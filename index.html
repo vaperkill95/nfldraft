@@ -717,7 +717,6 @@ colDefs.forEach(c => {
 
 // Build table headers
 function buildHeaders() {
-  loadData(); // Re-read so column visibility reflects admin settings
   const groupRow = document.getElementById('colGroupsRow');
   const headerRow = document.getElementById('colHeadersRow');
 
@@ -793,7 +792,6 @@ function posBadge(pos) {
 
 // ===== RENDER =====
 function renderTable() {
-  loadData(); // Always re-read localStorage so admin changes show immediately
   const q = searchQuery.toLowerCase();
   filtered = players.filter(p => {
     const matchSearch = !q || p.name.toLowerCase().includes(q) || p.school.toLowerCase().includes(q) || (p.comp||[]).join(' ').toLowerCase().includes(q);
