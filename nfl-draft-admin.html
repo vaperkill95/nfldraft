@@ -449,8 +449,8 @@ const STORAGE_KEY = 'nflDraftGuideData'; // kept for fallback only
 
 // ── RAILWAY API CONFIG ────────────────────────────────────────────────────────
 // After deploying the API to Railway, paste your URL and secret below
-const API_URL    = 'YOUR_RAILWAY_URL_HERE'; // e.g. https://draft-api-production.up.railway.app
-const API_SECRET = 'YOUR_ADMIN_SECRET_HERE'; // must match ADMIN_SECRET env var in Railway
+const API_URL    = 'https://nfldraft-production.up.railway.app'; // e.g. https://draft-api-production.up.railway.app
+const API_SECRET = 'draft2026'; // must match ADMIN_SECRET env var in Railway
 // ─────────────────────────────────────────────────────────────────────────────
 
 const DEFAULT_PLAYERS = [
@@ -810,10 +810,16 @@ function initEditingCopy() {
     const src = sc[key]?.tiers || DEFAULT_STAT_COLORS[key].tiers;
     editingTiers[key] = src.map(t => ({ label:t.label, color:t.color, min:t.min }));
   });
-  // Round map
+  // Round map — load all saved rounds (including custom ones), fall back to defaults
   const roundSrc = sc.round?.map || DEFAULT_STAT_COLORS.round.map;
+  editingRounds = {};
+  // Start with defaults so order is preserved
   Object.keys(DEFAULT_STAT_COLORS.round.map).forEach(r => {
     editingRounds[r] = (roundSrc[r]?.color) || DEFAULT_STAT_COLORS.round.map[r].color;
+  });
+  // Then add any custom rounds saved beyond defaults
+  Object.keys(roundSrc).forEach(r => {
+    if (!editingRounds[r]) editingRounds[r] = roundSrc[r].color;
   });
 }
 
@@ -975,21 +981,8 @@ function moveTier(key, ti, dir) {
 }
 
 function buildRoundSection() {
-  const def = DEFAULT_STAT_COLORS.round.map;
-  const rowsHtml = Object.keys(def).map(round => {
-    const c = editingRounds[round] || def[round].color;
-    const id = round.replace(/[^a-z0-9]/gi,'_');
-    return `<div class="round-tier-row">
-      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;">${round}</span>
-      <input type="color" class="tier-color-swatch" id="sc_round_${id}_color" value="${c}" oninput="onRoundColorInput('${round}')">
-      <input class="tier-input" id="sc_round_${id}_hex" value="${c}" oninput="onRoundHexInput('${round}')" style="font-family:monospace;font-size:12px;" placeholder="#hex">
-      <div class="tier-preview-chip" id="sc_round_${id}_chip" style="color:${c};background:${c}22;border-color:${c}44">${round}</div>
-      <button class="btn btn-secondary btn-sm" onclick="resetRoundColor('${round}')">↺</button>
-    </div>`;
-  }).join('');
-
-  const previewChips = Object.keys(def).map(r => {
-    const c = editingRounds[r] || def[r].color;
+  const previewChips = Object.keys(editingRounds).map(r => {
+    const c = editingRounds[r];
     return `<span class="tier-preview-chip" style="color:${c};background:${c}22;border-color:${c}44;font-size:10px;padding:2px 7px">${r}</span>`;
   }).join('');
 
@@ -997,24 +990,108 @@ function buildRoundSection() {
     <div class="stat-section-header" onclick="toggleStatSection('round')">
       <div class="stat-section-title">
         <span>Round Badge Colors</span>
-        <div class="tier-preview-bar" style="margin:0;">${previewChips}</div>
+        <div class="tier-preview-bar" style="margin:0;" id="round-preview-bar">${previewChips}</div>
       </div>
       <span class="stat-section-chevron">▼</span>
     </div>
     <div class="stat-section-body">
-      <div class="tier-section-label" style="margin-bottom:8px;">Round → Color mapping</div>
-      ${rowsHtml}
+      <div style="display:grid;grid-template-columns:1fr 36px 1fr 1fr auto auto;gap:10px;padding:4px 0 8px;border-bottom:1px solid var(--border);margin-bottom:4px;">
+        <div class="tier-section-label">Round Name</div><div class="tier-section-label">Color</div>
+        <div class="tier-section-label">Hex</div><div class="tier-section-label">Preview</div>
+        <div></div><div></div>
+      </div>
+      <div id="round-rows">${renderRoundRows()}</div>
+      <div style="margin-top:12px;">
+        <button class="btn btn-secondary btn-sm" onclick="addRound()" style="border-style:dashed;">＋ Add Round</button>
+      </div>
     </div>
   </div>`;
+}
+
+function renderRoundRows() {
+  const defaults = DEFAULT_STAT_COLORS.round.map;
+  return Object.keys(editingRounds).map(round => {
+    const c = editingRounds[round];
+    const id = round.replace(/[^a-z0-9]/gi,'_');
+    const isDefault = !!defaults[round];
+    return `<div class="round-tier-row" id="round-row-${id}" style="grid-template-columns:1fr 36px 1fr 1fr auto auto;">
+      <input class="tier-input" id="sc_round_${id}_name" value="${round}"
+        onchange="renameRound('${round}', this.value)" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;">
+      <input type="color" class="tier-color-swatch" id="sc_round_${id}_color" value="${c}"
+        oninput="onRoundColorInput('${round}')">
+      <input class="tier-input" id="sc_round_${id}_hex" value="${c}"
+        oninput="onRoundHexInput('${round}')" style="font-family:monospace;font-size:12px;" placeholder="#hex">
+      <div class="tier-preview-chip" id="sc_round_${id}_chip"
+        style="color:${c};background:${c}22;border-color:${c}44">${round}</div>
+      <button class="btn btn-secondary btn-sm" onclick="resetRoundColor('${round}')"
+        title="Reset to default" ${isDefault?'':'style="opacity:.3" disabled'}>↺</button>
+      <button class="btn btn-danger btn-sm" onclick="removeRound('${round}')"
+        style="padding:5px 8px;" title="Remove round">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function refreshRoundRows() {
+  const el = document.getElementById('round-rows');
+  if (el) el.innerHTML = renderRoundRows();
+  const bar = document.getElementById('round-preview-bar');
+  if (bar) bar.innerHTML = Object.keys(editingRounds).map(r => {
+    const c = editingRounds[r];
+    return `<span class="tier-preview-chip" style="color:${c};background:${c}22;border-color:${c}44;font-size:10px;padding:2px 7px">${r}</span>`;
+  }).join('');
+}
+
+function addRound() {
+  const name = 'New Round';
+  // Find a unique name
+  let finalName = name;
+  let i = 2;
+  while (editingRounds[finalName] !== undefined) finalName = name + ' ' + i++;
+  editingRounds[finalName] = '#888888';
+  refreshRoundRows();
+  // Focus the new name input
+  setTimeout(() => {
+    const rows = document.querySelectorAll('#round-rows .tier-input');
+    const last = rows[rows.length - 3]; // name input is first in each row
+    if (last) { last.select(); last.focus(); }
+  }, 50);
+}
+
+function removeRound(round) {
+  delete editingRounds[round];
+  refreshRoundRows();
+}
+
+function renameRound(oldName, newName) {
+  newName = newName.trim();
+  if (!newName || newName === oldName) return;
+  if (editingRounds[newName] !== undefined) {
+    showToast('A round with that name already exists.', true);
+    return;
+  }
+  // Rebuild preserving order
+  const newRounds = {};
+  Object.keys(editingRounds).forEach(r => {
+    newRounds[r === oldName ? newName : r] = editingRounds[r];
+  });
+  editingRounds = newRounds;
+  refreshRoundRows();
 }
 
 function onRoundColorInput(round) {
   const id = round.replace(/[^a-z0-9]/gi,'_');
   const color = document.getElementById(`sc_round_${id}_color`).value;
   editingRounds[round] = color;
-  document.getElementById(`sc_round_${id}_hex`).value = color;
+  const hexEl = document.getElementById(`sc_round_${id}_hex`);
+  if (hexEl) hexEl.value = color;
   const chip = document.getElementById(`sc_round_${id}_chip`);
-  chip.style.color=color; chip.style.background=color+'22'; chip.style.borderColor=color+'44';
+  if (chip) { chip.style.color=color; chip.style.background=color+'22'; chip.style.borderColor=color+'44'; }
+  // refresh preview bar
+  const bar = document.getElementById('round-preview-bar');
+  if (bar) bar.innerHTML = Object.keys(editingRounds).map(r => {
+    const c = editingRounds[r];
+    return `<span class="tier-preview-chip" style="color:${c};background:${c}22;border-color:${c}44;font-size:10px;padding:2px 7px">${r}</span>`;
+  }).join('');
 }
 
 function onRoundHexInput(round) {
@@ -1022,9 +1099,15 @@ function onRoundHexInput(round) {
   const hex = document.getElementById(`sc_round_${id}_hex`).value;
   if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
     editingRounds[round] = hex;
-    document.getElementById(`sc_round_${id}_color`).value = hex;
+    const colorEl = document.getElementById(`sc_round_${id}_color`);
+    if (colorEl) colorEl.value = hex;
     const chip = document.getElementById(`sc_round_${id}_chip`);
-    chip.style.color=hex; chip.style.background=hex+'22'; chip.style.borderColor=hex+'44';
+    if (chip) { chip.style.color=hex; chip.style.background=hex+'22'; chip.style.borderColor=hex+'44'; }
+    const bar = document.getElementById('round-preview-bar');
+    if (bar) bar.innerHTML = Object.keys(editingRounds).map(r => {
+      const c = editingRounds[r];
+      return `<span class="tier-preview-chip" style="color:${c};background:${c}22;border-color:${c}44;font-size:10px;padding:2px 7px">${r}</span>`;
+    }).join('');
   }
 }
 
@@ -1076,6 +1159,8 @@ function saveStatColors() {
 
   appData.statColors = sc;
   saveData();
+  // Re-render the editor so admin display matches what was just saved
+  renderStatColorEditor();
   showToast('🌈 Stat colors saved!');
 }
 
@@ -1111,7 +1196,7 @@ function syncColorFromHex(pos) {
   const hex=document.getElementById('cbghex_'+pos).value;
   if(/^#[0-9a-fA-F]{6}$/.test(hex)){document.getElementById('cbg_'+pos).value=hex;document.getElementById('cp_'+pos).style.background=hex;}
 }
-function saveColors() { Object.keys(appData.posColors).forEach(pos=>{appData.posColors[pos].bg=document.getElementById('cbg_'+pos).value;appData.posColors[pos].text=document.getElementById('ctxt_'+pos).value;}); saveData(); showToast('🎨 Position colors saved!'); }
+function saveColors() { Object.keys(appData.posColors).forEach(pos=>{appData.posColors[pos].bg=document.getElementById('cbg_'+pos).value;appData.posColors[pos].text=document.getElementById('ctxt_'+pos).value;}); saveData(); renderColorGrid(); showToast('🎨 Position colors saved!'); }
 function resetColors() { appData.posColors=JSON.parse(JSON.stringify(DEFAULT_POS_COLORS)); saveData(); renderColorGrid(); showToast('↺ Colors reset to defaults.'); }
 
 // ===== COLUMNS =====
