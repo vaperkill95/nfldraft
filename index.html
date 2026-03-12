@@ -700,20 +700,25 @@ const colDefs = [
   {key:'info',label:'Info'},{key:'size',label:'Size'},
   {key:'scores',label:'Scores'}
 ];
-const colToggleContainer = document.getElementById('colToggles');
-colDefs.forEach(c => {
-  const active = colVis[c.key] !== false;
-  const label = document.createElement('label');
-  label.className = 'col-toggle' + (active ? ' active' : '');
-  label.innerHTML = `<input type="checkbox" ${active?'checked':''} data-col="${c.key}"><span class="col-toggle-dot"></span>${c.label}`;
-  label.addEventListener('click', () => {
-    const cb = label.querySelector('input');
-    cb.checked = !cb.checked;
-    label.classList.toggle('active', cb.checked);
-    toggleCols(c.key, cb.checked);
+
+function buildColToggles() {
+  const colToggleContainer = document.getElementById('colToggles');
+  if (!colToggleContainer) return;
+  colToggleContainer.innerHTML = '';
+  colDefs.forEach(c => {
+    const active = colVis[c.key] !== false;
+    const label = document.createElement('label');
+    label.className = 'col-toggle' + (active ? ' active' : '');
+    label.innerHTML = `<input type="checkbox" ${active?'checked':''} data-col="${c.key}"><span class="col-toggle-dot"></span>${c.label}`;
+    label.addEventListener('click', () => {
+      const cb = label.querySelector('input');
+      cb.checked = !cb.checked;
+      label.classList.toggle('active', cb.checked);
+      toggleCols(c.key, cb.checked);
+    });
+    colToggleContainer.appendChild(label);
   });
-  colToggleContainer.appendChild(label);
-});
+}
 
 // Build table headers
 function buildHeaders() {
@@ -926,6 +931,7 @@ document.getElementById('perPage').addEventListener('change', e => { perPage=par
 
 // Initial page render — loads from API first, then renders
 initLoad().then(() => {
+  buildColToggles();
   // Build position nav tabs
   const positions = [...new Set(players.map(p => p.pos))];
   const posOrder = ['QB','HB','WR','TE','G','C','OT','DT','ED','LB','CB','S'];
@@ -950,7 +956,6 @@ initLoad().then(() => {
   while (schoolSelect.options.length > 1) schoolSelect.remove(1);
   schools.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; schoolSelect.appendChild(o); });
 
-  colDefs.forEach(c => { if(!colVis[c.key]) toggleCols(c.key, false); });
   buildHeaders();
   renderTable();
   applyBranding();
