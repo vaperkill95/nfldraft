@@ -901,11 +901,10 @@ function renderPlayerTable() {
 function openAddModal() {
   document.getElementById('modalTitle').textContent = activePos ? `Add ${activePos} Player` : 'Add Player';
   document.getElementById('editIdx').value = -1;
-  ['f_name','f_school','f_grade','f_ovr','f_posRank','f_age','f_class','f_star','f_ht','f_wt','f_arm','f_prod','f_ath','f_comp','f_star2'].forEach(id => {
+  ['f_name','f_school','f_grade','f_age','f_class','f_star','f_ht','f_wt','f_arm','f_prod','f_ath','f_comp','f_star2'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
-  // Pre-select active position tab
   const posEl = document.getElementById('f_pos');
   posEl.selectedIndex = 0;
   if (activePos) posEl.value = activePos;
@@ -921,8 +920,6 @@ function openEditModal(idx) {
   document.getElementById('f_name').value = p.name || '';
   document.getElementById('f_school').value = p.school || '';
   document.getElementById('f_grade').value = p.grade || '';
-  document.getElementById('f_ovr').value = p.ovr || '';
-  document.getElementById('f_posRank').value = p.posRank || '';
   document.getElementById('f_age').value = p.age || '';
   document.getElementById('f_class').value = p.class || '';
   document.getElementById('f_round').value = p.round || 'Top 10';
@@ -948,8 +945,6 @@ function savePlayer() {
     pos, name, school,
     grade:   parseFloat(document.getElementById('f_grade').value) || 0,
     round:   document.getElementById('f_round').value,
-    ovr:     parseInt(document.getElementById('f_ovr').value) || 0,
-    posRank: parseInt(document.getElementById('f_posRank').value) || 1,
     age:     parseFloat(document.getElementById('f_age').value) || null,
     class:   parseInt(document.getElementById('f_class').value) || null,
     star:    parseInt(document.getElementById('f_star').value) || parseInt(document.getElementById('f_star2').value) || 0,
