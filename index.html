@@ -940,7 +940,7 @@ initLoad().then(() => {
     return (ai===-1?99:ai) - (bi===-1?99:bi);
   });
   const nav = document.getElementById('mainNav');
-  nav.innerHTML = ''; // clear any stale tabs
+  nav.innerHTML = '<a class="active" onclick="switchTab(''">📋 Big Board</a>'; // always keep Big Board first
   positions.forEach(pos => {
     const a = document.createElement('a');
     const c = posColors[pos] || {bg:'#333',text:'#fff'};
