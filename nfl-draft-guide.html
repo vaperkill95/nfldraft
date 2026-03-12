@@ -449,7 +449,7 @@
 const STORAGE_KEY = 'nflDraftGuideData';
 
 // ── RAILWAY API CONFIG ────────────────────────────────────────────────────────
-const API_URL = 'https://nfldraft-production.up.railway.app'; // e.g. https://draft-api-production.up.railway.app
+const API_URL = 'YOUR_RAILWAY_URL_HERE'; // e.g. https://draft-api-production.up.railway.app
 // ─────────────────────────────────────────────────────────────────────────────
 
 const DEFAULT_PLAYERS = [
@@ -594,25 +594,30 @@ function loadData() {
   applyRaw(raw);
 }
 
+let _lastUpdatedAt = null;
+
 async function initLoad() {
   // On first page load, try to fetch latest from API
   if (API_URL && API_URL !== 'YOUR_RAILWAY_URL_HERE') {
     try {
       const res = await fetch(API_URL + '/data');
       if (res.ok) {
-        const { data, updated_at } = await res.json();
-        if (data) {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-          _lastUpdatedAt = updated_at;
-          applyRaw(data);
+        const json = await res.json();
+        if (json.data) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(json.data));
+          _lastUpdatedAt = json.updated_at;
+          applyRaw(json.data);
           return;
         }
+        // API reachable but DB is empty — use defaults
+        applyRaw({});
+        return;
       }
     } catch(e) {
-      console.warn('API unreachable on load, using localStorage cache');
+      console.warn('API unreachable on load, using localStorage cache:', e.message);
     }
   }
-  // Fallback: use localStorage
+  // Fallback: use localStorage (or defaults if localStorage also empty)
   loadData();
 }
 
@@ -955,8 +960,6 @@ initLoad().then(() => {
 });
 
 // ===== LIVE SYNC WITH ADMIN (cross-device via Railway API) =====
-let _lastUpdatedAt = null;
-
 async function syncFromAPI() {
   if (!API_URL || API_URL === 'YOUR_RAILWAY_URL_HERE') return;
   try {

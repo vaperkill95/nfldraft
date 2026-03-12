@@ -449,8 +449,8 @@ const STORAGE_KEY = 'nflDraftGuideData'; // kept for fallback only
 
 // ── RAILWAY API CONFIG ────────────────────────────────────────────────────────
 // After deploying the API to Railway, paste your URL and secret below
-const API_URL = 'https://nfldraft-production.up.railway.app'; // e.g. https://draft-api-production.up.railway.app
-const API_SECRET = 'draft2026'; // must match ADMIN_SECRET env var in Railway
+const API_URL    = 'YOUR_RAILWAY_URL_HERE'; // e.g. https://draft-api-production.up.railway.app
+const API_SECRET = 'YOUR_ADMIN_SECRET_HERE'; // must match ADMIN_SECRET env var in Railway
 // ─────────────────────────────────────────────────────────────────────────────
 
 const DEFAULT_PLAYERS = [
@@ -572,12 +572,19 @@ async function loadData() {
       if (res.ok) {
         const json = await res.json();
         if (json.data) {
+          // API has data — use it
           appData = json.data;
           applyDefaults();
-          // Mirror to localStorage as offline cache
           localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
           return;
         }
+        // API reachable but DB empty (first run) — load from localStorage/defaults
+        // then push up to DB so guide can read it
+        try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) appData = JSON.parse(raw); } catch(e) {}
+        applyDefaults();
+        console.log('Fresh DB detected — pushing local data up...');
+        await saveData(); // seed the DB with current local data
+        return;
       }
     } catch(e) {
       console.warn('API unreachable, falling back to localStorage:', e.message);
