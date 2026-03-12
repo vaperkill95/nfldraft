@@ -940,7 +940,13 @@ initLoad().then(() => {
     return (ai===-1?99:ai) - (bi===-1?99:bi);
   });
   const nav = document.getElementById('mainNav');
-  nav.innerHTML = '<a class="active" onclick="switchTab(''">📋 Big Board</a>'; // always keep Big Board first
+  // Rebuild nav with Big Board first
+  nav.innerHTML = '';
+  const bbLink = document.createElement('a');
+  bbLink.className = 'active';
+  bbLink.textContent = '📋 Big Board';
+  bbLink.onclick = () => switchTab('');
+  nav.appendChild(bbLink);
   positions.forEach(pos => {
     const a = document.createElement('a');
     const c = posColors[pos] || {bg:'#333',text:'#fff'};
