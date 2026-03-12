@@ -449,7 +449,7 @@
 const STORAGE_KEY = 'nflDraftGuideData';
 
 // ── RAILWAY API CONFIG ────────────────────────────────────────────────────────
-const API_URL = 'YOUR_RAILWAY_URL_HERE'; // e.g. https://draft-api-production.up.railway.app
+const API_URL = 'https://nfldraft-production.up.railway.app'; // e.g. https://draft-api-production.up.railway.app
 // ─────────────────────────────────────────────────────────────────────────────
 
 const DEFAULT_PLAYERS = [
@@ -675,23 +675,7 @@ function buildLegend() {
       <span class="legend-label">${t.label}</span>
     </div>`).join('');
 }
-buildLegend();
-
-// Build position tabs in nav
-const positions = [...new Set(players.map(p => p.pos))];
-const posOrder = ['QB','HB','WR','TE','G','C','OT','DT','ED','LB','CB','S'];
-positions.sort((a,b) => {
-  const ai = posOrder.indexOf(a), bi = posOrder.indexOf(b);
-  return (ai===-1?99:ai) - (bi===-1?99:bi);
-});
-const nav = document.getElementById('mainNav');
-positions.forEach(pos => {
-  const a = document.createElement('a');
-  const c = posColors[pos] || {bg:'#333',text:'#fff'};
-  a.innerHTML = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.bg};margin-right:5px;"></span>${pos}`;
-  a.onclick = () => switchTab(pos);
-  nav.appendChild(a);
-});
+// Nav and legend built after data loads (see initLoad().then below)
 
 function switchTab(pos) {
   posFilter = pos;
@@ -708,10 +692,7 @@ function switchTab(pos) {
   renderTable();
 }
 
-// Populate school filter
-const schools = [...new Set(players.map(p => p.school))].sort();
-const schoolSelect = document.getElementById('schoolFilter');
-schools.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; schoolSelect.appendChild(o); });
+// School filter populated after data loads (see initLoad().then below)
 
 // Column toggles
 const colDefs = [
@@ -947,6 +928,30 @@ document.getElementById('perPage').addEventListener('change', e => { perPage=par
 
 // Initial page render — loads from API first, then renders
 initLoad().then(() => {
+  // Build position nav tabs
+  const positions = [...new Set(players.map(p => p.pos))];
+  const posOrder = ['QB','HB','WR','TE','G','C','OT','DT','ED','LB','CB','S'];
+  positions.sort((a,b) => {
+    const ai = posOrder.indexOf(a), bi = posOrder.indexOf(b);
+    return (ai===-1?99:ai) - (bi===-1?99:bi);
+  });
+  const nav = document.getElementById('mainNav');
+  nav.innerHTML = ''; // clear any stale tabs
+  positions.forEach(pos => {
+    const a = document.createElement('a');
+    const c = posColors[pos] || {bg:'#333',text:'#fff'};
+    a.innerHTML = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.bg};margin-right:5px;"></span>${pos}`;
+    a.onclick = () => switchTab(pos);
+    nav.appendChild(a);
+  });
+
+  // Populate school filter
+  const schools = [...new Set(players.map(p => p.school))].sort();
+  const schoolSelect = document.getElementById('schoolFilter');
+  // keep the default "All Schools" option, remove old entries
+  while (schoolSelect.options.length > 1) schoolSelect.remove(1);
+  schools.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; schoolSelect.appendChild(o); });
+
   colDefs.forEach(c => { if(!colVis[c.key]) toggleCols(c.key, false); });
   buildHeaders();
   renderTable();
