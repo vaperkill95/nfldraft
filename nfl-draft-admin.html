@@ -471,6 +471,8 @@ td { padding:9px 12px; vertical-align:middle; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 const STORAGE_KEY = 'nflDraftGuideData';
+const API_URL    = 'https://nfldraft-production.up.railway.app';
+const API_SECRET = 'draft2026';
 
 const DEFAULT_PLAYERS = [
   { pos:"LB", name:"Sonny Styles", school:"Ohio State", grade:7.32, round:"Top 10", ovr:1, posRank:1, age:21.4, comp:["Jordyn Brooks","Jihaad Campbell"], ht:6050, wt:244, arm:32.88, prod:81.6, ath:89.8, star:5, class:2022 },
@@ -588,7 +590,17 @@ function loadData() {
   appData.username   = appData.username   || 'admin';
 }
 
-function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+  fetch(API_URL + '/data', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data: appData, secret: API_SECRET })
+  })
+  .then(r => r.json())
+  .then(r => { if (!r.ok) console.warn('Railway sync failed:', r); })
+  .catch(err => console.warn('Railway sync error:', err));
+}
 
 function recalcRanks() {
   appData.players.sort((a,b) => (b.grade||0) - (a.grade||0));
