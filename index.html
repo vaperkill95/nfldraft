@@ -329,6 +329,28 @@
   .modal-stat-label { color: var(--text-muted); }
   .modal-stat-val { font-weight: 600; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; }
 
+  /* STRENGTHS / WEAKNESSES */
+  .sw-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .sw-col { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .sw-col-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 14px; font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .sw-col-header.strengths { background: rgba(34,197,94,0.12); color: #22c55e; border-bottom: 1px solid rgba(34,197,94,0.2); }
+  .sw-col-header.weaknesses { background: rgba(239,68,68,0.12); color: #f87171; border-bottom: 1px solid rgba(239,68,68,0.2); }
+  .sw-icon { width: 18px; height: 18px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+  .sw-icon.s { background: #22c55e; color: #000; }
+  .sw-icon.w { background: #ef4444; color: #fff; }
+  .sw-item {
+    display: flex; align-items: center; gap: 0;
+    padding: 8px 14px; font-size: 13px; color: var(--text-dim);
+    border-bottom: 1px solid var(--border); line-height: 1.4;
+  }
+  .sw-item:last-child { border-bottom: none; }
+  .sw-accent { width: 3px; height: 100%; min-height: 20px; border-radius: 2px; flex-shrink: 0; margin-right: 10px; align-self: stretch; }
+  .sw-empty { padding: 14px; font-size: 12px; color: var(--text-muted); text-align: center; font-style: italic; }
+
   .last-updated { font-size: 11px; color: var(--text-muted); text-align: center; padding: 12px; border-top: 1px solid var(--border); margin-top: 4px; }
 
   .tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 2px 7px; border-radius: 4px; background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim); }
@@ -448,10 +470,6 @@
 // ===== LOAD FROM ADMIN STORAGE =====
 const STORAGE_KEY = 'nflDraftGuideData';
 
-// ── RAILWAY API CONFIG ────────────────────────────────────────────────────────
-const API_URL = 'https://nfldraft-production.up.railway.app'; // e.g. https://draft-api-production.up.railway.app
-// ─────────────────────────────────────────────────────────────────────────────
-
 const DEFAULT_PLAYERS = [
   { pos:"LB", name:"Sonny Styles", school:"Ohio State", grade:7.32, round:"Top 10", ovr:1, posRank:1, age:21.4, comp:["Jordyn Brooks","Jihaad Campbell"], ht:6050, wt:244, arm:32.88, prod:81.6, ath:89.8, star:5, class:2022 },
   { pos:"QB", name:"Fernando Mendoza", school:"Indiana", grade:7.28, round:"Top 10", ovr:2, posRank:1, age:22.6, comp:["Matt Ryan"], ht:6046, wt:236, arm:31.88, prod:93.9, ath:78.3, star:2, class:2022 },
@@ -568,8 +586,15 @@ const DEFAULT_STAT_COLORS = {
   },
 };
 
-// Load data — re-reads localStorage fresh so admin changes apply without page reload
-let players, posColors, colVis, branding, statColors;
+// Load data
+let raw = {};
+try { raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){}
+const players    = raw.players    || DEFAULT_PLAYERS;
+const posColors  = raw.posColors  || DEFAULT_POS_COLORS;
+const colVis     = raw.columns    || {grade:true,rank:true,info:true,size:true,scores:true};
+const branding   = raw.branding   || {title1:"PHIL'S 2026",title2:"NFL DRAFT",title3:"GUIDE",accent:"#f59e0b",lastUpdated:"Last updated: 3/4",footerNote:""};
+// Merge saved stat colors over defaults
+const statColors = mergeStatColors(raw.statColors || {});
 
 function mergeStatColors(saved) {
   const result = JSON.parse(JSON.stringify(DEFAULT_STAT_COLORS));
@@ -577,48 +602,6 @@ function mergeStatColors(saved) {
     if (result[key]) result[key] = saved[key];
   });
   return result;
-}
-
-function applyRaw(raw) {
-  players    = raw.players    || DEFAULT_PLAYERS;
-  posColors  = raw.posColors  || DEFAULT_POS_COLORS;
-  colVis     = raw.columns    || {grade:true,rank:true,info:true,size:true,scores:true};
-  branding   = raw.branding   || {title1:"PHIL'S 2026",title2:"NFL DRAFT",title3:"GUIDE",accent:"#f59e0b",lastUpdated:"Last updated: 3/4",footerNote:""};
-  statColors = mergeStatColors(raw.statColors || {});
-}
-
-function loadData() {
-  // Always re-read from localStorage (kept as local cache)
-  let raw = {};
-  try { raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){}
-  applyRaw(raw);
-}
-
-let _lastUpdatedAt = null;
-
-async function initLoad() {
-  // On first page load, try to fetch latest from API
-  if (API_URL && API_URL !== 'YOUR_RAILWAY_URL_HERE') {
-    try {
-      const res = await fetch(API_URL + '/data');
-      if (res.ok) {
-        const json = await res.json();
-        if (json.data) {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(json.data));
-          _lastUpdatedAt = json.updated_at;
-          applyRaw(json.data);
-          return;
-        }
-        // API reachable but DB is empty — use defaults
-        applyRaw({});
-        return;
-      }
-    } catch(e) {
-      console.warn('API unreachable on load, using localStorage cache:', e.message);
-    }
-  }
-  // Fallback: use localStorage (or defaults if localStorage also empty)
-  loadData();
 }
 
 // ===== STAT COLOR HELPER =====
@@ -630,7 +613,7 @@ function getStatStyle(statKey, value) {
   if (cfg.tiers) {
     for (const tier of cfg.tiers) {
       if (value >= tier.min) {
-        return { color: tier.color, bg: tier.bg || (tier.color + '2e'), label: tier.label };
+        return { color: tier.color, bg: tier.bg, label: tier.label };
       }
     }
   }
@@ -640,9 +623,7 @@ function getStatStyle(statKey, value) {
 function getRoundStyle(round) {
   const cfg = statColors.round;
   if (!cfg || !cfg.map) return null;
-  const entry = cfg.map[round];
-  if (!entry) return null;
-  return { color: entry.color, bg: entry.bg || (entry.color + '2e') };
+  return cfg.map[round] || null;
 }
 
 function statPill(value, statKey, displayText) {
@@ -663,7 +644,13 @@ function gradePill(grade) {
   return `<span class="grade-pill" style="color:${style.color};background:${style.bg};border:1px solid ${style.color}55">${grade.toFixed(2)}</span>`;
 }
 
-// Branding applied after data loads via applyBranding()
+// Apply branding
+const accentColor = branding.accent || '#f59e0b';
+document.documentElement.style.setProperty('--accent', accentColor);
+document.getElementById('siteLogo').innerHTML =
+  `${branding.title1} <span>${branding.title2}</span> ${branding.title3}`;
+document.title = `${branding.title1} ${branding.title2} ${branding.title3}`;
+document.getElementById('lastUpdatedText').textContent = branding.lastUpdated || '';
 
 // Build color legend
 function buildLegend() {
@@ -675,7 +662,23 @@ function buildLegend() {
       <span class="legend-label">${t.label}</span>
     </div>`).join('');
 }
-// Nav and legend built after data loads (see initLoad().then below)
+buildLegend();
+
+// Build position tabs in nav
+const positions = [...new Set(players.map(p => p.pos))];
+const posOrder = ['QB','HB','WR','TE','G','C','OT','DT','ED','LB','CB','S'];
+positions.sort((a,b) => {
+  const ai = posOrder.indexOf(a), bi = posOrder.indexOf(b);
+  return (ai===-1?99:ai) - (bi===-1?99:bi);
+});
+const nav = document.getElementById('mainNav');
+positions.forEach(pos => {
+  const a = document.createElement('a');
+  const c = posColors[pos] || {bg:'#333',text:'#fff'};
+  a.innerHTML = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.bg};margin-right:5px;"></span>${pos}`;
+  a.onclick = () => switchTab(pos);
+  nav.appendChild(a);
+});
 
 function switchTab(pos) {
   posFilter = pos;
@@ -692,7 +695,10 @@ function switchTab(pos) {
   renderTable();
 }
 
-// School filter populated after data loads (see initLoad().then below)
+// Populate school filter
+const schools = [...new Set(players.map(p => p.school))].sort();
+const schoolSelect = document.getElementById('schoolFilter');
+schools.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; schoolSelect.appendChild(o); });
 
 // Column toggles
 const colDefs = [
@@ -700,25 +706,20 @@ const colDefs = [
   {key:'info',label:'Info'},{key:'size',label:'Size'},
   {key:'scores',label:'Scores'}
 ];
-
-function buildColToggles() {
-  const colToggleContainer = document.getElementById('colToggles');
-  if (!colToggleContainer) return;
-  colToggleContainer.innerHTML = '';
-  colDefs.forEach(c => {
-    const active = colVis[c.key] !== false;
-    const label = document.createElement('label');
-    label.className = 'col-toggle' + (active ? ' active' : '');
-    label.innerHTML = `<input type="checkbox" ${active?'checked':''} data-col="${c.key}"><span class="col-toggle-dot"></span>${c.label}`;
-    label.addEventListener('click', () => {
-      const cb = label.querySelector('input');
-      cb.checked = !cb.checked;
-      label.classList.toggle('active', cb.checked);
-      toggleCols(c.key, cb.checked);
-    });
-    colToggleContainer.appendChild(label);
+const colToggleContainer = document.getElementById('colToggles');
+colDefs.forEach(c => {
+  const active = colVis[c.key] !== false;
+  const label = document.createElement('label');
+  label.className = 'col-toggle' + (active ? ' active' : '');
+  label.innerHTML = `<input type="checkbox" ${active?'checked':''} data-col="${c.key}"><span class="col-toggle-dot"></span>${c.label}`;
+  label.addEventListener('click', () => {
+    const cb = label.querySelector('input');
+    cb.checked = !cb.checked;
+    label.classList.toggle('active', cb.checked);
+    toggleCols(c.key, cb.checked);
   });
-}
+  colToggleContainer.appendChild(label);
+});
 
 // Build table headers
 function buildHeaders() {
@@ -915,7 +916,26 @@ function openModal(idx) {
         <div class="modal-card-label">NFL Comparisons</div>
         ${(p.comp||[]).map(c=>`<div class="modal-stat-row"><span class="modal-stat-val" style="font-size:14px">${c}</span></div>`).join('') || '<div style="color:var(--text-muted);font-size:13px">None listed</div>'}
       </div>
-    </div>`;
+    </div>
+    ${((p.strengths && p.strengths.length) || (p.weaknesses && p.weaknesses.length)) ? `
+    <div class="sw-panel">
+      <div class="sw-col">
+        <div class="sw-col-header strengths">
+          <span class="sw-icon s">+</span> Strengths
+        </div>
+        ${(p.strengths||[]).length
+          ? (p.strengths).map(s=>`<div class="sw-item"><div class="sw-accent" style="background:#22c55e"></div>${s}</div>`).join('')
+          : '<div class="sw-empty">None listed</div>'}
+      </div>
+      <div class="sw-col">
+        <div class="sw-col-header weaknesses">
+          <span class="sw-icon w">−</span> Weaknesses
+        </div>
+        ${(p.weaknesses||[]).length
+          ? (p.weaknesses).map(w=>`<div class="sw-item"><div class="sw-accent" style="background:#ef4444"></div>${w}</div>`).join('')
+          : '<div class="sw-empty">None listed</div>'}
+      </div>
+    </div>` : ''}`;
   document.getElementById('modalOverlay').classList.add('open');
 }
 
@@ -929,116 +949,10 @@ document.getElementById('roundFilter').addEventListener('change', e => { roundFi
 document.getElementById('schoolFilter').addEventListener('change', e => { schoolFilter=e.target.value; currentPage=1; renderTable(); });
 document.getElementById('perPage').addEventListener('change', e => { perPage=parseInt(e.target.value); currentPage=1; renderTable(); });
 
-// Initial page render — loads from API first, then renders
-initLoad().then(() => {
-  buildColToggles();
-  // Build position nav tabs
-  const positions = [...new Set(players.map(p => p.pos))];
-  const posOrder = ['QB','HB','WR','TE','G','C','OT','DT','ED','LB','CB','S'];
-  positions.sort((a,b) => {
-    const ai = posOrder.indexOf(a), bi = posOrder.indexOf(b);
-    return (ai===-1?99:ai) - (bi===-1?99:bi);
-  });
-  const nav = document.getElementById('mainNav');
-  // Rebuild nav with Big Board first
-  nav.innerHTML = '';
-  const bbLink = document.createElement('a');
-  bbLink.className = 'active';
-  bbLink.textContent = '📋 Big Board';
-  bbLink.onclick = () => switchTab('');
-  nav.appendChild(bbLink);
-  positions.forEach(pos => {
-    const a = document.createElement('a');
-    const c = posColors[pos] || {bg:'#333',text:'#fff'};
-    a.innerHTML = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.bg};margin-right:5px;"></span>${pos}`;
-    a.onclick = () => switchTab(pos);
-    nav.appendChild(a);
-  });
+colDefs.forEach(c => { if(!colVis[c.key]) toggleCols(c.key, false); });
 
-  // Populate school filter
-  const schools = [...new Set(players.map(p => p.school))].sort();
-  const schoolSelect = document.getElementById('schoolFilter');
-  // keep the default "All Schools" option, remove old entries
-  while (schoolSelect.options.length > 1) schoolSelect.remove(1);
-  schools.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; schoolSelect.appendChild(o); });
-
-  buildHeaders();
-  renderTable();
-  applyBranding();
-});
-
-// ===== LIVE SYNC WITH ADMIN (cross-device via Railway API) =====
-async function syncFromAPI() {
-  if (!API_URL || API_URL === 'YOUR_RAILWAY_URL_HERE') return;
-  try {
-    const res = await fetch(API_URL + '/ping');
-    if (!res.ok) return;
-    const { updated_at } = await res.json();
-    if (!updated_at) return;
-
-    if (_lastUpdatedAt && updated_at !== _lastUpdatedAt) {
-      // Something changed — fetch full data and re-render
-      const dataRes = await fetch(API_URL + '/data');
-      if (!dataRes.ok) return;
-      const { data } = await dataRes.json();
-      if (data) {
-        // Update localStorage cache too
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        loadData();
-        buildHeaders();
-        renderTable();
-        applyBranding();
-        showUpdateToast();
-      }
-    }
-    _lastUpdatedAt = updated_at;
-  } catch(e) {
-    // API offline — silent fail, guide still works from localStorage
-  }
-}
-
-// Initial fetch of updated_at so first poll has a baseline
-syncFromAPI();
-
-// Poll API every 3 seconds for cross-device live updates
-setInterval(syncFromAPI, 3000);
-
-// Also keep local storage event listener for same-machine tabs
-window.addEventListener('storage', function(e) {
-  if (e.key === STORAGE_KEY) {
-    loadData();
-    buildHeaders();
-    renderTable();
-    applyBranding();
-    showUpdateToast();
-  }
-});
-
-function applyBranding() {
-  if (!branding) return; // guard against being called before data loads
-  const accent = branding.accent || '#f59e0b';
-  document.documentElement.style.setProperty('--accent', accent);
-  const logoEl = document.getElementById('siteLogo');
-  if (logoEl) logoEl.innerHTML = `${branding.title1 || ''} <span>${branding.title2 || ''}</span> ${branding.title3 || ''}`;
-  document.title = `${branding.title1 || ''} ${branding.title2 || ''} ${branding.title3 || ''}`;
-  const updEl = document.getElementById('lastUpdatedText');
-  if (updEl) updEl.textContent = branding.lastUpdated || '';
-  buildLegend();
-}
-
-function showUpdateToast() {
-  let toast = document.getElementById('liveUpdateToast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'liveUpdateToast';
-    toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#22c55e;color:#000;padding:10px 18px;border-radius:10px;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:14px;letter-spacing:.5px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4);transition:opacity .4s;';
-    document.body.appendChild(toast);
-  }
-  toast.textContent = '✅ Colors updated live!';
-  toast.style.opacity = '1';
-  clearTimeout(toast._timer);
-  toast._timer = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
-}
+buildHeaders();
+renderTable();
 </script>
 </body>
 </html>

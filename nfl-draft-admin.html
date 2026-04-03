@@ -23,87 +23,43 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Barlow',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
-/* LOGIN */
-#loginScreen {
-  display:flex; align-items:center; justify-content:center;
-  min-height:100vh; background:var(--bg);
-}
-.login-box {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:16px; padding:40px; width:380px; text-align:center;
-}
+#loginScreen { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+.login-box { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:40px; width:380px; text-align:center; }
 .login-logo { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:28px; margin-bottom:6px; }
 .login-logo span { color:var(--accent); }
 .login-sub { font-size:13px; color:var(--text-muted); margin-bottom:28px; }
-.login-box input {
-  width:100%; background:var(--surface2); border:1px solid var(--border);
-  color:var(--text); border-radius:8px; padding:11px 14px; font-size:14px;
-  font-family:'Barlow',sans-serif; outline:none; margin-bottom:12px; transition:border-color .15s;
-}
+.login-box input { width:100%; background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:11px 14px; font-size:14px; font-family:'Barlow',sans-serif; outline:none; margin-bottom:12px; transition:border-color .15s; }
 .login-box input:focus { border-color:var(--accent); }
 .login-error { color:var(--red); font-size:13px; margin-bottom:10px; display:none; }
 
-/* HEADER */
 #adminApp { display:none; }
-header {
-  background:var(--surface); border-bottom:1px solid var(--border);
-  padding:0 24px; display:flex; align-items:center; justify-content:space-between;
-  height:56px; position:sticky; top:0; z-index:100;
-}
+header { background:var(--surface); border-bottom:1px solid var(--border); padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; position:sticky; top:0; z-index:100; }
 .logo { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:20px; }
 .logo span { color:var(--accent); }
 .header-tabs { display:flex; gap:4px; }
-.tab-btn {
-  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px;
-  letter-spacing:.5px; text-transform:uppercase; color:var(--text-muted);
-  background:none; border:none; padding:7px 14px; border-radius:6px;
-  cursor:pointer; transition:all .15s;
-}
+.tab-btn { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; letter-spacing:.5px; text-transform:uppercase; color:var(--text-muted); background:none; border:none; padding:7px 14px; border-radius:6px; cursor:pointer; transition:all .15s; }
 .tab-btn:hover { color:var(--text); background:var(--border); }
 .tab-btn.active { color:var(--accent); background:rgba(245,158,11,.12); }
-.logout-btn {
-  font-size:13px; color:var(--text-muted); background:none; border:1px solid var(--border);
-  padding:6px 12px; border-radius:7px; cursor:pointer; transition:all .15s; font-family:'Barlow',sans-serif;
-}
+.logout-btn { font-size:13px; color:var(--text-muted); background:none; border:1px solid var(--border); padding:6px 12px; border-radius:7px; cursor:pointer; transition:all .15s; font-family:'Barlow',sans-serif; }
 .logout-btn:hover { color:var(--red); border-color:var(--red); }
 
-/* TABS */
 .tab-panel { display:none; padding:28px 28px 60px; max-width:1200px; margin:0 auto; }
 .tab-panel.active { display:block; }
 
-/* SECTION */
 .section { margin-bottom:32px; }
-.section-title {
-  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:18px;
-  letter-spacing:.5px; margin-bottom:16px; padding-bottom:10px;
-  border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px;
-}
+.section-title { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:18px; letter-spacing:.5px; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; }
 .section-title::before { content:''; width:4px; height:18px; background:var(--accent); border-radius:2px; display:inline-block; }
 
-/* FORM GRID */
 .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 .form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
 .form-grid-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; }
 .form-group { display:flex; flex-direction:column; gap:6px; }
 .form-label { font-size:12px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; }
-.form-input {
-  background:var(--surface2); border:1px solid var(--border); color:var(--text);
-  border-radius:8px; padding:9px 12px; font-size:13px; font-family:'Barlow',sans-serif;
-  outline:none; transition:border-color .15s; width:100%;
-}
+.form-input { background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:9px 12px; font-size:13px; font-family:'Barlow',sans-serif; outline:none; transition:border-color .15s; width:100%; }
 .form-input:focus { border-color:var(--accent); }
-select.form-input {
-  appearance:none; -webkit-appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat:no-repeat; background-position:right 10px center; padding-right:28px; cursor:pointer;
-}
+select.form-input { appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; padding-right:28px; cursor:pointer; }
 
-/* BUTTONS */
-.btn {
-  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:14px;
-  letter-spacing:.5px; text-transform:uppercase; padding:9px 20px; border-radius:8px;
-  border:none; cursor:pointer; transition:all .15s; display:inline-flex; align-items:center; gap:6px;
-}
+.btn { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:14px; letter-spacing:.5px; text-transform:uppercase; padding:9px 20px; border-radius:8px; border:none; cursor:pointer; transition:all .15s; display:inline-flex; align-items:center; gap:6px; }
 .btn-primary { background:var(--accent); color:#000; }
 .btn-primary:hover { background:#fbbf24; }
 .btn-success { background:var(--green); color:#000; }
@@ -114,154 +70,124 @@ select.form-input {
 .btn-secondary:hover { border-color:var(--text-muted); color:var(--text); }
 .btn-sm { padding:5px 12px; font-size:12px; }
 
-/* PLAYER TABLE */
 .player-table-wrap { border:1px solid var(--border); border-radius:12px; overflow:hidden; overflow-x:auto; }
 table { width:100%; border-collapse:collapse; font-size:13px; min-width:700px; }
-thead th {
-  background:var(--surface2); padding:9px 12px; font-family:'Barlow Condensed',sans-serif;
-  font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
-  color:var(--text-muted); border-bottom:1px solid var(--border); text-align:left; white-space:nowrap;
-}
+thead th { background:var(--surface2); padding:9px 12px; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); border-bottom:1px solid var(--border); text-align:left; white-space:nowrap; }
 tbody tr { border-bottom:1px solid var(--border); transition:background .1s; }
 tbody tr:last-child { border-bottom:none; }
 tbody tr:hover { background:rgba(255,255,255,.03); }
 td { padding:9px 12px; vertical-align:middle; }
 
-.pos-badge {
-  display:inline-block; padding:3px 8px; border-radius:5px;
-  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px;
-  letter-spacing:.5px; min-width:36px; text-align:center;
-}
-
-.grade-pill {
-  display:inline-block; padding:3px 10px; border-radius:20px;
-  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px;
-  background:rgba(0,200,150,.15); color:#00c896; border:1px solid rgba(0,200,150,.3);
-}
-
+.pos-badge { display:inline-block; padding:3px 8px; border-radius:5px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:.5px; min-width:36px; text-align:center; }
+.grade-pill { display:inline-block; padding:3px 10px; border-radius:20px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; background:rgba(0,200,150,.15); color:#00c896; border:1px solid rgba(0,200,150,.3); }
 .action-btns { display:flex; gap:6px; }
 
-/* SEARCH BAR */
 .table-toolbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:12px; flex-wrap:wrap; }
-.search-input {
-  background:var(--surface2); border:1px solid var(--border); color:var(--text);
-  border-radius:8px; padding:8px 14px; font-size:13px; font-family:'Barlow',sans-serif;
-  outline:none; width:260px;
-}
+.search-input { background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:8px 14px; font-size:13px; font-family:'Barlow',sans-serif; outline:none; width:260px; }
 .search-input:focus { border-color:var(--accent); }
 .search-input::placeholder { color:var(--text-muted); }
 
-/* MODAL */
-.modal-overlay {
-  display:none; position:fixed; inset:0; background:rgba(0,0,0,.75);
-  z-index:200; align-items:center; justify-content:center; backdrop-filter:blur(4px);
-}
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.75); z-index:200; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
 .modal-overlay.open { display:flex; }
-.modal {
-  background:var(--surface); border:1px solid var(--border); border-radius:16px;
-  padding:28px; width:680px; max-width:96vw; max-height:90vh; overflow-y:auto;
-  position:relative; animation:modalIn .2s ease;
-}
+.modal { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px; width:680px; max-width:96vw; max-height:90vh; overflow-y:auto; position:relative; animation:modalIn .2s ease; }
 @keyframes modalIn { from{opacity:0;transform:translateY(16px) scale(.97)} to{opacity:1;transform:none} }
 .modal-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:22px; margin-bottom:20px; }
-.modal-close {
-  position:absolute; top:16px; right:16px; background:var(--surface2);
-  border:1px solid var(--border); color:var(--text-muted); width:30px; height:30px;
-  border-radius:8px; font-size:16px; cursor:pointer; display:flex; align-items:center;
-  justify-content:center; transition:all .15s;
-}
+.modal-close { position:absolute; top:16px; right:16px; background:var(--surface2); border:1px solid var(--border); color:var(--text-muted); width:30px; height:30px; border-radius:8px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s; }
 .modal-close:hover { color:var(--text); }
 .modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; padding-top:16px; border-top:1px solid var(--border); }
 
-/* COLOR SWATCHES */
 .color-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; }
-.color-item {
-  background:var(--surface2); border:1px solid var(--border); border-radius:10px;
-  padding:12px; display:flex; flex-direction:column; gap:8px;
-}
-.color-preview {
-  height:36px; border-radius:7px; display:flex; align-items:center; justify-content:center;
-  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:14px; letter-spacing:.5px;
-  transition:all .15s;
-}
+.color-item { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:12px; display:flex; flex-direction:column; gap:8px; }
+.color-preview { height:36px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:14px; letter-spacing:.5px; transition:all .15s; }
 .color-label { font-size:11px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:.5px; }
 .color-inputs { display:flex; gap:6px; align-items:center; }
 .color-swatch { width:28px; height:28px; border-radius:6px; border:2px solid var(--border); cursor:pointer; padding:0; }
 .color-hex { flex:1; background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:5px 8px; font-size:12px; font-family:monospace; outline:none; }
 .color-hex:focus { border-color:var(--accent); }
 
-/* COLUMNS TOGGLE */
 .col-toggles-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:8px; }
-.col-toggle-item {
-  display:flex; align-items:center; justify-content:space-between;
-  background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:10px 14px;
-}
+.col-toggle-item { display:flex; align-items:center; justify-content:space-between; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:10px 14px; }
 .col-toggle-name { font-size:13px; font-weight:500; }
 .toggle { position:relative; width:38px; height:22px; flex-shrink:0; }
 .toggle input { opacity:0; width:0; height:0; }
-.toggle-slider {
-  position:absolute; inset:0; background:var(--border); border-radius:22px; cursor:pointer; transition:.2s;
-}
-.toggle-slider::before {
-  content:''; position:absolute; width:16px; height:16px; left:3px; top:3px;
-  background:var(--text-muted); border-radius:50%; transition:.2s;
-}
+.toggle-slider { position:absolute; inset:0; background:var(--border); border-radius:22px; cursor:pointer; transition:.2s; }
+.toggle-slider::before { content:''; position:absolute; width:16px; height:16px; left:3px; top:3px; background:var(--text-muted); border-radius:50%; transition:.2s; }
 .toggle input:checked + .toggle-slider { background:var(--accent); }
 .toggle input:checked + .toggle-slider::before { transform:translateX(16px); background:#000; }
 
-/* TOAST */
-.toast {
-  position:fixed; bottom:24px; right:24px; background:var(--green); color:#000;
-  padding:12px 20px; border-radius:10px; font-weight:600; font-size:14px;
-  z-index:9999; transform:translateY(80px); opacity:0; transition:all .3s;
-  font-family:'Barlow Condensed',sans-serif; letter-spacing:.5px;
-}
+.toast { position:fixed; bottom:24px; right:24px; background:var(--green); color:#000; padding:12px 20px; border-radius:10px; font-weight:600; font-size:14px; z-index:9999; transform:translateY(80px); opacity:0; transition:all .3s; font-family:'Barlow Condensed',sans-serif; letter-spacing:.5px; }
 .toast.show { transform:translateY(0); opacity:1; }
 .toast.error { background:var(--red); color:#fff; }
 
-/* BRANDING PREVIEW */
-.branding-preview {
-  background:var(--surface2); border:1px solid var(--border); border-radius:10px;
-  padding:16px 20px; display:flex; align-items:center; gap:12px; margin-top:10px;
-}
+.branding-preview { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:12px; margin-top:10px; }
 .preview-logo { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:22px; }
 
-/* STATS ROW */
 .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
-.stat-card {
-  background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px;
-  text-align:center;
-}
+.stat-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; text-align:center; }
 .stat-num { font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:800; color:var(--accent); }
 .stat-lbl { font-size:12px; color:var(--text-muted); margin-top:2px; text-transform:uppercase; letter-spacing:.5px; }
 
-/* POS TABS */
-.pos-tab {
-  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px;
-  letter-spacing:.5px; text-transform:uppercase; padding:6px 14px; border-radius:7px;
-  border:2px solid transparent; cursor:pointer; transition:all .15s;
-  display:inline-flex; align-items:center; gap:6px;
-  background:var(--surface2); color:var(--text-muted);
-}
+.pos-tab { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; letter-spacing:.5px; text-transform:uppercase; padding:6px 14px; border-radius:7px; border:2px solid transparent; cursor:pointer; transition:all .15s; display:inline-flex; align-items:center; gap:6px; background:var(--surface2); color:var(--text-muted); }
 .pos-tab:hover { color:var(--text); border-color:var(--border); }
 .pos-tab.active { color:#fff !important; border-color:transparent; }
-.pos-tab .count {
-  font-size:10px; background:rgba(255,255,255,.15); padding:1px 5px;
-  border-radius:10px; font-weight:600;
-}
+.pos-tab .count { font-size:10px; background:rgba(255,255,255,.15); padding:1px 5px; border-radius:10px; font-weight:600; }
 
-/* SCROLLBAR */
 ::-webkit-scrollbar { width:6px; height:6px; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
-/* DRAG HANDLE */
-.drag-handle { cursor:grab; color:var(--text-muted); padding:0 4px; font-size:16px; }
-.drag-handle:active { cursor:grabbing; }
+/* ===== STAT COLOR EDITOR STYLES ===== */
+.stat-section {
+  background:var(--surface2); border:1px solid var(--border); border-radius:12px;
+  overflow:hidden; margin-bottom:16px;
+}
+.stat-section-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 18px; border-bottom:1px solid var(--border);
+  cursor:pointer; user-select:none;
+}
+.stat-section-header:hover { background:rgba(255,255,255,.02); }
+.stat-section-title {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:16px;
+  letter-spacing:.5px; display:flex; align-items:center; gap:10px;
+}
+.stat-section-body { padding:18px; display:none; }
+.stat-section.open .stat-section-body { display:block; }
+.stat-section-chevron { color:var(--text-muted); transition:transform .2s; font-size:12px; }
+.stat-section.open .stat-section-chevron { transform:rotate(180deg); }
 
-.badge { display:inline-block; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:600; }
-.badge-green { background:rgba(34,197,94,.15); color:#4ade80; }
-.badge-yellow { background:rgba(245,158,11,.15); color:#fbbf24; }
+/* Tier rows */
+.tier-row {
+  display:grid; gap:10px; align-items:center; padding:10px 0;
+  border-bottom:1px solid var(--border);
+  grid-template-columns: 90px 36px 1fr 1fr 1fr auto;
+}
+.tier-row:last-child { border-bottom:none; }
+.tier-label-badge {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px;
+  padding:4px 10px; border-radius:20px; text-align:center; min-width:70px;
+  border:1px solid transparent;
+}
+.tier-input { background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:7px; padding:7px 10px; font-size:13px; font-family:'Barlow',sans-serif; outline:none; width:100%; }
+.tier-input:focus { border-color:var(--accent); }
+.tier-color-swatch { width:36px; height:36px; border-radius:8px; border:2px solid var(--border); cursor:pointer; padding:0; }
+.tier-section-label { font-size:11px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+
+/* Round map rows */
+.round-tier-row {
+  display:grid; gap:10px; align-items:center; padding:8px 0;
+  border-bottom:1px solid var(--border);
+  grid-template-columns: 120px 36px 1fr 1fr auto;
+}
+.round-tier-row:last-child { border-bottom:none; }
+
+/* Preview bar */
+.tier-preview-bar { display:flex; gap:6px; flex-wrap:wrap; margin-top:14px; }
+.tier-preview-chip {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px;
+  padding:4px 10px; border-radius:20px; border:1px solid transparent;
+  white-space:nowrap;
+}
 </style>
 </head>
 <body>
@@ -284,11 +210,12 @@ td { padding:9px 12px; vertical-align:middle; }
   <header>
     <div class="logo">DRAFT GUIDE <span>ADMIN</span></div>
     <div class="header-tabs">
-      <button class="tab-btn active" onclick="switchTab('players')">👤 Players</button>
-      <button class="tab-btn" onclick="switchTab('positions')">🎨 Positions</button>
-      <button class="tab-btn" onclick="switchTab('columns')">📋 Columns</button>
-      <button class="tab-btn" onclick="switchTab('branding')">✏️ Branding</button>
-      <button class="tab-btn" onclick="switchTab('settings')">⚙️ Settings</button>
+      <button class="tab-btn active" onclick="switchTab('players',this)">👤 Players</button>
+      <button class="tab-btn" onclick="switchTab('stat-colors',this)">🌈 Stat Colors</button>
+      <button class="tab-btn" onclick="switchTab('positions',this)">🎨 Positions</button>
+      <button class="tab-btn" onclick="switchTab('columns',this)">📋 Columns</button>
+      <button class="tab-btn" onclick="switchTab('branding',this)">✏️ Branding</button>
+      <button class="tab-btn" onclick="switchTab('settings',this)">⚙️ Settings</button>
     </div>
     <button class="logout-btn" onclick="doLogout()">Sign Out</button>
   </header>
@@ -297,10 +224,9 @@ td { padding:9px 12px; vertical-align:middle; }
   <div class="tab-panel active" id="tab-players">
     <div class="stats-row" id="statsRow"></div>
     <div class="section">
-      <!-- Position sub-tabs -->
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
         <div class="pos-tabs" id="posTabBar" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
-        <div style="display:flex;gap:8px;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <button class="btn btn-secondary btn-sm" onclick="exportData()">⬇ Export JSON</button>
           <button class="btn btn-secondary btn-sm" onclick="document.getElementById('importFile').click()">⬆ Import JSON</button>
           <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
@@ -316,17 +242,28 @@ td { padding:9px 12px; vertical-align:middle; }
       </div>
       <div class="player-table-wrap">
         <table>
-          <thead>
-            <tr>
-              <th>#</th><th>POS</th><th>PLAYER</th><th>SCHOOL</th>
-              <th>GRADE</th><th>ROUND</th><th>OVR</th><th>AGE</th><th>ACTIONS</th>
-            </tr>
-          </thead>
+          <thead><tr><th>#</th><th>POS</th><th>PLAYER</th><th>SCHOOL</th><th>GRADE</th><th>ROUND</th><th>OVR</th><th>AGE</th><th>ACTIONS</th></tr></thead>
           <tbody id="adminTableBody"></tbody>
         </table>
       </div>
     </div>
   </div>
+
+  <!-- ===== STAT COLORS TAB ===== -->
+  <div class="tab-panel" id="tab-stat-colors">
+    <div class="section">
+      <div class="section-title">Stat Color Thresholds</div>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">
+        Set the color and minimum threshold for each tier across all stats. Values <strong style="color:var(--text)">≥ min</strong> for that tier will display that color. Tiers are checked highest to lowest — first match wins.
+      </p>
+      <div id="statColorEditor"></div>
+      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="saveStatColors()">💾 Save All Stat Colors</button>
+        <button class="btn btn-secondary" onclick="resetStatColors()">↺ Reset to Defaults</button>
+      </div>
+    </div>
+  </div>
+
   <!-- POSITIONS TAB -->
   <div class="tab-panel" id="tab-positions">
     <div class="section">
@@ -346,9 +283,7 @@ td { padding:9px 12px; vertical-align:middle; }
       <div class="section-title">Default Column Visibility</div>
       <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">Toggle which column groups are visible by default on the main site.</p>
       <div class="col-toggles-grid" id="colTogglesGrid"></div>
-      <div style="margin-top:20px;">
-        <button class="btn btn-primary" onclick="saveColumns()">💾 Save Column Settings</button>
-      </div>
+      <div style="margin-top:20px;"><button class="btn btn-primary" onclick="saveColumns()">💾 Save Column Settings</button></div>
     </div>
   </div>
 
@@ -357,40 +292,15 @@ td { padding:9px 12px; vertical-align:middle; }
     <div class="section">
       <div class="section-title">Site Branding</div>
       <div class="form-grid" style="max-width:600px;">
-        <div class="form-group">
-          <label class="form-label">Site Title (before highlight)</label>
-          <input class="form-input" id="brandTitle1" placeholder="e.g. PHIL'S 2026" oninput="updateBrandPreview()">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Highlighted Word(s)</label>
-          <input class="form-input" id="brandTitle2" placeholder="e.g. NFL DRAFT" oninput="updateBrandPreview()">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Suffix</label>
-          <input class="form-input" id="brandTitle3" placeholder="e.g. GUIDE" oninput="updateBrandPreview()">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Accent Color</label>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <input type="color" class="color-swatch" id="accentColor" oninput="updateBrandPreview()">
-            <input class="form-input" id="accentHex" placeholder="#f59e0b" oninput="syncAccentHex()" style="font-family:monospace;">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Last Updated Text</label>
-          <input class="form-input" id="lastUpdated" placeholder="e.g. Last updated: 3/4">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Footer Note</label>
-          <input class="form-input" id="footerNote" placeholder="Optional footer text">
-        </div>
+        <div class="form-group"><label class="form-label">Site Title (before highlight)</label><input class="form-input" id="brandTitle1" placeholder="e.g. PHIL'S 2026" oninput="updateBrandPreview()"></div>
+        <div class="form-group"><label class="form-label">Highlighted Word(s)</label><input class="form-input" id="brandTitle2" placeholder="e.g. NFL DRAFT" oninput="updateBrandPreview()"></div>
+        <div class="form-group"><label class="form-label">Suffix</label><input class="form-input" id="brandTitle3" placeholder="e.g. GUIDE" oninput="updateBrandPreview()"></div>
+        <div class="form-group"><label class="form-label">Accent Color</label><div style="display:flex;gap:8px;align-items:center;"><input type="color" class="color-swatch" id="accentColor" oninput="updateBrandPreview()"><input class="form-input" id="accentHex" placeholder="#f59e0b" oninput="syncAccentHex()" style="font-family:monospace;"></div></div>
+        <div class="form-group"><label class="form-label">Last Updated Text</label><input class="form-input" id="lastUpdated" placeholder="e.g. Last updated: 3/4"></div>
+        <div class="form-group"><label class="form-label">Footer Note</label><input class="form-input" id="footerNote" placeholder="Optional footer text"></div>
       </div>
-      <div class="branding-preview" id="brandPreview">
-        <div class="preview-logo"></div>
-      </div>
-      <div style="margin-top:16px;">
-        <button class="btn btn-primary" onclick="saveBranding()">💾 Save Branding</button>
-      </div>
+      <div class="branding-preview" id="brandPreview"><div class="preview-logo"></div></div>
+      <div style="margin-top:16px;"><button class="btn btn-primary" onclick="saveBranding()">💾 Save Branding</button></div>
     </div>
   </div>
 
@@ -399,18 +309,10 @@ td { padding:9px 12px; vertical-align:middle; }
     <div class="section">
       <div class="section-title">Admin Password</div>
       <div class="form-grid" style="max-width:400px;">
-        <div class="form-group">
-          <label class="form-label">New Password</label>
-          <input class="form-input" type="password" id="newPass" placeholder="Enter new password">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Confirm Password</label>
-          <input class="form-input" type="password" id="confirmPass" placeholder="Confirm new password">
-        </div>
+        <div class="form-group"><label class="form-label">New Password</label><input class="form-input" type="password" id="newPass" placeholder="Enter new password"></div>
+        <div class="form-group"><label class="form-label">Confirm Password</label><input class="form-input" type="password" id="confirmPass" placeholder="Confirm new password"></div>
       </div>
-      <div style="margin-top:14px;">
-        <button class="btn btn-primary" onclick="changePassword()">🔒 Update Password</button>
-      </div>
+      <div style="margin-top:14px;"><button class="btn btn-primary" onclick="changePassword()">🔒 Update Password</button></div>
     </div>
     <div class="section">
       <div class="section-title">Data Management</div>
@@ -432,88 +334,63 @@ td { padding:9px 12px; vertical-align:middle; }
     <div class="modal-title" id="modalTitle">Add Player</div>
     <input type="hidden" id="editIdx" value="-1">
     <div class="form-grid-3">
-      <div class="form-group">
-        <label class="form-label">Position *</label>
-        <select class="form-input" id="f_pos">
-          <option>QB</option><option>HB</option><option>WR</option><option>TE</option>
-          <option>G</option><option>OT</option><option>DT</option><option>ED</option>
-          <option selected>LB</option><option>CB</option><option>S</option><option>C</option>
-        </select>
-      </div>
-      <div class="form-group" style="grid-column:span 2;">
-        <label class="form-label">Full Name *</label>
-        <input class="form-input" id="f_name" placeholder="e.g. Sonny Styles">
-      </div>
+      <div class="form-group"><label class="form-label">Position *</label><select class="form-input" id="f_pos"><option>QB</option><option>HB</option><option>WR</option><option>TE</option><option>G</option><option>OT</option><option>DT</option><option>ED</option><option selected>LB</option><option>CB</option><option>S</option><option>C</option></select></div>
+      <div class="form-group" style="grid-column:span 2;"><label class="form-label">Full Name *</label><input class="form-input" id="f_name" placeholder="e.g. Sonny Styles"></div>
     </div>
     <div class="form-grid" style="margin-top:12px;">
-      <div class="form-group">
-        <label class="form-label">School *</label>
-        <input class="form-input" id="f_school" placeholder="e.g. Ohio State">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Grade (e.g. 7.32)</label>
-        <input class="form-input" id="f_grade" type="number" step="0.01" min="0" max="10" placeholder="7.32">
-      </div>
+      <div class="form-group"><label class="form-label">School *</label><input class="form-input" id="f_school" placeholder="e.g. Ohio State"></div>
+      <div class="form-group"><label class="form-label">Grade (e.g. 7.32)</label><input class="form-input" id="f_grade" type="number" step="0.01" min="0" max="10" placeholder="7.32"></div>
     </div>
-    <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;margin-top:12px;font-size:12px;color:#fbbf24;">
-      ⚡ <strong>Overall Rank</strong> and <strong>Position Rank</strong> are auto-calculated by grade — no need to set them manually.
+    <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;margin-top:12px;font-size:12px;color:#fbbf24;">⚡ <strong>Overall Rank</strong> and <strong>Position Rank</strong> are auto-calculated by grade.</div>
+    <div class="form-grid" style="margin-top:12px;">
+      <div class="form-group"><label class="form-label">Age</label><input class="form-input" id="f_age" type="number" step="0.1" placeholder="21.4"></div>
+      <div class="form-group"><label class="form-label">Class Year</label><input class="form-input" id="f_class" type="number" placeholder="2023"></div>
     </div>
     <div class="form-grid" style="margin-top:12px;">
-      <div class="form-group">
-        <label class="form-label">Age</label>
-        <input class="form-input" id="f_age" type="number" step="0.1" placeholder="21.4">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Class Year</label>
-        <input class="form-input" id="f_class" type="number" placeholder="2023">
-      </div>
-    </div>
-    <div class="form-grid" style="margin-top:12px;">
-      <div class="form-group">
-        <label class="form-label">Round</label>
-        <select class="form-input" id="f_round">
-          <option>Top 10</option><option>1 (Early)</option><option>1 (Mid)</option>
-          <option>1 (Late)</option><option>2nd Round</option><option>3rd Round</option>
-          <option>Day 3</option><option>UDFA</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Recruiting Stars (1-5)</label>
-        <input class="form-input" id="f_star" type="number" min="1" max="5" placeholder="4">
-      </div>
+      <div class="form-group"><label class="form-label">Round</label><select class="form-input" id="f_round"><option>Top 10</option><option>1 (Early)</option><option>1 (Mid)</option><option>1 (Late)</option><option>2nd Round</option><option>3rd Round</option><option>Day 3</option><option>UDFA</option></select></div>
+      <div class="form-group"><label class="form-label">Recruiting Stars (1-5)</label><input class="form-input" id="f_star" type="number" min="1" max="5" placeholder="4"></div>
     </div>
     <div class="form-grid-4" style="margin-top:12px;">
-      <div class="form-group">
-        <label class="form-label">Height (e.g. 6050)</label>
-        <input class="form-input" id="f_ht" type="number" placeholder="6050">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Weight (lbs)</label>
-        <input class="form-input" id="f_wt" type="number" placeholder="244">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Arm Length"</label>
-        <input class="form-input" id="f_arm" type="number" step="0.01" placeholder="32.88">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Stars</label>
-        <input class="form-input" id="f_star2" type="number" min="1" max="5" placeholder="4">
-      </div>
+      <div class="form-group"><label class="form-label">Height (e.g. 6050)</label><input class="form-input" id="f_ht" type="number" placeholder="6050"></div>
+      <div class="form-group"><label class="form-label">Weight (lbs)</label><input class="form-input" id="f_wt" type="number" placeholder="244"></div>
+      <div class="form-group"><label class="form-label">Arm Length"</label><input class="form-input" id="f_arm" type="number" step="0.01" placeholder="32.88"></div>
+      <div class="form-group"><label class="form-label">Stars</label><input class="form-input" id="f_star2" type="number" min="1" max="5" placeholder="4"></div>
     </div>
     <div class="form-grid" style="margin-top:12px;">
-      <div class="form-group">
-        <label class="form-label">Production Score (0-100)</label>
-        <input class="form-input" id="f_prod" type="number" step="0.1" placeholder="81.6">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Athleticism Score (0-100)</label>
-        <input class="form-input" id="f_ath" type="number" step="0.1" placeholder="89.8">
-      </div>
+      <div class="form-group"><label class="form-label">Production Score (0-100)</label><input class="form-input" id="f_prod" type="number" step="0.1" placeholder="81.6"></div>
+      <div class="form-group"><label class="form-label">Athleticism Score (0-100)</label><input class="form-input" id="f_ath" type="number" step="0.1" placeholder="89.8"></div>
     </div>
     <div class="form-group" style="margin-top:12px;">
       <label class="form-label">NFL Comparisons (comma-separated)</label>
       <input class="form-input" id="f_comp" placeholder="e.g. Jordyn Brooks, Jihaad Campbell">
     </div>
+
+    <!-- STRENGTHS & WEAKNESSES -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;">
+      <!-- STRENGTHS -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <label class="form-label" style="margin:0;display:flex;align-items:center;gap:6px;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:#22c55e;border-radius:4px;font-size:11px;font-weight:800;color:#000;">+</span>
+            STRENGTHS
+          </label>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="addSwRow('strengths')" style="padding:3px 10px;font-size:11px;">＋ Add</button>
+        </div>
+        <div id="sw-strengths" style="display:flex;flex-direction:column;gap:5px;min-height:40px;"></div>
+      </div>
+      <!-- WEAKNESSES -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <label class="form-label" style="margin:0;display:flex;align-items:center;gap:6px;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:#ef4444;border-radius:4px;font-size:11px;font-weight:800;color:#fff;">−</span>
+            WEAKNESSES
+          </label>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="addSwRow('weaknesses')" style="padding:3px 10px;font-size:11px;">＋ Add</button>
+        </div>
+        <div id="sw-weaknesses" style="display:flex;flex-direction:column;gap:5px;min-height:40px;"></div>
+      </div>
+    </div>
+
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('playerModal')">Cancel</button>
       <button class="btn btn-primary" onclick="savePlayer()">💾 Save Player</button>
@@ -521,11 +398,11 @@ td { padding:9px 12px; vertical-align:middle; }
   </div>
 </div>
 
-<!-- DELETE CONFIRM MODAL -->
+<!-- DELETE MODAL -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal" style="width:420px;">
     <div class="modal-title">Delete Player?</div>
-    <p style="color:var(--text-dim);font-size:14px;margin-bottom:8px;">This will permanently remove <strong id="deletePlayerName"></strong> from the roster.</p>
+    <p style="color:var(--text-dim);font-size:14px;margin-bottom:8px;">This will permanently remove <strong id="deletePlayerName"></strong>.</p>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('deleteModal')">Cancel</button>
       <button class="btn btn-danger" onclick="confirmDelete()">🗑 Delete</button>
@@ -540,62 +417,31 @@ td { padding:9px 12px; vertical-align:middle; }
   <div class="modal" style="width:860px;max-width:97vw;">
     <button class="modal-close" onclick="closeModal('xlsxModal')">✕</button>
     <div class="modal-title">📊 Import from Excel</div>
-
-    <!-- Step 1: Column Mapping -->
     <div id="xlsxStep1">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <p style="font-size:13px;color:var(--text-muted);">
-          We detected the following columns in your file. Map each one to the correct player field, then preview the import.
-        </p>
+        <p style="font-size:13px;color:var(--text-muted);">Map each column to the correct player field, then preview the import.</p>
         <button class="btn btn-secondary btn-sm" onclick="downloadExcelTemplate()" style="flex-shrink:0;margin-left:12px;">⬇ Download Template</button>
       </div>
       <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:16px;">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:10px;">Sheet / Detected Columns</div>
         <div id="xlsxSheetInfo" style="font-size:13px;color:var(--text-dim);margin-bottom:10px;"></div>
         <div id="xlsxColumnMap" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;"></div>
       </div>
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px;">
-        <div class="form-group" style="flex:0 0 auto;">
-          <label class="form-label">Import Mode</label>
-          <select class="form-input" id="xlsxImportMode" style="width:220px;" onchange="updateImportModeWarning('xlsxImportMode','xlsxModeWarning')">
-            <option value="upsert" selected>Update by name (add new, update existing)</option>
-            <option value="append">Append to existing players</option>
-            <option value="replace">⚠️ Replace ALL players (destructive)</option>
-          </select>
-        </div>
-        <div class="form-group" style="flex:0 0 auto;">
-          <label class="form-label">Header Row</label>
-          <input class="form-input" id="xlsxHeaderRow" type="number" value="1" min="1" style="width:80px;">
-        </div>
-      </div>
-      <div id="xlsxModeWarning" style="display:none;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);border-radius:8px;padding:10px 14px;font-size:12px;color:#f87171;margin-bottom:12px;">
-        ⚠️ <strong>Destructive mode:</strong> This will permanently delete ALL existing players and replace them. Make sure you have a backup (Export JSON first).
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px;">
+        <div class="form-group" style="flex:0 0 auto;"><label class="form-label">Import Mode</label><select class="form-input" id="xlsxImportMode" style="width:200px;"><option value="append">Append to existing</option><option value="replace">Replace all</option><option value="upsert">Update by name</option></select></div>
+        <div class="form-group" style="flex:0 0 auto;"><label class="form-label">Header Row</label><input class="form-input" id="xlsxHeaderRow" type="number" value="1" min="1" style="width:80px;"></div>
       </div>
       <button class="btn btn-primary" onclick="previewExcelImport()">👁 Preview Import →</button>
     </div>
-
-    <!-- Step 2: Preview -->
     <div id="xlsxStep2" style="display:none;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-        <div>
-          <span id="xlsxPreviewCount" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;"></span>
-          <span style="font-size:13px;color:var(--text-muted);margin-left:8px;" id="xlsxPreviewNote"></span>
-        </div>
-        <button class="btn btn-secondary btn-sm" onclick="backToMapping()">← Back to Mapping</button>
+        <div><span id="xlsxPreviewCount" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;"></span><span style="font-size:13px;color:var(--text-muted);margin-left:8px;" id="xlsxPreviewNote"></span></div>
+        <button class="btn btn-secondary btn-sm" onclick="backToMapping()">← Back</button>
       </div>
       <div id="xlsxPreviewErrors" style="margin-bottom:12px;"></div>
       <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;overflow-x:auto;max-height:320px;overflow-y:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:12px;min-width:600px;">
-          <thead>
-            <tr id="xlsxPreviewHead" style="position:sticky;top:0;background:var(--surface2);"></tr>
-          </thead>
-          <tbody id="xlsxPreviewBody"></tbody>
-        </table>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;min-width:600px;"><thead><tr id="xlsxPreviewHead" style="position:sticky;top:0;background:var(--surface2);"></tr></thead><tbody id="xlsxPreviewBody"></tbody></table>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeModal('xlsxModal')">Cancel</button>
-        <button class="btn btn-success" onclick="confirmExcelImport()">✅ Confirm Import</button>
-      </div>
+      <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('xlsxModal')">Cancel</button><button class="btn btn-success" onclick="confirmExcelImport()">✅ Confirm Import</button></div>
     </div>
   </div>
 </div>
@@ -605,53 +451,14 @@ td { padding:9px 12px; vertical-align:middle; }
   <div class="modal" style="width:640px;max-width:97vw;">
     <button class="modal-close" onclick="closeModal('gSheetsModal')">✕</button>
     <div class="modal-title">🔗 Import from Google Sheets</div>
-
-    <!-- Instructions -->
     <div style="background:rgba(66,133,244,.08);border:1px solid rgba(66,133,244,.2);border-radius:10px;padding:16px;margin-bottom:20px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;color:#60a5fa;margin-bottom:10px;">HOW TO CONNECT YOUR GOOGLE SHEET</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-dim);">
-          <span style="background:#1a3a8f;color:#60a5fa;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;">1</span>
-          <span>Open your Google Sheet, click <strong style="color:var(--text)">File → Share → Publish to web</strong></span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-dim);">
-          <span style="background:#1a3a8f;color:#60a5fa;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;">2</span>
-          <span>Select the sheet tab you want, change format to <strong style="color:var(--text)">Comma-separated values (.csv)</strong>, then click <strong style="color:var(--text)">Publish</strong></span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-dim);">
-          <span style="background:#1a3a8f;color:#60a5fa;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;">3</span>
-          <span>Copy the URL it gives you (or just paste your regular Google Sheets URL — we'll convert it automatically)</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-dim);">
-          <span style="background:#1a3a8f;color:#60a5fa;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;">4</span>
-          <span>Paste the URL below and click <strong style="color:var(--text)">Fetch & Import</strong></span>
-        </div>
-      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;color:#60a5fa;margin-bottom:10px;">HOW TO CONNECT</div>
+      <div style="font-size:13px;color:var(--text-dim);">File → Share → Publish to web → CSV format → Copy URL → Paste below</div>
     </div>
-
-    <div class="form-group" style="margin-bottom:16px;">
-      <label class="form-label">Google Sheets URL</label>
-      <input class="form-input" id="gSheetsUrl" placeholder="https://docs.google.com/spreadsheets/d/..." style="font-size:13px;">
-      <div style="font-size:11px;color:var(--text-muted);margin-top:5px;">Paste either the regular sheet URL or the published CSV link</div>
-    </div>
-
-    <div class="form-group" style="margin-bottom:16px;">
-      <label class="form-label">Import Mode</label>
-      <select class="form-input" id="gSheetsImportMode" style="width:100%;max-width:300px;" onchange="updateImportModeWarning('gSheetsImportMode','gSheetsModeWarning')">
-        <option value="upsert" selected>Update by name (add new, update existing)</option>
-        <option value="append">Append to existing players</option>
-        <option value="replace">⚠️ Replace ALL players (destructive)</option>
-      </select>
-    </div>
-    <div id="gSheetsModeWarning" style="display:none;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);border-radius:8px;padding:10px 14px;font-size:12px;color:#f87171;margin-bottom:4px;">
-      ⚠️ <strong>Destructive mode:</strong> This will permanently delete ALL existing players and replace them. Make sure you have a backup (Export JSON first).
-    </div>
-
+    <div class="form-group" style="margin-bottom:16px;"><label class="form-label">Google Sheets URL</label><input class="form-input" id="gSheetsUrl" placeholder="https://docs.google.com/spreadsheets/d/..."></div>
+    <div class="form-group" style="margin-bottom:16px;"><label class="form-label">Import Mode</label><select class="form-input" id="gSheetsImportMode" style="width:300px;"><option value="append">Append to existing</option><option value="replace">Replace all</option><option value="upsert">Update by name</option></select></div>
     <div id="gSheetsStatus" style="margin-bottom:12px;display:none;"></div>
-
-    <!-- Saved sheets -->
     <div id="savedSheetsSection" style="margin-bottom:16px;"></div>
-
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('gSheetsModal')">Cancel</button>
       <button class="btn" style="background:rgba(66,133,244,.2);color:#60a5fa;border:1px solid rgba(66,133,244,.3);" onclick="saveGSheetUrl()">💾 Save URL</button>
@@ -662,10 +469,8 @@ td { padding:9px 12px; vertical-align:middle; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-// ===== STORAGE KEY =====
 const STORAGE_KEY = 'nflDraftGuideData';
 
-// ===== DEFAULT DATA =====
 const DEFAULT_PLAYERS = [
   { pos:"LB", name:"Sonny Styles", school:"Ohio State", grade:7.32, round:"Top 10", ovr:1, posRank:1, age:21.4, comp:["Jordyn Brooks","Jihaad Campbell"], ht:6050, wt:244, arm:32.88, prod:81.6, ath:89.8, star:5, class:2022 },
   { pos:"QB", name:"Fernando Mendoza", school:"Indiana", grade:7.28, round:"Top 10", ovr:2, posRank:1, age:22.6, comp:["Matt Ryan"], ht:6046, wt:236, arm:31.88, prod:93.9, ath:78.3, star:2, class:2022 },
@@ -695,72 +500,98 @@ const DEFAULT_PLAYERS = [
 ];
 
 const DEFAULT_POS_COLORS = {
-  QB:  { bg:'#8b0000', text:'#ffffff' },
-  HB:  { bg:'#b85c00', text:'#ffffff' },
-  WR:  { bg:'#1a3a8f', text:'#ffffff' },
-  TE:  { bg:'#7a6600', text:'#ffffff' },
-  G:   { bg:'#4a4a00', text:'#ffffff' },
-  C:   { bg:'#4a4a00', text:'#ffffff' },
-  OT:  { bg:'#4a2800', text:'#ffffff' },
-  DT:  { bg:'#2a2a2a', text:'#cccccc' },
-  ED:  { bg:'#5a0a0a', text:'#ffffff' },
-  LB:  { bg:'#1a5c1a', text:'#ffffff' },
-  CB:  { bg:'#4a006a', text:'#ffffff' },
-  S:   { bg:'#006a5a', text:'#ffffff' },
+  QB:{bg:'#8b0000',text:'#ffffff'}, HB:{bg:'#b85c00',text:'#ffffff'},
+  WR:{bg:'#1a3a8f',text:'#ffffff'}, TE:{bg:'#7a6600',text:'#ffffff'},
+  G:{bg:'#4a4a00',text:'#ffffff'},  C:{bg:'#4a4a00',text:'#ffffff'},
+  OT:{bg:'#4a2800',text:'#ffffff'}, DT:{bg:'#2a2a2a',text:'#cccccc'},
+  ED:{bg:'#5a0a0a',text:'#ffffff'}, LB:{bg:'#1a5c1a',text:'#ffffff'},
+  CB:{bg:'#4a006a',text:'#ffffff'}, S:{bg:'#006a5a',text:'#ffffff'},
 };
 
-const DEFAULT_COLUMNS = {
-  grade: true, rank: true, info: true,
-  size: true, scores: true, recruiting: true
-};
+const DEFAULT_COLUMNS = { grade:true, rank:true, info:true, size:true, scores:true, recruiting:true };
 
-const DEFAULT_BRANDING = {
-  title1: "PHIL'S 2026", title2: "NFL DRAFT", title3: "GUIDE",
-  accent: "#f59e0b", lastUpdated: "Last updated: 3/4", footerNote: ""
+const DEFAULT_BRANDING = { title1:"PHIL'S 2026", title2:"NFL DRAFT", title3:"GUIDE", accent:"#f59e0b", lastUpdated:"Last updated: 3/4", footerNote:"" };
+
+// Default stat color thresholds (mirrors guide file)
+const DEFAULT_STAT_COLORS = {
+  grade: { label:'Overall Grade', unit:'', tiers:[
+    { label:'Elite',  color:'#00c896', min: 7.0 },
+    { label:'High',   color:'#22c55e', min: 6.8 },
+    { label:'Mid',    color:'#60a5fa', min: 6.5 },
+    { label:'Low',    color:'#fbbf24', min: 6.0 },
+    { label:'Late',   color:'#9ca3af', min: 0   },
+  ]},
+  ht: { label:'Height', unit:' (e.g. 6040)', tiers:[
+    { label:'Elite',  color:'#00c896', min: 6040 },
+    { label:'High',   color:'#22c55e', min: 6020 },
+    { label:'Mid',    color:'#60a5fa', min: 6000 },
+    { label:'Low',    color:'#fbbf24', min: 5110 },
+    { label:'Late',   color:'#9ca3af', min: 0    },
+  ]},
+  wt: { label:'Weight (lbs)', unit:'', tiers:[
+    { label:'Elite',  color:'#00c896', min: 280 },
+    { label:'High',   color:'#22c55e', min: 230 },
+    { label:'Mid',    color:'#60a5fa', min: 200 },
+    { label:'Low',    color:'#fbbf24', min: 175 },
+    { label:'Late',   color:'#9ca3af', min: 0   },
+  ]},
+  arm: { label:'Arm Length (in)', unit:'', tiers:[
+    { label:'Elite',  color:'#00c896', min: 34.0 },
+    { label:'High',   color:'#22c55e', min: 32.5 },
+    { label:'Mid',    color:'#60a5fa', min: 31.0 },
+    { label:'Low',    color:'#fbbf24', min: 29.5 },
+    { label:'Late',   color:'#9ca3af', min: 0    },
+  ]},
+  prod: { label:'Production Score', unit:' (0-100)', tiers:[
+    { label:'Elite',  color:'#00c896', min: 90 },
+    { label:'High',   color:'#22c55e', min: 75 },
+    { label:'Mid',    color:'#60a5fa', min: 60 },
+    { label:'Low',    color:'#fbbf24', min: 40 },
+    { label:'Late',   color:'#9ca3af', min: 0  },
+  ]},
+  ath: { label:'Athleticism Score', unit:' (0-100)', tiers:[
+    { label:'Elite',  color:'#00c896', min: 85 },
+    { label:'High',   color:'#22c55e', min: 70 },
+    { label:'Mid',    color:'#60a5fa', min: 50 },
+    { label:'Low',    color:'#fbbf24', min: 30 },
+    { label:'Late',   color:'#9ca3af', min: 0  },
+  ]},
+  round: { label:'Round', isRoundMap:true, map:{
+    'Top 10':    { color:'#00c896' },
+    '1 (Early)': { color:'#22c55e' },
+    '1 (Mid)':   { color:'#60a5fa' },
+    '1 (Late)':  { color:'#fbbf24' },
+    '2nd Round': { color:'#fb923c' },
+    '3rd Round': { color:'#f87171' },
+    'Day 3':     { color:'#9ca3af' },
+    'UDFA':      { color:'#6b7280' },
+  }},
 };
 
 // ===== STATE =====
 let appData = {};
 let deleteIdx = -1;
 
-// ===== LOAD / SAVE =====
 function loadData() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      appData = JSON.parse(raw);
-    }
-  } catch(e) {}
-  appData.players   = appData.players   || JSON.parse(JSON.stringify(DEFAULT_PLAYERS));
-  appData.posColors = appData.posColors || JSON.parse(JSON.stringify(DEFAULT_POS_COLORS));
-  appData.columns   = appData.columns   || JSON.parse(JSON.stringify(DEFAULT_COLUMNS));
-  appData.branding  = appData.branding  || JSON.parse(JSON.stringify(DEFAULT_BRANDING));
-  appData.password  = appData.password  || 'draft2026';
-  appData.username  = appData.username  || 'admin';
+  try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) appData = JSON.parse(raw); } catch(e) {}
+  appData.players    = appData.players    || JSON.parse(JSON.stringify(DEFAULT_PLAYERS));
+  appData.posColors  = appData.posColors  || JSON.parse(JSON.stringify(DEFAULT_POS_COLORS));
+  appData.columns    = appData.columns    || JSON.parse(JSON.stringify(DEFAULT_COLUMNS));
+  appData.branding   = appData.branding   || JSON.parse(JSON.stringify(DEFAULT_BRANDING));
+  appData.statColors = appData.statColors || JSON.parse(JSON.stringify(DEFAULT_STAT_COLORS));
+  appData.password   = appData.password   || 'draft2026';
+  appData.username   = appData.username   || 'admin';
 }
 
-function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
-}
+function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
 
-// ===== RECALC RANKS =====
-// Sorts players by grade desc, then auto-assigns ovr and posRank
 function recalcRanks() {
-  // Sort by grade descending
-  appData.players.sort((a, b) => (b.grade || 0) - (a.grade || 0));
-
-  // Assign overall rank
-  appData.players.forEach((p, i) => { p.ovr = i + 1; });
-
-  // Assign position rank per position group
+  appData.players.sort((a,b) => (b.grade||0) - (a.grade||0));
+  appData.players.forEach((p,i) => { p.ovr = i+1; });
   const posCounters = {};
-  appData.players.forEach(p => {
-    if (!posCounters[p.pos]) posCounters[p.pos] = 1;
-    p.posRank = posCounters[p.pos]++;
-  });
+  appData.players.forEach(p => { if(!posCounters[p.pos]) posCounters[p.pos]=1; p.posRank=posCounters[p.pos]++; });
 }
 
-// ===== AUTH =====
 function doLogin() {
   const u = document.getElementById('loginUser').value.trim();
   const p = document.getElementById('loginPass').value;
@@ -773,7 +604,6 @@ function doLogin() {
     document.getElementById('loginError').style.display = 'block';
   }
 }
-
 document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 document.getElementById('loginUser').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 
@@ -785,9 +615,8 @@ function doLogout() {
   document.getElementById('loginError').style.display = 'none';
 }
 
-// ===== INIT =====
 const POS_ORDER = ['QB','HB','WR','TE','G','C','OT','DT','ED','LB','CB','S'];
-let activePos = ''; // '' = All
+let activePos = '';
 
 function initAdmin() {
   recalcRanks();
@@ -798,14 +627,14 @@ function initAdmin() {
   renderColorGrid();
   renderColumnToggles();
   renderBrandingForm();
+  renderStatColorEditor();
 }
 
-// ===== TABS =====
-function switchTab(name) {
+function switchTab(name, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
-  event.currentTarget.classList.add('active');
+  if (btn) btn.classList.add('active');
 }
 
 // ===== POS TAB BAR =====
@@ -814,78 +643,51 @@ function buildPosTabBar() {
   const colors = appData.posColors;
   const allPositions = [...new Set(appData.players.map(p => p.pos))];
   allPositions.sort((a,b) => (POS_ORDER.indexOf(a)===-1?99:POS_ORDER.indexOf(a)) - (POS_ORDER.indexOf(b)===-1?99:POS_ORDER.indexOf(b)));
-
-  // All tab
-  const allCount = appData.players.length;
-  let html = `<button class="pos-tab ${activePos===''?'active':''}" onclick="selectPosTab('')"
-    style="${activePos===''?'background:#334155;color:#fff;':''}"
-    >All <span class="count">${allCount}</span></button>`;
-
+  let html = `<button class="pos-tab ${activePos===''?'active':''}" onclick="selectPosTab('')" style="${activePos===''?'background:#334155;color:#fff;':''}">All <span class="count">${appData.players.length}</span></button>`;
   allPositions.forEach(pos => {
-    const c = colors[pos] || {bg:'#333',text:'#fff'};
-    const count = appData.players.filter(p => p.pos === pos).length;
-    html += `<button class="pos-tab ${activePos===pos?'active':''}" onclick="selectPosTab('${pos}')"
-      style="${activePos===pos?`background:${c.bg};`:''}"
-      ><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.bg};"></span>${pos} <span class="count">${count}</span></button>`;
+    const c = colors[pos]||{bg:'#333',text:'#fff'};
+    const count = appData.players.filter(p=>p.pos===pos).length;
+    html += `<button class="pos-tab ${activePos===pos?'active':''}" onclick="selectPosTab('${pos}')" style="${activePos===pos?`background:${c.bg};`:''}"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.bg};"></span>${pos} <span class="count">${count}</span></button>`;
   });
-
   bar.innerHTML = html;
-
-  // Update title
   const titleEl = document.getElementById('posTabTitle');
-  if (activePos === '') {
-    titleEl.textContent = 'All Players';
-    document.getElementById('addPlayerBtn').textContent = '＋ Add Player';
-  } else {
-    const c = colors[activePos] || {bg:'#333'};
-    titleEl.innerHTML = `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${c.bg};margin-right:6px;"></span>${activePos} Players`;
-    document.getElementById('addPlayerBtn').textContent = `＋ Add ${activePos}`;
-  }
+  if (activePos==='') { titleEl.textContent='All Players'; document.getElementById('addPlayerBtn').textContent='＋ Add Player'; }
+  else { const c=colors[activePos]||{bg:'#333'}; titleEl.innerHTML=`<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${c.bg};margin-right:6px;"></span>${activePos} Players`; document.getElementById('addPlayerBtn').textContent=`＋ Add ${activePos}`; }
 }
 
-function selectPosTab(pos) {
-  activePos = pos;
-  buildPosTabBar();
-  renderPlayerTable();
-}
+function selectPosTab(pos) { activePos=pos; buildPosTabBar(); renderPlayerTable(); }
 
-// ===== STATS =====
 function renderStats() {
   const p = appData.players;
-  const positions = [...new Set(p.map(x => x.pos))].length;
-  const schools = [...new Set(p.map(x => x.school))].length;
-  const avgGrade = p.length ? (p.reduce((a,b)=>a+(b.grade||0),0)/p.length).toFixed(2) : '—';
+  const positions = [...new Set(p.map(x=>x.pos))].length;
+  const schools = [...new Set(p.map(x=>x.school))].length;
+  const avgGrade = p.length?(p.reduce((a,b)=>a+(b.grade||0),0)/p.length).toFixed(2):'—';
   document.getElementById('statsRow').innerHTML = `
     <div class="stat-card"><div class="stat-num">${p.length}</div><div class="stat-lbl">Total Players</div></div>
     <div class="stat-card"><div class="stat-num">${positions}</div><div class="stat-lbl">Positions</div></div>
     <div class="stat-card"><div class="stat-num">${schools}</div><div class="stat-lbl">Schools</div></div>
-    <div class="stat-card"><div class="stat-num">${avgGrade}</div><div class="stat-lbl">Avg Grade</div></div>
-  `;
+    <div class="stat-card"><div class="stat-num">${avgGrade}</div><div class="stat-lbl">Avg Grade</div></div>`;
 }
 
-// ===== PLAYER TABLE =====
 function renderPlayerTable() {
-  const q = (document.getElementById('adminSearch').value||'').toLowerCase();
-  const players = appData.players.filter(p => {
-    const matchPos = !activePos || p.pos === activePos;
-    const matchSearch = !q || p.name.toLowerCase().includes(q) || p.school.toLowerCase().includes(q) || p.pos.toLowerCase().includes(q);
-    return matchPos && matchSearch;
+  const q=(document.getElementById('adminSearch').value||'').toLowerCase();
+  const players=appData.players.filter(p=>{
+    const matchPos=!activePos||p.pos===activePos;
+    const matchSearch=!q||p.name.toLowerCase().includes(q)||p.school.toLowerCase().includes(q)||p.pos.toLowerCase().includes(q);
+    return matchPos&&matchSearch;
   });
-  const colors = appData.posColors;
-  const tbody = document.getElementById('adminTableBody');
-  if (!players.length) {
-    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--text-muted);">No players found${activePos ? ` for ${activePos}` : ''}. <button class="btn btn-primary btn-sm" style="margin-left:10px" onclick="openAddModal()">＋ Add one</button></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = players.map((p) => {
-    const realIdx = appData.players.indexOf(p);
-    const c = colors[p.pos] || { bg:'#333', text:'#fff' };
+  const colors=appData.posColors;
+  const tbody=document.getElementById('adminTableBody');
+  if(!players.length){tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--text-muted);">No players found. <button class="btn btn-primary btn-sm" style="margin-left:10px" onclick="openAddModal()">＋ Add one</button></td></tr>`;return;}
+  tbody.innerHTML=players.map(p=>{
+    const realIdx=appData.players.indexOf(p);
+    const c=colors[p.pos]||{bg:'#333',text:'#fff'};
     return `<tr>
       <td style="color:var(--text-muted);font-size:12px;">${realIdx+1}</td>
       <td><span class="pos-badge" style="background:${c.bg};color:${c.text}">${p.pos}</span></td>
       <td><strong>${p.name}</strong></td>
       <td style="color:var(--text-muted)">${p.school}</td>
-      <td><span class="grade-pill">${p.grade ? p.grade.toFixed(2) : '—'}</span></td>
+      <td><span class="grade-pill">${p.grade?p.grade.toFixed(2):'—'}</span></td>
       <td style="font-size:12px;color:var(--text-dim)">${p.round||'—'}</td>
       <td style="font-weight:700">#${p.ovr||'—'}</td>
       <td style="color:var(--text-muted)">${p.age||'—'}</td>
@@ -897,742 +699,525 @@ function renderPlayerTable() {
   }).join('');
 }
 
-// ===== ADD / EDIT MODAL =====
+// ===== STRENGTHS / WEAKNESSES HELPERS =====
+function populateSwRows(type, items) {
+  const container = document.getElementById('sw-' + type);
+  container.innerHTML = '';
+  (items || []).forEach(text => addSwRow(type, text));
+  if (!items || items.length === 0) addSwRow(type, '');
+}
+
+function addSwRow(type, text='') {
+  const container = document.getElementById('sw-' + type);
+  const isStrength = type === 'strengths';
+  const accentColor = isStrength ? '#22c55e' : '#ef4444';
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;align-items:center;gap:6px;';
+  row.innerHTML = `
+    <div style="width:3px;height:28px;border-radius:2px;background:${accentColor};flex-shrink:0;"></div>
+    <input class="form-input" style="flex:1;padding:6px 10px;font-size:12px;" placeholder="${isStrength ? 'e.g. Elite block-shedder...' : 'e.g. Needs to improve...'}" value="${text.replace(/"/g,'&quot;')}">
+    <button type="button" onclick="this.closest('div').remove()" style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;width:26px;height:26px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✕</button>`;
+  container.appendChild(row);
+  const input = row.querySelector('input');
+  input.focus();
+  // Press Enter to add next row
+  input.addEventListener('keydown', e => { if(e.key==='Enter'){e.preventDefault();addSwRow(type,'');} });
+}
+
+function getSwValues(type) {
+  return [...document.querySelectorAll('#sw-' + type + ' input')]
+    .map(i => i.value.trim()).filter(Boolean);
+}
+
+// ===== PLAYER MODAL =====
 function openAddModal() {
   document.getElementById('modalTitle').textContent = activePos ? `Add ${activePos} Player` : 'Add Player';
   document.getElementById('editIdx').value = -1;
-  ['f_name','f_school','f_grade','f_age','f_class','f_star','f_ht','f_wt','f_arm','f_prod','f_ath','f_comp','f_star2'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  const posEl = document.getElementById('f_pos');
-  posEl.selectedIndex = 0;
-  if (activePos) posEl.value = activePos;
-  document.getElementById('f_round').selectedIndex = 0;
+  ['f_name','f_school','f_grade','f_age','f_class','f_star','f_star2','f_ht','f_wt','f_arm','f_prod','f_ath','f_comp'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  const posEl=document.getElementById('f_pos'); posEl.selectedIndex=0; if(activePos) posEl.value=activePos;
+  document.getElementById('f_round').selectedIndex=0;
+  populateSwRows('strengths', []); populateSwRows('weaknesses', []);
   openModal('playerModal');
 }
 
 function openEditModal(idx) {
-  const p = appData.players[idx];
-  document.getElementById('modalTitle').textContent = 'Edit Player';
-  document.getElementById('editIdx').value = idx;
-  document.getElementById('f_pos').value = p.pos || '';
-  document.getElementById('f_name').value = p.name || '';
-  document.getElementById('f_school').value = p.school || '';
-  document.getElementById('f_grade').value = p.grade || '';
-  document.getElementById('f_age').value = p.age || '';
-  document.getElementById('f_class').value = p.class || '';
-  document.getElementById('f_round').value = p.round || 'Top 10';
-  document.getElementById('f_star').value = p.star || '';
-  document.getElementById('f_star2').value = p.star || '';
-  document.getElementById('f_ht').value = p.ht || '';
-  document.getElementById('f_wt').value = p.wt || '';
-  document.getElementById('f_arm').value = p.arm || '';
-  document.getElementById('f_prod').value = p.prod || '';
-  document.getElementById('f_ath').value = p.ath || '';
-  document.getElementById('f_comp').value = (p.comp||[]).join(', ');
+  const p=appData.players[idx];
+  document.getElementById('modalTitle').textContent='Edit Player';
+  document.getElementById('editIdx').value=idx;
+  document.getElementById('f_pos').value=p.pos||'';
+  document.getElementById('f_name').value=p.name||'';
+  document.getElementById('f_school').value=p.school||'';
+  document.getElementById('f_grade').value=p.grade||'';
+  document.getElementById('f_age').value=p.age||'';
+  document.getElementById('f_class').value=p.class||'';
+  document.getElementById('f_round').value=p.round||'Top 10';
+  document.getElementById('f_star').value=p.star||'';
+  document.getElementById('f_star2').value=p.star||'';
+  document.getElementById('f_ht').value=p.ht||'';
+  document.getElementById('f_wt').value=p.wt||'';
+  document.getElementById('f_arm').value=p.arm||'';
+  document.getElementById('f_prod').value=p.prod||'';
+  document.getElementById('f_ath').value=p.ath||'';
+  document.getElementById('f_comp').value=(p.comp||[]).join(', ');
+  populateSwRows('strengths', p.strengths||[]); populateSwRows('weaknesses', p.weaknesses||[]);
   openModal('playerModal');
 }
 
 function savePlayer() {
-  const idx = parseInt(document.getElementById('editIdx').value);
-  const name = document.getElementById('f_name').value.trim();
-  const pos  = document.getElementById('f_pos').value;
-  const school = document.getElementById('f_school').value.trim();
-  if (!name || !school) { showToast('Name and School are required.', true); return; }
-
-  const p = {
-    pos, name, school,
-    grade:   parseFloat(document.getElementById('f_grade').value) || 0,
-    round:   document.getElementById('f_round').value,
-    age:     parseFloat(document.getElementById('f_age').value) || null,
-    class:   parseInt(document.getElementById('f_class').value) || null,
-    star:    parseInt(document.getElementById('f_star').value) || parseInt(document.getElementById('f_star2').value) || 0,
-    ht:      parseInt(document.getElementById('f_ht').value) || 0,
-    wt:      parseInt(document.getElementById('f_wt').value) || 0,
-    arm:     parseFloat(document.getElementById('f_arm').value) || 0,
-    prod:    parseFloat(document.getElementById('f_prod').value) || 0,
-    ath:     parseFloat(document.getElementById('f_ath').value) || 0,
-    comp:    document.getElementById('f_comp').value.split(',').map(s=>s.trim()).filter(Boolean),
+  const idx=parseInt(document.getElementById('editIdx').value);
+  const name=document.getElementById('f_name').value.trim();
+  const pos=document.getElementById('f_pos').value;
+  const school=document.getElementById('f_school').value.trim();
+  if(!name||!school){showToast('Name and School are required.',true);return;}
+  const p={pos,name,school,
+    grade:parseFloat(document.getElementById('f_grade').value)||0,
+    round:document.getElementById('f_round').value,
+    age:parseFloat(document.getElementById('f_age').value)||null,
+    class:parseInt(document.getElementById('f_class').value)||null,
+    star:parseInt(document.getElementById('f_star').value)||parseInt(document.getElementById('f_star2').value)||0,
+    ht:parseInt(document.getElementById('f_ht').value)||0,
+    wt:parseInt(document.getElementById('f_wt').value)||0,
+    arm:parseFloat(document.getElementById('f_arm').value)||0,
+    prod:parseFloat(document.getElementById('f_prod').value)||0,
+    ath:parseFloat(document.getElementById('f_ath').value)||0,
+    comp:document.getElementById('f_comp').value.split(',').map(s=>s.trim()).filter(Boolean),
+    strengths: getSwValues('strengths'),
+    weaknesses: getSwValues('weaknesses'),
   };
-
-  if (idx === -1) {
-    appData.players.push(p);
-    showToast('✅ Player added!');
-  } else {
-    appData.players[idx] = p;
-    showToast('✅ Player updated!');
-  }
-  recalcRanks();
-  saveData();
-  closeModal('playerModal');
-  renderPlayerTable();
-  buildPosTabBar();
-  renderStats();
+  if(idx===-1){appData.players.push(p);showToast('✅ Player added!');}
+  else{appData.players[idx]=p;showToast('✅ Player updated!');}
+  recalcRanks(); saveData(); closeModal('playerModal'); renderPlayerTable(); buildPosTabBar(); renderStats();
 }
 
-// ===== DELETE =====
-function openDeleteModal(idx) {
-  deleteIdx = idx;
-  document.getElementById('deletePlayerName').textContent = appData.players[idx].name;
-  openModal('deleteModal');
-}
-
+function openDeleteModal(idx) { deleteIdx=idx; document.getElementById('deletePlayerName').textContent=appData.players[idx].name; openModal('deleteModal'); }
 function confirmDelete() {
-  if (deleteIdx >= 0) {
-    appData.players.splice(deleteIdx, 1);
-    recalcRanks();
-    saveData();
-    showToast('🗑 Player removed.');
-    renderPlayerTable();
-    buildPosTabBar();
-    renderStats();
-    closeModal('deleteModal');
+  if(deleteIdx>=0){appData.players.splice(deleteIdx,1);recalcRanks();saveData();showToast('🗑 Player removed.');renderPlayerTable();buildPosTabBar();renderStats();closeModal('deleteModal');}
+}
+
+// ===== STAT COLOR EDITOR =====
+// Live working copy — mutations happen here first, then saved to appData on "Save"
+let editingTiers = {}; // { [key]: [ {label, color, min} ] }
+let editingRounds = {}; // { [roundName]: color }
+
+function initEditingCopy() {
+  const sc = appData.statColors;
+  // Tier-based stats
+  ['grade','ht','wt','arm','prod','ath'].forEach(key => {
+    const src = sc[key]?.tiers || DEFAULT_STAT_COLORS[key].tiers;
+    editingTiers[key] = src.map(t => ({ label:t.label, color:t.color, min:t.min }));
+  });
+  // Round map
+  const roundSrc = sc.round?.map || DEFAULT_STAT_COLORS.round.map;
+  Object.keys(DEFAULT_STAT_COLORS.round.map).forEach(r => {
+    editingRounds[r] = (roundSrc[r]?.color) || DEFAULT_STAT_COLORS.round.map[r].color;
+  });
+}
+
+function renderStatColorEditor() {
+  initEditingCopy();
+  const container = document.getElementById('statColorEditor');
+  const TIER_STAT_KEYS = ['grade','ht','wt','arm','prod','ath'];
+
+  container.innerHTML = [
+    ...TIER_STAT_KEYS.map(key => buildTierSection(key)),
+    buildRoundSection()
+  ].join('');
+}
+
+function buildTierSection(key) {
+  const def = DEFAULT_STAT_COLORS[key];
+  const tiers = editingTiers[key];
+  const previewBar = tiers.map(t =>
+    `<span class="tier-preview-chip" style="color:${t.color};background:${t.color}22;border-color:${t.color}44">${t.label}</span>`
+  ).join('');
+
+  return `<div class="stat-section open" id="stat-sec-${key}">
+    <div class="stat-section-header" onclick="toggleStatSection('${key}')">
+      <div class="stat-section-title">
+        <span>${def.label}${def.unit||''}</span>
+        <div class="tier-preview-bar" id="preview-bar-${key}" style="margin:0;">${previewBar}</div>
+      </div>
+      <span class="stat-section-chevron">▼</span>
+    </div>
+    <div class="stat-section-body">
+      <div style="display:grid;grid-template-columns:90px 36px 1fr 1fr 1fr auto auto;gap:10px;padding:4px 0 8px;border-bottom:1px solid var(--border);margin-bottom:4px;">
+        <div class="tier-section-label">Tier</div><div class="tier-section-label">Color</div>
+        <div class="tier-section-label">Hex</div><div class="tier-section-label">Min Value (≥)</div>
+        <div class="tier-section-label">Label</div><div></div><div></div>
+      </div>
+      <div id="tier-rows-${key}">${renderTierRows(key)}</div>
+      <div style="margin-top:12px;">
+        <button class="btn btn-secondary btn-sm" onclick="addTier('${key}')" style="border-style:dashed;">＋ Add Tier</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderTierRows(key) {
+  const tiers = editingTiers[key];
+  const step = (key==='grade'||key==='arm') ? '0.1' : '1';
+  return tiers.map((tier, ti) => {
+    const isLast = ti === tiers.length - 1;
+    const canDelete = tiers.length > 1;
+    const canMoveUp = ti > 0;
+    const canMoveDown = ti < tiers.length - 1;
+    return `<div class="tier-row" id="tier-row-${key}-${ti}" style="grid-template-columns:90px 36px 1fr 1fr 1fr auto auto;">
+      <div class="tier-label-badge" id="sc_${key}_${ti}_badge"
+        style="color:${tier.color};background:${tier.color}22;border-color:${tier.color}44">
+        ${tier.label}
+      </div>
+      <input type="color" class="tier-color-swatch" id="sc_${key}_${ti}_color" value="${tier.color}"
+        oninput="onTierColorInput('${key}',${ti})">
+      <input class="tier-input" id="sc_${key}_${ti}_hex" value="${tier.color}"
+        oninput="onTierHexInput('${key}',${ti})" style="font-family:monospace;font-size:12px;" placeholder="#hex">
+      <input class="tier-input" id="sc_${key}_${ti}_min" value="${tier.min}" type="number" step="${step}"
+        ${isLast ? 'readonly style="opacity:.4;cursor:not-allowed"' : ''}
+        onchange="onTierMinChange('${key}',${ti})">
+      <input class="tier-input" id="sc_${key}_${ti}_label" value="${tier.label}"
+        oninput="onTierLabelInput('${key}',${ti})">
+      <div style="display:flex;flex-direction:column;gap:3px;">
+        <button class="btn btn-secondary btn-sm" style="padding:3px 7px;font-size:10px;" ${canMoveUp?'':'disabled style="opacity:.3"'} onclick="moveTier('${key}',${ti},-1)" title="Move up">▲</button>
+        <button class="btn btn-secondary btn-sm" style="padding:3px 7px;font-size:10px;" ${canMoveDown?'':'disabled style="opacity:.3"'} onclick="moveTier('${key}',${ti},1)" title="Move down">▼</button>
+      </div>
+      <button class="btn btn-danger btn-sm" style="padding:5px 8px;" ${canDelete?'':'disabled style="opacity:.3"'}
+        onclick="removeTier('${key}',${ti})" title="Remove tier">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function refreshTierRows(key) {
+  document.getElementById('tier-rows-'+key).innerHTML = renderTierRows(key);
+  refreshPreviewBar(key);
+}
+
+function refreshPreviewBar(key) {
+  const barEl = document.getElementById('preview-bar-'+key);
+  if (!barEl) return;
+  barEl.innerHTML = editingTiers[key].map(t =>
+    `<span class="tier-preview-chip" style="color:${t.color};background:${t.color}22;border-color:${t.color}44">${t.label}</span>`
+  ).join('');
+}
+
+// Tier mutation handlers — update editingTiers then re-render rows
+function onTierColorInput(key, ti) {
+  const color = document.getElementById(`sc_${key}_${ti}_color`).value;
+  editingTiers[key][ti].color = color;
+  // Sync hex input and badge without full re-render
+  const hexEl = document.getElementById(`sc_${key}_${ti}_hex`);
+  if (hexEl) hexEl.value = color;
+  const badge = document.getElementById(`sc_${key}_${ti}_badge`);
+  if (badge) { badge.style.color=color; badge.style.background=color+'22'; badge.style.borderColor=color+'44'; }
+  refreshPreviewBar(key);
+}
+
+function onTierHexInput(key, ti) {
+  const hex = document.getElementById(`sc_${key}_${ti}_hex`).value;
+  if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
+    editingTiers[key][ti].color = hex;
+    document.getElementById(`sc_${key}_${ti}_color`).value = hex;
+    const badge = document.getElementById(`sc_${key}_${ti}_badge`);
+    if (badge) { badge.style.color=hex; badge.style.background=hex+'22'; badge.style.borderColor=hex+'44'; }
+    refreshPreviewBar(key);
   }
 }
 
-// ===== COLOR GRID =====
+function onTierLabelInput(key, ti) {
+  const val = document.getElementById(`sc_${key}_${ti}_label`).value;
+  editingTiers[key][ti].label = val;
+  const badge = document.getElementById(`sc_${key}_${ti}_badge`);
+  if (badge) badge.textContent = val;
+  refreshPreviewBar(key);
+}
+
+function onTierMinChange(key, ti) {
+  const val = parseFloat(document.getElementById(`sc_${key}_${ti}_min`).value);
+  if (!isNaN(val)) editingTiers[key][ti].min = val;
+}
+
+function addTier(key) {
+  const tiers = editingTiers[key];
+  // Insert before the last tier (which is always the "catch-all" min=0)
+  const insertAt = Math.max(tiers.length - 1, 0);
+  const prevTier = tiers[insertAt - 1] || { color:'#888888', min:5 };
+  const lastTier = tiers[tiers.length - 1];
+  const newMin = insertAt > 0 ? Math.max(0, (prevTier.min + lastTier.min) / 2) : 5;
+  const newTier = { label: 'New Tier', color: '#888888', min: parseFloat(newMin.toFixed(1)) };
+  tiers.splice(insertAt, 0, newTier);
+  refreshTierRows(key);
+  // Focus the new tier's label input after render
+  setTimeout(() => {
+    const labelEl = document.getElementById(`sc_${key}_${insertAt}_label`);
+    if (labelEl) { labelEl.select(); labelEl.focus(); }
+  }, 50);
+}
+
+function removeTier(key, ti) {
+  if (editingTiers[key].length <= 1) return;
+  editingTiers[key].splice(ti, 1);
+  // Ensure last tier always has min=0
+  editingTiers[key][editingTiers[key].length - 1].min = 0;
+  refreshTierRows(key);
+}
+
+function moveTier(key, ti, dir) {
+  const tiers = editingTiers[key];
+  const targetIdx = ti + dir;
+  if (targetIdx < 0 || targetIdx >= tiers.length) return;
+  // Swap
+  [tiers[ti], tiers[targetIdx]] = [tiers[targetIdx], tiers[ti]];
+  // Ensure last tier always has min=0 after swap
+  tiers[tiers.length - 1].min = 0;
+  refreshTierRows(key);
+}
+
+function buildRoundSection() {
+  const def = DEFAULT_STAT_COLORS.round.map;
+  const rowsHtml = Object.keys(def).map(round => {
+    const c = editingRounds[round] || def[round].color;
+    const id = round.replace(/[^a-z0-9]/gi,'_');
+    return `<div class="round-tier-row">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;">${round}</span>
+      <input type="color" class="tier-color-swatch" id="sc_round_${id}_color" value="${c}" oninput="onRoundColorInput('${round}')">
+      <input class="tier-input" id="sc_round_${id}_hex" value="${c}" oninput="onRoundHexInput('${round}')" style="font-family:monospace;font-size:12px;" placeholder="#hex">
+      <div class="tier-preview-chip" id="sc_round_${id}_chip" style="color:${c};background:${c}22;border-color:${c}44">${round}</div>
+      <button class="btn btn-secondary btn-sm" onclick="resetRoundColor('${round}')">↺</button>
+    </div>`;
+  }).join('');
+
+  const previewChips = Object.keys(def).map(r => {
+    const c = editingRounds[r] || def[r].color;
+    return `<span class="tier-preview-chip" style="color:${c};background:${c}22;border-color:${c}44;font-size:10px;padding:2px 7px">${r}</span>`;
+  }).join('');
+
+  return `<div class="stat-section open" id="stat-sec-round">
+    <div class="stat-section-header" onclick="toggleStatSection('round')">
+      <div class="stat-section-title">
+        <span>Round Badge Colors</span>
+        <div class="tier-preview-bar" style="margin:0;">${previewChips}</div>
+      </div>
+      <span class="stat-section-chevron">▼</span>
+    </div>
+    <div class="stat-section-body">
+      <div class="tier-section-label" style="margin-bottom:8px;">Round → Color mapping</div>
+      ${rowsHtml}
+    </div>
+  </div>`;
+}
+
+function onRoundColorInput(round) {
+  const id = round.replace(/[^a-z0-9]/gi,'_');
+  const color = document.getElementById(`sc_round_${id}_color`).value;
+  editingRounds[round] = color;
+  document.getElementById(`sc_round_${id}_hex`).value = color;
+  const chip = document.getElementById(`sc_round_${id}_chip`);
+  chip.style.color=color; chip.style.background=color+'22'; chip.style.borderColor=color+'44';
+}
+
+function onRoundHexInput(round) {
+  const id = round.replace(/[^a-z0-9]/gi,'_');
+  const hex = document.getElementById(`sc_round_${id}_hex`).value;
+  if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
+    editingRounds[round] = hex;
+    document.getElementById(`sc_round_${id}_color`).value = hex;
+    const chip = document.getElementById(`sc_round_${id}_chip`);
+    chip.style.color=hex; chip.style.background=hex+'22'; chip.style.borderColor=hex+'44';
+  }
+}
+
+function resetRoundColor(round) {
+  const def = DEFAULT_STAT_COLORS.round.map[round];
+  if (!def) return;
+  editingRounds[round] = def.color;
+  const id = round.replace(/[^a-z0-9]/gi,'_');
+  document.getElementById(`sc_round_${id}_color`).value = def.color;
+  document.getElementById(`sc_round_${id}_hex`).value = def.color;
+  const chip = document.getElementById(`sc_round_${id}_chip`);
+  chip.style.color=def.color; chip.style.background=def.color+'22'; chip.style.borderColor=def.color+'44';
+}
+
+function toggleStatSection(key) {
+  document.getElementById('stat-sec-'+key).classList.toggle('open');
+}
+
+function saveStatColors() {
+  const sc = {};
+
+  // Flush any unsaved text inputs into editingTiers before saving
+  ['grade','ht','wt','arm','prod','ath'].forEach(key => {
+    editingTiers[key].forEach((tier, ti) => {
+      const colorEl = document.getElementById(`sc_${key}_${ti}_color`);
+      const minEl   = document.getElementById(`sc_${key}_${ti}_min`);
+      const labelEl = document.getElementById(`sc_${key}_${ti}_label`);
+      if (colorEl) tier.color = colorEl.value;
+      if (minEl && !minEl.readOnly) tier.min = parseFloat(minEl.value) || 0;
+      if (labelEl) tier.label = labelEl.value || tier.label;
+    });
+    // Guarantee last tier min=0
+    editingTiers[key][editingTiers[key].length - 1].min = 0;
+
+    const def = DEFAULT_STAT_COLORS[key];
+    sc[key] = {
+      label: def.label, unit: def.unit,
+      tiers: editingTiers[key].map(t => ({ ...t, bg: t.color+'2e' }))
+    };
+  });
+
+  // Round map
+  const roundMap = {};
+  Object.keys(editingRounds).forEach(round => {
+    const color = editingRounds[round];
+    roundMap[round] = { color, bg: color+'2e' };
+  });
+  sc.round = { label:'Round', isRoundMap:true, map: roundMap };
+
+  appData.statColors = sc;
+  saveData();
+  showToast('🌈 Stat colors saved!');
+}
+
+function resetStatColors() {
+  appData.statColors = JSON.parse(JSON.stringify(DEFAULT_STAT_COLORS));
+  saveData();
+  renderStatColorEditor();
+  showToast('↺ Stat colors reset to defaults.');
+}
+
+// ===== POSITION COLORS =====
 function renderColorGrid() {
   const positions = Object.keys(appData.posColors);
   document.getElementById('colorGrid').innerHTML = positions.map(pos => {
     const c = appData.posColors[pos];
-    return `
-      <div class="color-item" id="ci_${pos}">
-        <div class="color-label">${pos}</div>
-        <div class="color-preview" id="cp_${pos}" style="background:${c.bg};color:${c.text}">${pos}</div>
-        <div class="color-inputs">
-          <div>
-            <div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;">BG</div>
-            <input type="color" class="color-swatch" id="cbg_${pos}" value="${c.bg}" oninput="updateColorPreview('${pos}')">
-          </div>
-          <div style="flex:1">
-            <div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;">BG HEX</div>
-            <input class="color-hex" id="cbghex_${pos}" value="${c.bg}" oninput="syncColorFromHex('${pos}','bg')">
-          </div>
-          <div>
-            <div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;">TXT</div>
-            <input type="color" class="color-swatch" id="ctxt_${pos}" value="${c.text}" oninput="updateColorPreview('${pos}')">
-          </div>
-        </div>
-      </div>`;
+    return `<div class="color-item">
+      <div class="color-label">${pos}</div>
+      <div class="color-preview" id="cp_${pos}" style="background:${c.bg};color:${c.text}">${pos}</div>
+      <div class="color-inputs">
+        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;">BG</div><input type="color" class="color-swatch" id="cbg_${pos}" value="${c.bg}" oninput="updateColorPreview('${pos}')"></div>
+        <div style="flex:1"><div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;">BG HEX</div><input class="color-hex" id="cbghex_${pos}" value="${c.bg}" oninput="syncColorFromHex('${pos}')"></div>
+        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;">TXT</div><input type="color" class="color-swatch" id="ctxt_${pos}" value="${c.text}" oninput="updateColorPreview('${pos}')"></div>
+      </div>
+    </div>`;
   }).join('');
 }
 
 function updateColorPreview(pos) {
-  const bg = document.getElementById('cbg_'+pos).value;
-  const txt = document.getElementById('ctxt_'+pos).value;
-  document.getElementById('cbghex_'+pos).value = bg;
-  document.getElementById('cp_'+pos).style.background = bg;
-  document.getElementById('cp_'+pos).style.color = txt;
+  const bg=document.getElementById('cbg_'+pos).value; const txt=document.getElementById('ctxt_'+pos).value;
+  document.getElementById('cbghex_'+pos).value=bg; document.getElementById('cp_'+pos).style.background=bg; document.getElementById('cp_'+pos).style.color=txt;
 }
-
-function syncColorFromHex(pos, type) {
-  const hex = document.getElementById('cbghex_'+pos).value;
-  if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
-    document.getElementById('cbg_'+pos).value = hex;
-    document.getElementById('cp_'+pos).style.background = hex;
-  }
+function syncColorFromHex(pos) {
+  const hex=document.getElementById('cbghex_'+pos).value;
+  if(/^#[0-9a-fA-F]{6}$/.test(hex)){document.getElementById('cbg_'+pos).value=hex;document.getElementById('cp_'+pos).style.background=hex;}
 }
-
-function saveColors() {
-  Object.keys(appData.posColors).forEach(pos => {
-    appData.posColors[pos].bg = document.getElementById('cbg_'+pos).value;
-    appData.posColors[pos].text = document.getElementById('ctxt_'+pos).value;
-  });
-  saveData();
-  showToast('🎨 Colors saved!');
-}
-
-function resetColors() {
-  appData.posColors = JSON.parse(JSON.stringify(DEFAULT_POS_COLORS));
-  saveData();
-  renderColorGrid();
-  showToast('↺ Colors reset to defaults.');
-}
+function saveColors() { Object.keys(appData.posColors).forEach(pos=>{appData.posColors[pos].bg=document.getElementById('cbg_'+pos).value;appData.posColors[pos].text=document.getElementById('ctxt_'+pos).value;}); saveData(); showToast('🎨 Position colors saved!'); }
+function resetColors() { appData.posColors=JSON.parse(JSON.stringify(DEFAULT_POS_COLORS)); saveData(); renderColorGrid(); showToast('↺ Colors reset to defaults.'); }
 
 // ===== COLUMNS =====
 function renderColumnToggles() {
-  const cols = [
-    { key:'grade', label:'Grade & Round' },
-    { key:'rank', label:'Rankings (OVR/POS)' },
-    { key:'info', label:'Info (Age, Comps)' },
-    { key:'size', label:'Size & Testing' },
-    { key:'scores', label:'Scores (Prod/Ath)' },
-    { key:'recruiting', label:'Recruiting (Stars/Class)' },
-  ];
-  document.getElementById('colTogglesGrid').innerHTML = cols.map(c => `
-    <div class="col-toggle-item">
-      <span class="col-toggle-name">${c.label}</span>
-      <label class="toggle">
-        <input type="checkbox" id="col_${c.key}" ${appData.columns[c.key] ? 'checked' : ''}>
-        <span class="toggle-slider"></span>
-      </label>
-    </div>
-  `).join('');
+  const cols=[{key:'grade',label:'Grade & Round'},{key:'rank',label:'Rankings (OVR/POS)'},{key:'info',label:'Info (Age, Comps)'},{key:'size',label:'Size & Testing'},{key:'scores',label:'Scores (Prod/Ath)'},{key:'recruiting',label:'Recruiting (Stars/Class)'}];
+  document.getElementById('colTogglesGrid').innerHTML=cols.map(c=>`<div class="col-toggle-item"><span class="col-toggle-name">${c.label}</span><label class="toggle"><input type="checkbox" id="col_${c.key}" ${appData.columns[c.key]?'checked':''}><span class="toggle-slider"></span></label></div>`).join('');
 }
-
-function saveColumns() {
-  Object.keys(appData.columns).forEach(k => {
-    const el = document.getElementById('col_'+k);
-    if (el) appData.columns[k] = el.checked;
-  });
-  saveData();
-  showToast('📋 Column settings saved!');
-}
+function saveColumns() { Object.keys(appData.columns).forEach(k=>{const el=document.getElementById('col_'+k);if(el)appData.columns[k]=el.checked;}); saveData(); showToast('📋 Column settings saved!'); }
 
 // ===== BRANDING =====
 function renderBrandingForm() {
-  const b = appData.branding;
-  document.getElementById('brandTitle1').value = b.title1 || '';
-  document.getElementById('brandTitle2').value = b.title2 || '';
-  document.getElementById('brandTitle3').value = b.title3 || '';
-  document.getElementById('accentColor').value = b.accent || '#f59e0b';
-  document.getElementById('accentHex').value = b.accent || '#f59e0b';
-  document.getElementById('lastUpdated').value = b.lastUpdated || '';
-  document.getElementById('footerNote').value = b.footerNote || '';
+  const b=appData.branding;
+  document.getElementById('brandTitle1').value=b.title1||''; document.getElementById('brandTitle2').value=b.title2||''; document.getElementById('brandTitle3').value=b.title3||'';
+  document.getElementById('accentColor').value=b.accent||'#f59e0b'; document.getElementById('accentHex').value=b.accent||'#f59e0b';
+  document.getElementById('lastUpdated').value=b.lastUpdated||''; document.getElementById('footerNote').value=b.footerNote||'';
   updateBrandPreview();
 }
-
 function updateBrandPreview() {
-  const t1 = document.getElementById('brandTitle1').value;
-  const t2 = document.getElementById('brandTitle2').value;
-  const t3 = document.getElementById('brandTitle3').value;
-  const accent = document.getElementById('accentColor').value;
-  document.getElementById('accentHex').value = accent;
-  document.getElementById('brandPreview').querySelector('.preview-logo').innerHTML =
-    `${t1} <span style="color:${accent}">${t2}</span> ${t3}`;
+  const t1=document.getElementById('brandTitle1').value,t2=document.getElementById('brandTitle2').value,t3=document.getElementById('brandTitle3').value,accent=document.getElementById('accentColor').value;
+  document.getElementById('accentHex').value=accent;
+  document.getElementById('brandPreview').querySelector('.preview-logo').innerHTML=`${t1} <span style="color:${accent}">${t2}</span> ${t3}`;
 }
-
-function syncAccentHex() {
-  const hex = document.getElementById('accentHex').value;
-  if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
-    document.getElementById('accentColor').value = hex;
-    updateBrandPreview();
-  }
-}
-
-function saveBranding() {
-  appData.branding = {
-    title1: document.getElementById('brandTitle1').value,
-    title2: document.getElementById('brandTitle2').value,
-    title3: document.getElementById('brandTitle3').value,
-    accent: document.getElementById('accentColor').value,
-    lastUpdated: document.getElementById('lastUpdated').value,
-    footerNote: document.getElementById('footerNote').value,
-  };
-  saveData();
-  showToast('✏️ Branding saved!');
-}
+function syncAccentHex() { const hex=document.getElementById('accentHex').value; if(/^#[0-9a-fA-F]{6}$/.test(hex)){document.getElementById('accentColor').value=hex;updateBrandPreview();} }
+function saveBranding() { appData.branding={title1:document.getElementById('brandTitle1').value,title2:document.getElementById('brandTitle2').value,title3:document.getElementById('brandTitle3').value,accent:document.getElementById('accentColor').value,lastUpdated:document.getElementById('lastUpdated').value,footerNote:document.getElementById('footerNote').value}; saveData(); showToast('✏️ Branding saved!'); }
 
 // ===== SETTINGS =====
 function changePassword() {
-  const np = document.getElementById('newPass').value;
-  const cp = document.getElementById('confirmPass').value;
-  if (!np) { showToast('Password cannot be empty.', true); return; }
-  if (np !== cp) { showToast('Passwords do not match.', true); return; }
-  appData.password = np;
-  saveData();
-  document.getElementById('newPass').value = '';
-  document.getElementById('confirmPass').value = '';
-  showToast('🔒 Password updated!');
+  const np=document.getElementById('newPass').value,cp=document.getElementById('confirmPass').value;
+  if(!np){showToast('Password cannot be empty.',true);return;} if(np!==cp){showToast('Passwords do not match.',true);return;}
+  appData.password=np; saveData(); document.getElementById('newPass').value=''; document.getElementById('confirmPass').value=''; showToast('🔒 Password updated!');
 }
-
 function confirmReset() {
-  if (confirm('Are you sure? This will delete ALL players and reset all settings.')) {
-    appData = {
-      players: JSON.parse(JSON.stringify(DEFAULT_PLAYERS)),
-      posColors: JSON.parse(JSON.stringify(DEFAULT_POS_COLORS)),
-      columns: JSON.parse(JSON.stringify(DEFAULT_COLUMNS)),
-      branding: JSON.parse(JSON.stringify(DEFAULT_BRANDING)),
-      password: 'draft2026',
-      username: 'admin',
-    };
-    saveData();
-    initAdmin();
-    showToast('↺ All data reset.');
+  if(confirm('Are you sure? This will delete ALL players and reset all settings.')){
+    appData={players:JSON.parse(JSON.stringify(DEFAULT_PLAYERS)),posColors:JSON.parse(JSON.stringify(DEFAULT_POS_COLORS)),columns:JSON.parse(JSON.stringify(DEFAULT_COLUMNS)),branding:JSON.parse(JSON.stringify(DEFAULT_BRANDING)),statColors:JSON.parse(JSON.stringify(DEFAULT_STAT_COLORS)),password:'draft2026',username:'admin'};
+    saveData(); initAdmin(); showToast('↺ All data reset.');
   }
 }
 
 // ===== IMPORT / EXPORT =====
-function exportData() {
-  const blob = new Blob([JSON.stringify(appData, null, 2)], { type:'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'draft-guide-data.json';
-  a.click();
-  showToast('⬇ Data exported!');
-}
-
+function exportData() { const blob=new Blob([JSON.stringify(appData,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='draft-guide-data.json'; a.click(); showToast('⬇ Data exported!'); }
 function importData(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const data = JSON.parse(e.target.result);
-      if (data.players) {
-        appData = { ...appData, ...data };
-        recalcRanks();
-        saveData();
-        initAdmin();
-        showToast('⬆ Data imported!');
-      } else {
-        showToast('Invalid file format.', true);
-      }
-    } catch { showToast('Failed to parse file.', true); }
-  };
-  reader.readAsText(file);
-  event.target.value = '';
+  const file=event.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{try{const data=JSON.parse(e.target.result);if(data.players){appData={...appData,...data};recalcRanks();saveData();initAdmin();showToast('⬆ Data imported!');}else{showToast('Invalid file format.',true);}}catch{showToast('Failed to parse file.',true);}};
+  reader.readAsText(file); event.target.value='';
 }
 
 // ===== EXCEL IMPORT =====
-// Field definitions: what we want to import and aliases we'll auto-detect
 const EXCEL_FIELDS = [
-  { key:'pos',     label:'Position',        type:'string',  required:true,  aliases:['pos','position','postion'] },
-  { key:'name',    label:'Player Name',     type:'string',  required:true,  aliases:['name','player','player name','full name','playername'] },
-  { key:'school',  label:'School',          type:'string',  required:true,  aliases:['school','college','team','university'] },
-  { key:'grade',   label:'Grade',           type:'float',   required:false, aliases:['grade','overall grade','score','rtg','rating'] },
-  { key:'round',   label:'Round',           type:'string',  required:false, aliases:['round','draft round','proj round','projection','projected round'] },
-  { key:'ovr',     label:'Overall Rank',    type:'int',     required:false, aliases:['ovr','overall','overall rank','rank','overall ranking','#'] },
-  { key:'posRank', label:'Position Rank',   type:'int',     required:false, aliases:['posrank','pos rank','position rank','pos#','positionrank'] },
-  { key:'age',     label:'Age',             type:'float',   required:false, aliases:['age'] },
-  { key:'ht',      label:'Height',          type:'int',     required:false, aliases:['ht','height','ht (in)','height (in)'] },
-  { key:'wt',      label:'Weight',          type:'int',     required:false, aliases:['wt','weight','weight (lbs)','wt (lbs)'] },
-  { key:'arm',     label:'Arm Length',      type:'float',   required:false, aliases:['arm','arm length','arm (in)','arm length (in)'] },
-  { key:'prod',    label:'Production Score',type:'float',   required:false, aliases:['prod','production','production score','prod score'] },
-  { key:'ath',     label:'Athleticism',     type:'float',   required:false, aliases:['ath','athleticism','athletic score','ath score'] },
-  { key:'comp',    label:'NFL Comparisons', type:'comps',   required:false, aliases:['comp','comps','nfl comp','nfl comps','comparison','comparisons','nfl comparison'] },
+  {key:'pos',label:'Position',type:'string',required:true,aliases:['pos','position']},
+  {key:'name',label:'Player Name',type:'string',required:true,aliases:['name','player','player name','full name']},
+  {key:'school',label:'School',type:'string',required:true,aliases:['school','college','team','university']},
+  {key:'grade',label:'Grade',type:'float',required:false,aliases:['grade','overall grade','score','rtg','rating']},
+  {key:'round',label:'Round',type:'string',required:false,aliases:['round','draft round','proj round','projection']},
+  {key:'age',label:'Age',type:'float',required:false,aliases:['age']},
+  {key:'ht',label:'Height',type:'int',required:false,aliases:['ht','height']},
+  {key:'wt',label:'Weight',type:'int',required:false,aliases:['wt','weight']},
+  {key:'arm',label:'Arm Length',type:'float',required:false,aliases:['arm','arm length']},
+  {key:'prod',label:'Production Score',type:'float',required:false,aliases:['prod','production']},
+  {key:'ath',label:'Athleticism',type:'float',required:false,aliases:['ath','athleticism']},
+  {key:'comp',label:'NFL Comparisons',type:'comps',required:false,aliases:['comp','comps','nfl comp','comparison']},
 ];
-
-let xlsxWorkbook = null;
-let xlsxSheetData = [];  // Array of row objects (headers as keys)
-let xlsxRawHeaders = []; // Original column header strings
-let xlsxParsedPlayers = [];
+let xlsxWorkbook=null,xlsxSheetData=[],xlsxRawHeaders=[],xlsxParsedPlayers=[];
 
 function handleExcelUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  event.target.value = '';
-
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const data = new Uint8Array(e.target.result);
-      xlsxWorkbook = XLSX.read(data, { type: 'array' });
-      const sheetName = xlsxWorkbook.SheetNames[0];
-      const sheet = xlsxWorkbook.Sheets[sheetName];
-
-      // Get all rows as arrays (to handle header row selection)
-      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
-      xlsxSheetData = rows;
-      xlsxRawHeaders = rows[0] ? rows[0].map(h => String(h).trim()) : [];
-
-      // Populate sheet info
-      document.getElementById('xlsxSheetInfo').textContent =
-        `File: ${file.name}  •  Sheet: "${sheetName}"  •  ${rows.length - 1} data rows  •  ${xlsxRawHeaders.length} columns`;
-
-      // Build column mapping UI
-      buildColumnMapUI();
-      openModal('xlsxModal');
-      document.getElementById('xlsxStep1').style.display = '';
-      document.getElementById('xlsxStep2').style.display = 'none';
-    } catch(err) {
-      showToast('Failed to read Excel file: ' + err.message, true);
-    }
-  };
+  const file=event.target.files[0];if(!file)return;event.target.value='';
+  const reader=new FileReader();
+  reader.onload=e=>{try{const data=new Uint8Array(e.target.result);xlsxWorkbook=XLSX.read(data,{type:'array'});const sheetName=xlsxWorkbook.SheetNames[0];const sheet=xlsxWorkbook.Sheets[sheetName];const rows=XLSX.utils.sheet_to_json(sheet,{header:1,defval:''});xlsxSheetData=rows;xlsxRawHeaders=rows[0]?rows[0].map(h=>String(h).trim()):[];document.getElementById('xlsxSheetInfo').textContent=`File: ${file.name}  •  Sheet: "${sheetName}"  •  ${rows.length-1} data rows`;buildColumnMapUI();openModal('xlsxModal');document.getElementById('xlsxStep1').style.display='';document.getElementById('xlsxStep2').style.display='none';}catch(err){showToast('Failed to read Excel file: '+err.message,true);}};
   reader.readAsArrayBuffer(file);
 }
 
 function buildColumnMapUI() {
-  const container = document.getElementById('xlsxColumnMap');
-  container.innerHTML = EXCEL_FIELDS.map(field => {
-    // Auto-detect best column for this field
-    const autoMatch = autoDetectColumn(field);
-    const options = ['<option value="">(Skip)</option>',
-      ...xlsxRawHeaders.map((h, i) =>
-        `<option value="${i}" ${autoMatch === i ? 'selected' : ''}>${h}</option>`)
-    ].join('');
-
-    return `
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <label style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:${field.required ? '#f59e0b' : 'var(--text-muted)'};">
-          ${field.label}${field.required ? ' *' : ''}
-        </label>
-        <select class="form-input" id="map_${field.key}" style="font-size:12px;">
-          ${options}
-        </select>
-      </div>`;
-  }).join('');
+  const container=document.getElementById('xlsxColumnMap');
+  container.innerHTML=EXCEL_FIELDS.map(field=>{const autoMatch=autoDetectColumn(field);const options=['<option value="">(Skip)</option>',...xlsxRawHeaders.map((h,i)=>`<option value="${i}" ${autoMatch===i?'selected':''}>${h}</option>`)].join('');return `<div style="display:flex;flex-direction:column;gap:4px;"><label style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:${field.required?'#f59e0b':'var(--text-muted)'};">${field.label}${field.required?' *':''}</label><select class="form-input" id="map_${field.key}" style="font-size:12px;">${options}</select></div>`;}).join('');
 }
 
 function autoDetectColumn(field) {
-  for (let i = 0; i < xlsxRawHeaders.length; i++) {
-    const h = xlsxRawHeaders[i].toLowerCase().replace(/[^a-z0-9]/g,'');
-    for (const alias of field.aliases) {
-      if (h === alias.toLowerCase().replace(/[^a-z0-9]/g,'')) return i;
-    }
-  }
-  // Fuzzy: header contains alias
-  for (let i = 0; i < xlsxRawHeaders.length; i++) {
-    const h = xlsxRawHeaders[i].toLowerCase();
-    for (const alias of field.aliases) {
-      if (h.includes(alias.toLowerCase())) return i;
-    }
-  }
+  for(let i=0;i<xlsxRawHeaders.length;i++){const h=xlsxRawHeaders[i].toLowerCase().replace(/[^a-z0-9]/g,'');for(const alias of field.aliases){if(h===alias.toLowerCase().replace(/[^a-z0-9]/g,''))return i;}}
+  for(let i=0;i<xlsxRawHeaders.length;i++){const h=xlsxRawHeaders[i].toLowerCase();for(const alias of field.aliases){if(h.includes(alias.toLowerCase()))return i;}}
   return null;
 }
 
 function previewExcelImport() {
-  const headerRow = Math.max(1, parseInt(document.getElementById('xlsxHeaderRow').value) || 1);
-  const mapping = {};
-  EXCEL_FIELDS.forEach(f => {
-    const val = document.getElementById('map_' + f.key).value;
-    if (val !== '') mapping[f.key] = parseInt(val);
-  });
-
-  if (mapping.name === undefined || mapping.pos === undefined || mapping.school === undefined) {
-    showToast('Position, Name, and School columns are required.', true); return;
-  }
-
-  const dataRows = xlsxSheetData.slice(headerRow); // skip header rows
-  const errors = [];
-  xlsxParsedPlayers = [];
-
-  dataRows.forEach((row, i) => {
-    if (row.every(c => c === '' || c === null || c === undefined)) return; // skip empty rows
-    const rowNum = i + headerRow + 1;
-    const p = {};
-
-    EXCEL_FIELDS.forEach(f => {
-      if (mapping[f.key] === undefined) return;
-      const raw = String(row[mapping[f.key]] ?? '').trim();
-      if (!raw) return;
-
-      if (f.type === 'string')  p[f.key] = raw;
-      else if (f.type === 'int') { const v = parseInt(raw); if (!isNaN(v)) p[f.key] = v; }
-      else if (f.type === 'float') { const v = parseFloat(raw); if (!isNaN(v)) p[f.key] = v; }
-      else if (f.type === 'comps') { p[f.key] = raw.split(/[,;|]/).map(s => s.trim()).filter(Boolean); }
-    });
-
-    if (!p.name) { errors.push(`Row ${rowNum}: Missing player name`); return; }
-    if (!p.pos)  { errors.push(`Row ${rowNum}: Missing position`); return; }
-    if (!p.school){ errors.push(`Row ${rowNum}: Missing school`); return; }
-
-    // Normalize pos to uppercase
-    p.pos = p.pos.toUpperCase().trim();
-
-    xlsxParsedPlayers.push(p);
-  });
-
-  // Show preview
-  document.getElementById('xlsxStep1').style.display = 'none';
-  document.getElementById('xlsxStep2').style.display = '';
-  document.getElementById('xlsxPreviewCount').textContent = `${xlsxParsedPlayers.length} players ready to import`;
-
-  const mode = document.getElementById('xlsxImportMode').value;
-  const modeLabel = mode === 'append' ? 'will be added to existing roster' :
-                    mode === 'replace' ? 'will replace all current players' :
-                    'will update existing or add new players by name';
-  document.getElementById('xlsxPreviewNote').textContent = '— ' + modeLabel;
-
-  // Errors
-  if (errors.length) {
-    document.getElementById('xlsxPreviewErrors').innerHTML =
-      `<div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px;margin-bottom:10px;">
-        <div style="font-weight:600;color:#f87171;margin-bottom:6px;">⚠️ ${errors.length} row(s) skipped:</div>
-        ${errors.slice(0,5).map(e=>`<div style="font-size:12px;color:var(--text-muted);">${e}</div>`).join('')}
-        ${errors.length > 5 ? `<div style="font-size:12px;color:var(--text-muted);">...and ${errors.length-5} more</div>` : ''}
-      </div>`;
-  } else {
-    document.getElementById('xlsxPreviewErrors').innerHTML = '';
-  }
-
-  // Preview table
-  const previewFields = ['pos','name','school','grade','round','ovr','posRank','age','ht','wt'];
-  const shownFields = previewFields.filter(k => xlsxParsedPlayers.some(p => p[k] !== undefined));
-  document.getElementById('xlsxPreviewHead').innerHTML =
-    shownFields.map(k => `<th style="padding:8px 10px;font-size:11px;letter-spacing:.5px;font-weight:700;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">${k.toUpperCase()}</th>`).join('');
-
-  document.getElementById('xlsxPreviewBody').innerHTML = xlsxParsedPlayers.slice(0, 50).map(p => {
-    const c = appData.posColors[p.pos] || {bg:'#333',text:'#fff'};
-    return `<tr style="border-bottom:1px solid var(--border);">` +
-      shownFields.map(k => {
-        if (k === 'pos') return `<td style="padding:7px 10px;"><span class="pos-badge" style="background:${c.bg};color:${c.text}">${p.pos}</span></td>`;
-        if (k === 'grade' && p.grade) return `<td style="padding:7px 10px;"><span class="grade-pill">${p.grade.toFixed(2)}</span></td>`;
-        return `<td style="padding:7px 10px;font-size:12px;">${p[k] ?? '—'}</td>`;
-      }).join('') +
-      '</tr>';
-  }).join('') + (xlsxParsedPlayers.length > 50 ? `<tr><td colspan="${shownFields.length}" style="padding:10px;text-align:center;color:var(--text-muted);font-size:12px;">...and ${xlsxParsedPlayers.length - 50} more rows</td></tr>` : '');
+  const headerRow=Math.max(1,parseInt(document.getElementById('xlsxHeaderRow').value)||1);const mapping={};EXCEL_FIELDS.forEach(f=>{const val=document.getElementById('map_'+f.key).value;if(val!=='')mapping[f.key]=parseInt(val);});
+  if(mapping.name===undefined||mapping.pos===undefined||mapping.school===undefined){showToast('Position, Name, and School are required.',true);return;}
+  const dataRows=xlsxSheetData.slice(headerRow);const errors=[];xlsxParsedPlayers=[];
+  dataRows.forEach((row,i)=>{if(row.every(c=>c===''||c===null||c===undefined))return;const rowNum=i+headerRow+1;const p={};EXCEL_FIELDS.forEach(f=>{if(mapping[f.key]===undefined)return;const raw=String(row[mapping[f.key]]??'').trim();if(!raw)return;if(f.type==='string')p[f.key]=raw;else if(f.type==='int'){const v=parseInt(raw);if(!isNaN(v))p[f.key]=v;}else if(f.type==='float'){const v=parseFloat(raw);if(!isNaN(v))p[f.key]=v;}else if(f.type==='comps'){p[f.key]=raw.split(/[,;|]/).map(s=>s.trim()).filter(Boolean);}});if(!p.name){errors.push(`Row ${rowNum}: Missing name`);return;}if(!p.pos){errors.push(`Row ${rowNum}: Missing position`);return;}if(!p.school){errors.push(`Row ${rowNum}: Missing school`);return;}p.pos=p.pos.toUpperCase().trim();xlsxParsedPlayers.push(p);});
+  document.getElementById('xlsxStep1').style.display='none';document.getElementById('xlsxStep2').style.display='';document.getElementById('xlsxPreviewCount').textContent=`${xlsxParsedPlayers.length} players ready`;
+  document.getElementById('xlsxPreviewErrors').innerHTML=errors.length?`<div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px;margin-bottom:10px;"><div style="font-weight:600;color:#f87171;margin-bottom:6px;">⚠️ ${errors.length} row(s) skipped</div>${errors.slice(0,5).map(e=>`<div style="font-size:12px;color:var(--text-muted);">${e}</div>`).join('')}</div>`:'';
+  const pf=['pos','name','school','grade','round','age','ht','wt'];const sf=pf.filter(k=>xlsxParsedPlayers.some(p=>p[k]!==undefined));document.getElementById('xlsxPreviewHead').innerHTML=sf.map(k=>`<th style="padding:8px 10px;font-size:11px;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border);text-align:left;">${k.toUpperCase()}</th>`).join('');document.getElementById('xlsxPreviewBody').innerHTML=xlsxParsedPlayers.slice(0,50).map(p=>`<tr style="border-bottom:1px solid var(--border);">${sf.map(k=>`<td style="padding:7px 10px;font-size:12px;">${p[k]??'—'}</td>`).join('')}</tr>`).join('');
 }
+function backToMapping(){document.getElementById('xlsxStep1').style.display='';document.getElementById('xlsxStep2').style.display='none';}
+function confirmExcelImport(){const mode=document.getElementById('xlsxImportMode').value;if(mode==='replace')appData.players=xlsxParsedPlayers;else if(mode==='append')appData.players=[...appData.players,...xlsxParsedPlayers];else xlsxParsedPlayers.forEach(newP=>{const idx=appData.players.findIndex(p=>p.name.toLowerCase().trim()===newP.name.toLowerCase().trim());if(idx>=0)appData.players[idx]={...appData.players[idx],...newP};else appData.players.push(newP);});recalcRanks();saveData();closeModal('xlsxModal');initAdmin();showToast(`✅ ${xlsxParsedPlayers.length} players imported!`);}
+function downloadExcelTemplate(){const headers=['pos','name','school','grade','round','age','ht','wt','arm','prod','ath','comp'];const example=[['QB','Fernando Mendoza','Indiana',7.28,'Top 10',22.6,6046,236,31.88,93.9,78.3,'Matt Ryan'],['LB','Sonny Styles','Ohio State',7.32,'Top 10',21.4,6050,244,32.88,81.6,89.8,'Jordyn Brooks, Jihaad Campbell']];const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet([headers,...example]);XLSX.utils.book_append_sheet(wb,ws,'Players');XLSX.writeFile(wb,'draft-guide-template.xlsx');showToast('📊 Template downloaded!');}
 
-function backToMapping() {
-  document.getElementById('xlsxStep1').style.display = '';
-  document.getElementById('xlsxStep2').style.display = 'none';
-}
+// ===== GOOGLE SHEETS =====
+function convertToGSheetsCsvUrl(url){if(url.includes('output=csv'))return url;const idMatch=url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);if(!idMatch)return null;const id=idMatch[1];const gidMatch=url.match(/[#&?]gid=(\d+)/);return `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&gid=${gidMatch?gidMatch[1]:'0'}`;}
+async function fetchGoogleSheet(){const rawUrl=document.getElementById('gSheetsUrl').value.trim();if(!rawUrl){showToast('Please enter a URL.',true);return;}const csvUrl=convertToGSheetsCsvUrl(rawUrl);if(!csvUrl){showToast("Could not parse URL.",true);return;}const btn=document.getElementById('gSheetsFetchBtn');const statusEl=document.getElementById('gSheetsStatus');btn.textContent='⏳ Fetching...';btn.disabled=true;statusEl.style.display='';statusEl.innerHTML=`<div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:12px;font-size:13px;color:#fbbf24;">⏳ Fetching…</div>`;try{const response=await fetch(`https://corsproxy.io/?${encodeURIComponent(csvUrl)}`);if(!response.ok)throw new Error(`HTTP ${response.status}`);const csvText=await response.text();if(!csvText.trim())throw new Error('Empty sheet.');const wb=XLSX.read(csvText,{type:'string'});const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''});if(rows.length<2)throw new Error('No data rows.');const players=parseGSheetRows(rows);if(!players.length)throw new Error('No valid players found.');const mode=document.getElementById('gSheetsImportMode').value;if(mode==='replace')appData.players=players;else if(mode==='append')appData.players=[...appData.players,...players];else players.forEach(newP=>{const idx=appData.players.findIndex(p=>p.name.toLowerCase().trim()===newP.name.toLowerCase().trim());if(idx>=0)appData.players[idx]={...appData.players[idx],...newP};else appData.players.push(newP);});recalcRanks();saveData();closeModal('gSheetsModal');initAdmin();showToast(`✅ ${players.length} players imported!`);}catch(err){statusEl.innerHTML=`<div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:12px;font-size:13px;color:#f87171;"><strong>❌ ${err.message}</strong></div>`;showToast('Import failed.',true);}finally{btn.textContent='🔗 Fetch & Import';btn.disabled=false;}}
+function parseGSheetRows(rows){const headers=rows[0].map(h=>String(h).trim().toLowerCase().replace(/[^a-z0-9]/g,''));const mapping={};EXCEL_FIELDS.forEach(field=>{for(let i=0;i<headers.length;i++){for(const alias of field.aliases){if(headers[i]===alias.toLowerCase().replace(/[^a-z0-9]/g,'')){mapping[field.key]=i;return;}}}for(let i=0;i<headers.length;i++){for(const alias of field.aliases){if(headers[i].includes(alias.toLowerCase().replace(/[^a-z0-9]/g,''))&&mapping[field.key]===undefined)mapping[field.key]=i;}}});const players=[];rows.slice(1).forEach(row=>{if(row.every(c=>c===''||c===null||c===undefined))return;const p={};EXCEL_FIELDS.forEach(f=>{if(mapping[f.key]===undefined)return;const raw=String(row[mapping[f.key]]??'').trim();if(!raw)return;if(f.type==='string')p[f.key]=raw;else if(f.type==='int'){const v=parseInt(raw);if(!isNaN(v))p[f.key]=v;}else if(f.type==='float'){const v=parseFloat(raw);if(!isNaN(v))p[f.key]=v;}else if(f.type==='comps')p[f.key]=raw.split(/[,;|]/).map(s=>s.trim()).filter(Boolean);});if(p.name&&p.pos&&p.school){p.pos=p.pos.toUpperCase().trim();players.push(p);}});return players;}
+function saveGSheetUrl(){const url=document.getElementById('gSheetsUrl').value.trim();if(!url)return;const saved=JSON.parse(localStorage.getItem('savedGSheets')||'[]');if(!saved.includes(url)){saved.push(url);localStorage.setItem('savedGSheets',JSON.stringify(saved));renderSavedSheets();showToast('💾 Sheet URL saved!');}}
+function renderSavedSheets(){const saved=JSON.parse(localStorage.getItem('savedGSheets')||'[]');const el=document.getElementById('savedSheetsSection');if(!saved.length){el.innerHTML='';return;}el.innerHTML=`<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Saved Sheets</div>${saved.map((url,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;"><span style="font-size:12px;color:var(--text-dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${url}</span><button class="btn btn-secondary btn-sm" onclick="loadSavedSheet(${i})">Load</button><button class="btn btn-danger btn-sm" onclick="deleteSavedSheet(${i})">✕</button></div>`).join('')}`;}
+function loadSavedSheet(i){const saved=JSON.parse(localStorage.getItem('savedGSheets')||'[]');document.getElementById('gSheetsUrl').value=saved[i]||'';}
+function deleteSavedSheet(i){const saved=JSON.parse(localStorage.getItem('savedGSheets')||'[]');saved.splice(i,1);localStorage.setItem('savedGSheets',JSON.stringify(saved));renderSavedSheets();}
+function initGSheets(){renderSavedSheets();document.getElementById('gSheetsStatus').style.display='none';document.getElementById('gSheetsUrl').value='';}
 
-function confirmExcelImport() {
-  const mode = document.getElementById('xlsxImportMode').value;
+function openModal(id){document.getElementById(id).classList.add('open');if(id==='gSheetsModal')initGSheets();}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});});
 
-  if (mode === 'replace') {
-    if (!confirm(`⚠️ WARNING: This will permanently delete all ${appData.players.length} existing players and replace them with the ${xlsxParsedPlayers.length} players from your file.\n\nThis cannot be undone. Are you sure?`)) return;
-  }
-
-  if (mode === 'replace') {
-    appData.players = xlsxParsedPlayers;
-  } else if (mode === 'append') {
-    appData.players = [...appData.players, ...xlsxParsedPlayers];
-  } else if (mode === 'upsert') {
-    xlsxParsedPlayers.forEach(newP => {
-      const existingIdx = appData.players.findIndex(p =>
-        p.name.toLowerCase().trim() === newP.name.toLowerCase().trim());
-      if (existingIdx >= 0) {
-        appData.players[existingIdx] = { ...appData.players[existingIdx], ...newP };
-      } else {
-        appData.players.push(newP);
-      }
-    });
-  }
-
-  recalcRanks();
-  saveData();
-  closeModal('xlsxModal');
-  initAdmin();
-  showToast(`✅ ${xlsxParsedPlayers.length} players imported!`);
-}
-
-function updateImportModeWarning(selectId, warningId) {
-  const mode = document.getElementById(selectId).value;
-  document.getElementById(warningId).style.display = mode === 'replace' ? '' : 'none';
-}
-
-function downloadExcelTemplate() {
-  const headers = ['pos','name','school','grade','round','ovr','posRank','age','ht','wt','arm','prod','ath','comp'];
-  const example = [
-    ['QB','Fernando Mendoza','Indiana',7.28,'Top 10',2,1,22.6,6046,236,31.88,93.9,78.3,'Matt Ryan'],
-    ['LB','Sonny Styles','Ohio State',7.32,'Top 10',1,1,21.4,6050,244,32.88,81.6,89.8,'Jordyn Brooks, Jihaad Campbell'],
-    ['WR','Carnell Tate','Ohio State',7.09,'1 (Mid)',4,1,21.3,6022,192,31.75,75.3,65.2,'Nico Collins'],
-  ];
-  const wb = XLSX.utils.book_new();
-  const ws = XLSX.utils.aoa_to_sheet([headers, ...example]);
-  ws['!cols'] = headers.map(h => ({ wch: ['name','comp','school'].includes(h) ? 24 : 10 }));
-  XLSX.utils.book_append_sheet(wb, ws, 'Players');
-  XLSX.writeFile(wb, 'draft-guide-template.xlsx');
-  showToast('📊 Template downloaded!');
-}
-
-// ===== GOOGLE SHEETS IMPORT =====
-function convertToGSheetsCsvUrl(url) {
-  // Already a published CSV URL
-  if (url.includes('output=csv')) return url;
-
-  // Standard Google Sheets URL: extract the sheet ID and optional gid
-  const idMatch = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
-  if (!idMatch) return null;
-  const id = idMatch[1];
-
-  const gidMatch = url.match(/[#&?]gid=(\d+)/);
-  const gid = gidMatch ? gidMatch[1] : '0';
-
-  return `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&gid=${gid}`;
-}
-
-async function fetchGoogleSheet() {
-  const rawUrl = document.getElementById('gSheetsUrl').value.trim();
-  if (!rawUrl) { showToast('Please enter a Google Sheets URL.', true); return; }
-
-  const csvUrl = convertToGSheetsCsvUrl(rawUrl);
-  if (!csvUrl) { showToast('Could not parse that URL. Make sure it\'s a Google Sheets link.', true); return; }
-
-  const btn = document.getElementById('gSheetsFetchBtn');
-  const statusEl = document.getElementById('gSheetsStatus');
-  btn.textContent = '⏳ Fetching...';
-  btn.disabled = true;
-  statusEl.style.display = '';
-  statusEl.innerHTML = `<div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:12px;font-size:13px;color:#fbbf24;">⏳ Fetching your Google Sheet…</div>`;
-
-  try {
-    // Use a CORS proxy since browser can't directly fetch Google Sheets CSV cross-origin
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(csvUrl)}`;
-    const response = await fetch(proxyUrl);
-
-    if (!response.ok) throw new Error(`HTTP ${response.status} — make sure the sheet is published publicly.`);
-
-    const csvText = await response.text();
-    if (!csvText || csvText.trim().length === 0) throw new Error('Sheet appears to be empty.');
-
-    // Parse CSV using SheetJS
-    const wb = XLSX.read(csvText, { type: 'string' });
-    const sheetName = wb.SheetNames[0];
-    const sheet = wb.Sheets[sheetName];
-    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
-
-    if (rows.length < 2) throw new Error('Sheet has no data rows (need at least a header row + 1 data row).');
-
-    // Feed into the existing Excel import pipeline
-    xlsxWorkbook = wb;
-    xlsxSheetData = rows;
-    xlsxRawHeaders = rows[0].map(h => String(h).trim());
-
-    statusEl.innerHTML = `<div style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:12px;font-size:13px;color:#4ade80;">✅ Fetched ${rows.length - 1} rows from Google Sheets!</div>`;
-
-    // Parse with auto-mapping — skip the column mapping UI for a fast path
-    const mode = document.getElementById('gSheetsImportMode').value;
-    const players = parseGSheetRows(rows);
-
-    if (players.length === 0) throw new Error('No valid players found. Check your column headers match: pos, name, school, grade, round, ovr, etc.');
-
-    // Confirm if replacing
-    if (mode === 'replace') {
-      if (!confirm(`⚠️ WARNING: This will permanently delete all ${appData.players.length} existing players and replace them with ${players.length} players from Google Sheets.\n\nThis cannot be undone. Are you sure?`)) {
-        btn.textContent = '🔗 Fetch & Import';
-        btn.disabled = false;
-        return;
-      }
-    }
-
-    // Apply import mode
-    if (mode === 'replace') {
-      appData.players = players;
-    } else if (mode === 'append') {
-      appData.players = [...appData.players, ...players];
-    } else {
-      players.forEach(newP => {
-        const idx = appData.players.findIndex(p => p.name.toLowerCase().trim() === newP.name.toLowerCase().trim());
-        if (idx >= 0) appData.players[idx] = { ...appData.players[idx], ...newP };
-        else appData.players.push(newP);
-      });
-    }
-
-    recalcRanks();
-    saveData();
-    closeModal('gSheetsModal');
-    initAdmin();
-    showToast(`✅ ${players.length} players imported from Google Sheets!`);
-
-  } catch(err) {
-    statusEl.innerHTML = `
-      <div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:12px;font-size:13px;color:#f87171;">
-        <strong>❌ Import failed:</strong> ${err.message}
-        <div style="margin-top:8px;color:var(--text-muted);">Make sure the sheet is set to <strong style="color:var(--text)">File → Share → Publish to web</strong> and is publicly accessible.</div>
-      </div>`;
-    showToast('Import failed. See details in the modal.', true);
-  } finally {
-    btn.textContent = '🔗 Fetch & Import';
-    btn.disabled = false;
-  }
-}
-
-function parseGSheetRows(rows) {
-  // Auto-map headers
-  const headers = rows[0].map(h => String(h).trim().toLowerCase().replace(/[^a-z0-9]/g,''));
-  const mapping = {};
-
-  EXCEL_FIELDS.forEach(field => {
-    for (let i = 0; i < headers.length; i++) {
-      for (const alias of field.aliases) {
-        if (headers[i] === alias.toLowerCase().replace(/[^a-z0-9]/g,'')) {
-          mapping[field.key] = i;
-          return;
-        }
-      }
-    }
-    // Fuzzy match
-    for (let i = 0; i < headers.length; i++) {
-      for (const alias of field.aliases) {
-        if (headers[i].includes(alias.toLowerCase().replace(/[^a-z0-9]/g,''))) {
-          if (mapping[field.key] === undefined) mapping[field.key] = i;
-        }
-      }
-    }
-  });
-
-  const players = [];
-  rows.slice(1).forEach(row => {
-    if (row.every(c => c === '' || c === null || c === undefined)) return;
-    const p = {};
-    EXCEL_FIELDS.forEach(f => {
-      if (mapping[f.key] === undefined) return;
-      const raw = String(row[mapping[f.key]] ?? '').trim();
-      if (!raw) return;
-      if (f.type === 'string')  p[f.key] = raw;
-      else if (f.type === 'int')   { const v = parseInt(raw);   if (!isNaN(v)) p[f.key] = v; }
-      else if (f.type === 'float') { const v = parseFloat(raw); if (!isNaN(v)) p[f.key] = v; }
-      else if (f.type === 'comps') { p[f.key] = raw.split(/[,;|]/).map(s => s.trim()).filter(Boolean); }
-    });
-    if (p.name && p.pos && p.school) {
-      p.pos = p.pos.toUpperCase().trim();
-      players.push(p);
-    }
-  });
-  return players;
-}
-
-function saveGSheetUrl() {
-  const url = document.getElementById('gSheetsUrl').value.trim();
-  if (!url) return;
-  const saved = JSON.parse(localStorage.getItem('savedGSheets') || '[]');
-  if (!saved.includes(url)) {
-    saved.push(url);
-    localStorage.setItem('savedGSheets', JSON.stringify(saved));
-    renderSavedSheets();
-    showToast('💾 Sheet URL saved!');
-  }
-}
-
-function renderSavedSheets() {
-  const saved = JSON.parse(localStorage.getItem('savedGSheets') || '[]');
-  const el = document.getElementById('savedSheetsSection');
-  if (!saved.length) { el.innerHTML = ''; return; }
-  el.innerHTML = `
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Saved Sheets</div>
-    ${saved.map((url, i) => `
-      <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;">
-        <span style="font-size:12px;color:var(--text-dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${url}</span>
-        <button class="btn btn-secondary btn-sm" onclick="loadSavedSheet(${i})">Load</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteSavedSheet(${i})">✕</button>
-      </div>`).join('')}`;
-}
-
-function loadSavedSheet(i) {
-  const saved = JSON.parse(localStorage.getItem('savedGSheets') || '[]');
-  document.getElementById('gSheetsUrl').value = saved[i] || '';
-}
-
-function deleteSavedSheet(i) {
-  const saved = JSON.parse(localStorage.getItem('savedGSheets') || '[]');
-  saved.splice(i, 1);
-  localStorage.setItem('savedGSheets', JSON.stringify(saved));
-  renderSavedSheets();
-}
-
-// Render saved sheets when modal opens
-document.getElementById('gSheetsModal').addEventListener('click', e => {
-  if (e.target.classList.contains('modal-overlay') || e.target === document.getElementById('gSheetsModal')) return;
-});
-// Init saved sheets on load (called after initAdmin)
-function initGSheets() {
-  renderSavedSheets();
-  document.getElementById('gSheetsStatus').style.display = 'none';
-  document.getElementById('gSheetsUrl').value = '';
-}
-
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-  if (id === 'gSheetsModal') initGSheets();
-}
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay').forEach(o => {
-  o.addEventListener('click', e => { if(e.target === o) o.classList.remove('open'); });
-});
-
-// ===== TOAST =====
-function showToast(msg, isError=false) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast' + (isError ? ' error' : '');
-  setTimeout(() => t.classList.add('show'), 10);
-  setTimeout(() => t.classList.remove('show'), 2800);
-}
+function showToast(msg,isError=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(isError?' error':'');setTimeout(()=>t.classList.add('show'),10);setTimeout(()=>t.classList.remove('show'),2800);}
 </script>
 </body>
 </html>
