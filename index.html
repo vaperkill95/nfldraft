@@ -407,8 +407,12 @@
         <option>1 (Early)</option>
         <option>1 (Mid)</option>
         <option>1 (Late)</option>
-        <option>2nd Round</option>
-        <option>3rd Round</option>
+        <option>2 (Early)</option>
+        <option>2 (Mid)</option>
+        <option>2 (Late)</option>
+        <option>3 (Early)</option>
+        <option>3 (Mid)</option>
+        <option>3 (Late)</option>
         <option>Day 3</option>
         <option>UDFA</option>
       </select>
@@ -469,7 +473,7 @@
 <script>
 // ===== LOAD FROM ADMIN STORAGE =====
 const STORAGE_KEY = 'nflDraftGuideData';
-const API_URL = 'https://nfldraft-production.up.railway.app'; // e.g. https://draft-api-production.up.railway.app
+const API_URL = 'https://nfldraft-production.up.railway.app';
 
 const DEFAULT_PLAYERS = [
   { pos:"LB", name:"Sonny Styles", school:"Ohio State", grade:7.32, round:"Top 10", ovr:1, posRank:1, age:21.4, comp:["Jordyn Brooks","Jihaad Campbell"], ht:6050, wt:244, arm:32.88, prod:81.6, ath:89.8, star:5, class:2022 },
@@ -529,8 +533,12 @@ const DEFAULT_STAT_COLORS = {
       '1 (Early)': { color:'#22c55e', bg:'rgba(34,197,94,0.15)' },
       '1 (Mid)':   { color:'#60a5fa', bg:'rgba(59,130,246,0.15)' },
       '1 (Late)':  { color:'#fbbf24', bg:'rgba(245,158,11,0.15)' },
-      '2nd Round': { color:'#fb923c', bg:'rgba(251,146,60,0.15)' },
-      '3rd Round': { color:'#f87171', bg:'rgba(248,113,113,0.15)' },
+      '2 (Early)': { color:'#fb923c', bg:'rgba(251,146,60,0.15)' },
+      '2 (Mid)':   { color:'#f97316', bg:'rgba(249,115,22,0.15)' },
+      '2 (Late)':  { color:'#ea580c', bg:'rgba(234,88,12,0.15)' },
+      '3 (Early)': { color:'#f87171', bg:'rgba(248,113,113,0.15)' },
+      '3 (Mid)':   { color:'#ef4444', bg:'rgba(239,68,68,0.15)' },
+      '3 (Late)':  { color:'#dc2626', bg:'rgba(220,38,38,0.15)' },
       'Day 3':     { color:'#9ca3af', bg:'rgba(107,114,128,0.15)' },
       'UDFA':      { color:'#6b7280', bg:'rgba(107,114,128,0.10)' },
     }
@@ -975,8 +983,26 @@ colDefs.forEach(c => { if(!colVis[c.key]) toggleCols(c.key, false); });
 buildHeaders();
 renderTable();
 
+// ===== REBUILD NAV TABS =====
+function buildNavTabs() {
+  const nav = document.getElementById('mainNav');
+  // Remove all tabs except the first (Big Board)
+  while (nav.children.length > 1) nav.removeChild(nav.lastChild);
+  const freshPositions = [...new Set(players.map(p => p.pos))];
+  freshPositions.sort((a,b) => {
+    const ai = posOrder.indexOf(a), bi = posOrder.indexOf(b);
+    return (ai===-1?99:ai) - (bi===-1?99:bi);
+  });
+  freshPositions.forEach(pos => {
+    const a = document.createElement('a');
+    const c = posColors[pos] || {bg:'#333',text:'#fff'};
+    a.innerHTML = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.bg};margin-right:5px;"></span>${pos}`;
+    a.onclick = () => switchTab(pos);
+    nav.appendChild(a);
+  });
+}
+
 // ===== RAILWAY POLLING =====
-// On load: pull latest data from Railway and override localStorage
 async function fetchFromRailway() {
   if (!API_URL || API_URL.includes('YOUR_RAILWAY')) return;
   try {
@@ -985,13 +1011,14 @@ async function fetchFromRailway() {
     if (json.data) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(json.data));
       syncFromStorage();
+      buildNavTabs();
       buildLegend();
+      buildHeaders();
       renderTable();
     }
-  } catch(e) { /* offline fallback — localStorage still works */ }
+  } catch(e) { /* offline fallback */ }
 }
 
-// Lightweight poll: check if admin saved anything new
 let lastUpdatedAt = null;
 async function pollRailway() {
   if (!API_URL || API_URL.includes('YOUR_RAILWAY')) return;
@@ -1005,8 +1032,8 @@ async function pollRailway() {
   } catch(e) { /* ignore */ }
 }
 
-fetchFromRailway(); // load fresh data immediately on page open
-setInterval(pollRailway, 5000); // then check every 5 seconds
+fetchFromRailway();
+setInterval(pollRailway, 5000);
 </script>
 </body>
 </html>

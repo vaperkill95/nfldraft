@@ -348,7 +348,7 @@ td { padding:9px 12px; vertical-align:middle; }
       <div class="form-group"><label class="form-label">Class Year</label><input class="form-input" id="f_class" type="number" placeholder="2023"></div>
     </div>
     <div class="form-grid" style="margin-top:12px;">
-      <div class="form-group"><label class="form-label">Round</label><select class="form-input" id="f_round"><option>Top 10</option><option>1 (Early)</option><option>1 (Mid)</option><option>1 (Late)</option><option>2nd Round</option><option>3rd Round</option><option>Day 3</option><option>UDFA</option></select></div>
+      <div class="form-group"><label class="form-label">Round</label><select class="form-input" id="f_round"><option>Top 10</option><option>1 (Early)</option><option>1 (Mid)</option><option>1 (Late)</option><option>2 (Early)</option><option>2 (Mid)</option><option>2 (Late)</option><option>3 (Early)</option><option>3 (Mid)</option><option>3 (Late)</option><option>Day 3</option><option>UDFA</option></select></div>
       <div class="form-group"><label class="form-label">Recruiting Stars (1-5)</label><input class="form-input" id="f_star" type="number" min="1" max="5" placeholder="4"></div>
     </div>
     <div class="form-grid-4" style="margin-top:12px;">
@@ -471,8 +471,6 @@ td { padding:9px 12px; vertical-align:middle; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 const STORAGE_KEY = 'nflDraftGuideData';
-const API_URL    = 'https://nfldraft-production.up.railway.app';   // e.g. https://draft-api-production.up.railway.app
-const API_SECRET = 'draft2026';  // must match ADMIN_SECRET in Railway env vars
 
 const DEFAULT_PLAYERS = [
   { pos:"LB", name:"Sonny Styles", school:"Ohio State", grade:7.32, round:"Top 10", ovr:1, posRank:1, age:21.4, comp:["Jordyn Brooks","Jihaad Campbell"], ht:6050, wt:244, arm:32.88, prod:81.6, ath:89.8, star:5, class:2022 },
@@ -564,8 +562,12 @@ const DEFAULT_STAT_COLORS = {
     '1 (Early)': { color:'#22c55e' },
     '1 (Mid)':   { color:'#60a5fa' },
     '1 (Late)':  { color:'#fbbf24' },
-    '2nd Round': { color:'#fb923c' },
-    '3rd Round': { color:'#f87171' },
+    '2 (Early)': { color:'#fb923c' },
+    '2 (Mid)':   { color:'#f97316' },
+    '2 (Late)':  { color:'#ea580c' },
+    '3 (Early)': { color:'#f87171' },
+    '3 (Mid)':   { color:'#ef4444' },
+    '3 (Late)':  { color:'#dc2626' },
     'Day 3':     { color:'#9ca3af' },
     'UDFA':      { color:'#6b7280' },
   }},
@@ -586,20 +588,7 @@ function loadData() {
   appData.username   = appData.username   || 'admin';
 }
 
-function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
-  // Sync to Railway so the public site picks up changes
-  if (API_URL && !API_URL.includes('YOUR_RAILWAY')) {
-    fetch(API_URL + '/data', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: appData, secret: API_SECRET })
-    })
-    .then(r => r.json())
-    .then(r => { if (!r.ok) console.warn('Railway sync failed:', r); })
-    .catch(err => console.warn('Railway sync error:', err));
-  }
-}
+function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
 
 function recalcRanks() {
   appData.players.sort((a,b) => (b.grade||0) - (a.grade||0));
