@@ -414,7 +414,6 @@
   <div class="logo" id="siteLogo">PHIL'S 2026 <span>NFL DRAFT</span> GUIDE</div>
   <nav id="mainNav">
     <a class="active" onclick="switchTab('')">📋 Big Board</a>
-    <a onclick="switchToGrid()">⊞ Grid View</a>
   </nav>
   <div class="header-right">Lite Version</div>
 </header>
@@ -738,6 +737,10 @@ posOrder.forEach(pos => {
   a.onclick = () => switchTab(pos);
   nav.appendChild(a);
 });
+const initGridTab = document.createElement('a');
+initGridTab.innerHTML = '⊞ Grid View';
+initGridTab.onclick = switchToGrid;
+nav.appendChild(initGridTab);
 
 
 
@@ -1022,6 +1025,11 @@ function buildNavTabs() {
     a.onclick = () => switchTab(pos);
     nav.appendChild(a);
   });
+  // Always add Grid View tab at the end
+  const gridTab = document.createElement('a');
+  gridTab.innerHTML = '⊞ Grid View';
+  gridTab.onclick = switchToGrid;
+  nav.appendChild(gridTab);
 }
 
 // ===== RAILWAY POLLING =====
