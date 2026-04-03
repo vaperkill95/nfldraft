@@ -89,7 +89,8 @@ td { padding:9px 12px; vertical-align:middle; }
 
 .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.75); z-index:200; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
 .modal-overlay.open { display:flex; }
-.modal { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px; width:680px; max-width:96vw; max-height:90vh; overflow-y:auto; position:relative; animation:modalIn .2s ease; }
+.modal { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px; width:680px; max-width:96vw; max-height:92vh; overflow-y:auto; overflow-x:hidden; position:relative; animation:modalIn .2s ease; }
+#playerModal .modal { max-height:95vh; }
 @keyframes modalIn { from{opacity:0;transform:translateY(16px) scale(.97)} to{opacity:1;transform:none} }
 .modal-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:22px; margin-bottom:20px; }
 .modal-close { position:absolute; top:16px; right:16px; background:var(--surface2); border:1px solid var(--border); color:var(--text-muted); width:30px; height:30px; border-radius:8px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s; }
