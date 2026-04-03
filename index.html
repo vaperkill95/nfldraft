@@ -586,15 +586,26 @@ const DEFAULT_STAT_COLORS = {
   },
 };
 
-// Load data
-let raw = {};
-try { raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){}
-const players    = raw.players    || DEFAULT_PLAYERS;
-const posColors  = raw.posColors  || DEFAULT_POS_COLORS;
-const colVis     = raw.columns    || {grade:true,rank:true,info:true,size:true,scores:true};
-const branding   = raw.branding   || {title1:"PHIL'S 2026",title2:"NFL DRAFT",title3:"GUIDE",accent:"#f59e0b",lastUpdated:"Last updated: 3/4",footerNote:""};
-// Merge saved stat colors over defaults
-const statColors = mergeStatColors(raw.statColors || {});
+// Load data — always reads fresh from localStorage so admin changes sync immediately
+function loadFromStorage() {
+  let r = {};
+  try { r = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){}
+  return r;
+}
+let raw = loadFromStorage();
+let players    = raw.players    || DEFAULT_PLAYERS;
+let posColors  = raw.posColors  || DEFAULT_POS_COLORS;
+const colVis   = raw.columns    || {grade:true,rank:true,info:true,size:true,scores:true};
+const branding = raw.branding   || {title1:"PHIL'S 2026",title2:"NFL DRAFT",title3:"GUIDE",accent:"#f59e0b",lastUpdated:"Last updated: 3/4",footerNote:""};
+let statColors = mergeStatColors(raw.statColors || {});
+
+// Re-sync all mutable data from localStorage (called before any modal open)
+function syncFromStorage() {
+  const fresh = loadFromStorage();
+  players    = fresh.players    || DEFAULT_PLAYERS;
+  posColors  = fresh.posColors  || DEFAULT_POS_COLORS;
+  statColors = mergeStatColors(fresh.statColors || {});
+}
 
 function mergeStatColors(saved) {
   const result = JSON.parse(JSON.stringify(DEFAULT_STAT_COLORS));
@@ -798,6 +809,7 @@ function posBadge(pos) {
 
 // ===== RENDER =====
 function renderTable() {
+  syncFromStorage();
   const q = searchQuery.toLowerCase();
   filtered = players.filter(p => {
     const matchSearch = !q || p.name.toLowerCase().includes(q) || p.school.toLowerCase().includes(q) || (p.comp||[]).join(' ').toLowerCase().includes(q);
@@ -880,6 +892,7 @@ function doSort(col) {
 
 // ===== MODAL =====
 function openModal(idx) {
+  syncFromStorage();
   const p = players[idx];
   document.getElementById('modalBody').innerHTML = `
     <div class="modal-header">
@@ -939,6 +952,14 @@ function openModal(idx) {
 }
 
 document.getElementById('modalClose').onclick = () => document.getElementById('modalOverlay').classList.remove('open');
+
+// Auto-refresh when admin saves in another tab
+window.addEventListener('storage', e => {
+  if (e.key === STORAGE_KEY) {
+    syncFromStorage();
+    renderTable();
+  }
+});
 document.getElementById('modalOverlay').onclick = e => { if(e.target===document.getElementById('modalOverlay')) document.getElementById('modalOverlay').classList.remove('open'); };
 
 // ===== FILTERS =====
