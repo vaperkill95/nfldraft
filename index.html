@@ -469,6 +469,7 @@
 <script>
 // ===== LOAD FROM ADMIN STORAGE =====
 const STORAGE_KEY = 'nflDraftGuideData';
+const API_URL = 'https://nfldraft-production.up.railway.app/'; // e.g. https://draft-api-production.up.railway.app
 
 const DEFAULT_PLAYERS = [
   { pos:"LB", name:"Sonny Styles", school:"Ohio State", grade:7.32, round:"Top 10", ovr:1, posRank:1, age:21.4, comp:["Jordyn Brooks","Jihaad Campbell"], ht:6050, wt:244, arm:32.88, prod:81.6, ath:89.8, star:5, class:2022 },
@@ -973,6 +974,39 @@ colDefs.forEach(c => { if(!colVis[c.key]) toggleCols(c.key, false); });
 
 buildHeaders();
 renderTable();
+
+// ===== RAILWAY POLLING =====
+// On load: pull latest data from Railway and override localStorage
+async function fetchFromRailway() {
+  if (!API_URL || API_URL.includes('YOUR_RAILWAY')) return;
+  try {
+    const res = await fetch(API_URL + '/data');
+    const json = await res.json();
+    if (json.data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(json.data));
+      syncFromStorage();
+      buildLegend();
+      renderTable();
+    }
+  } catch(e) { /* offline fallback — localStorage still works */ }
+}
+
+// Lightweight poll: check if admin saved anything new
+let lastUpdatedAt = null;
+async function pollRailway() {
+  if (!API_URL || API_URL.includes('YOUR_RAILWAY')) return;
+  try {
+    const res = await fetch(API_URL + '/ping');
+    const json = await res.json();
+    if (json.updated_at && json.updated_at !== lastUpdatedAt) {
+      lastUpdatedAt = json.updated_at;
+      await fetchFromRailway();
+    }
+  } catch(e) { /* ignore */ }
+}
+
+fetchFromRailway(); // load fresh data immediately on page open
+setInterval(pollRailway, 5000); // then check every 5 seconds
 </script>
 </body>
 </html>
