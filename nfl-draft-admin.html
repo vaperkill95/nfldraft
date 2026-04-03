@@ -216,6 +216,7 @@ td { padding:9px 12px; vertical-align:middle; }
       <button class="tab-btn" onclick="switchTab('positions',this)">🎨 Positions</button>
       <button class="tab-btn" onclick="switchTab('columns',this)">📋 Columns</button>
       <button class="tab-btn" onclick="switchTab('branding',this)">✏️ Branding</button>
+      <button class="tab-btn" onclick="switchTab('grid',this)">⊞ Grid Editor</button>
       <button class="tab-btn" onclick="switchTab('settings',this)">⚙️ Settings</button>
     </div>
     <button class="logout-btn" onclick="doLogout()">Sign Out</button>
@@ -302,6 +303,47 @@ td { padding:9px 12px; vertical-align:middle; }
       </div>
       <div class="branding-preview" id="brandPreview"><div class="preview-logo"></div></div>
       <div style="margin-top:16px;"><button class="btn btn-primary" onclick="saveBranding()">💾 Save Branding</button></div>
+    </div>
+  </div>
+
+  <!-- GRID EDITOR TAB -->
+  <div class="tab-panel" id="tab-grid">
+    <div class="section">
+      <div class="section-title">Grid Editor</div>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">Customize columns, rows, colors, and player placement for the Grid View on the public site.</p>
+
+      <!-- COLUMNS -->
+      <div style="margin-bottom:28px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);">Columns (Positions)</div>
+          <button class="btn btn-secondary btn-sm" onclick="addGridCol()">＋ Add Column</button>
+        </div>
+        <div id="gridColList" style="display:flex;flex-direction:column;gap:6px;"></div>
+      </div>
+
+      <!-- ROWS -->
+      <div style="margin-bottom:28px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);">Rows (Rounds)</div>
+          <button class="btn btn-secondary btn-sm" onclick="addGridRow()">＋ Add Row</button>
+        </div>
+        <div id="gridRowList" style="display:flex;flex-direction:column;gap:6px;"></div>
+      </div>
+
+      <!-- PLAYER PLACEMENT -->
+      <div style="margin-bottom:28px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);">Player Placement</div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary btn-sm" onclick="autoPlacePlayers()">⚡ Auto-Place from Round/Pos</button>
+            <button class="btn btn-danger btn-sm" onclick="clearGridPlacement()">✕ Clear All</button>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Auto-Place maps each player's Round and Position to the grid automatically. Or drag players manually below.</p>
+        <div id="gridPlacementEditor" style="overflow-x:auto;"></div>
+      </div>
+
+      <button class="btn btn-primary" onclick="saveGrid()">💾 Save Grid</button>
     </div>
   </div>
 
@@ -581,6 +623,39 @@ const DEFAULT_STAT_COLORS = {
 
 // ===== STATE =====
 let appData = {};
+const DEFAULT_GRID = {
+  cols: [
+    { id:'QB',  label:'QB',  posMap:['QB'] },
+    { id:'HB',  label:'HB',  posMap:['HB'] },
+    { id:'WR',  label:'WR',  posMap:['WR'] },
+    { id:'TE',  label:'TE',  posMap:['TE'] },
+    { id:'IOL', label:'IOL', posMap:['G','C'] },
+    { id:'OT',  label:'OT',  posMap:['OT'] },
+    { id:'DT',  label:'DT',  posMap:['DT'] },
+    { id:'ED',  label:'ED',  posMap:['ED'] },
+    { id:'LB',  label:'LB',  posMap:['LB'] },
+    { id:'CB',  label:'CB',  posMap:['CB'] },
+    { id:'SAF', label:'SAF', posMap:['S'] },
+  ],
+  rows: [
+    { id:'Top 10',    label:'Top 10',    color:'#00c896' },
+    { id:'1mid',      label:'1 (Mid)',   color:'#60a5fa' },
+    { id:'1late',     label:'1 (Late)',  color:'#fbbf24' },
+    { id:'2early',    label:'2 (Early)', color:'#fb923c' },
+    { id:'2mid',      label:'2 (Mid)',   color:'#f97316' },
+    { id:'2late',     label:'2 (Late)',  color:'#ea580c' },
+    { id:'3early',    label:'3 (Early)', color:'#f87171' },
+    { id:'3mid',      label:'3 (Mid)',   color:'#ef4444' },
+    { id:'3late',     label:'3 (Late)',  color:'#dc2626' },
+    { id:'round4',    label:'Round 4',   color:'#9ca3af' },
+    { id:'round5',    label:'Round 5',   color:'#6b7280' },
+    { id:'day3plus',  label:'Day 3+',    color:'#4b5563' },
+    { id:'UDFA',      label:'UDFA',      color:'#374151' },
+  ],
+  // placement: { rowId: { colId: [playerName, ...] } }
+  placement: {}
+};
+
 let deleteIdx = -1;
 
 function loadData() {
@@ -590,6 +665,7 @@ function loadData() {
   appData.columns    = appData.columns    || JSON.parse(JSON.stringify(DEFAULT_COLUMNS));
   appData.branding   = appData.branding   || JSON.parse(JSON.stringify(DEFAULT_BRANDING));
   appData.statColors = appData.statColors || JSON.parse(JSON.stringify(DEFAULT_STAT_COLORS));
+  appData.grid       = appData.grid       || JSON.parse(JSON.stringify(DEFAULT_GRID));
   appData.password   = appData.password   || 'draft2026';
   appData.username   = appData.username   || 'admin';
 }
@@ -656,6 +732,7 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   if (btn) btn.classList.add('active');
+  if (name === 'grid') initGridEditor();
 }
 
 // ===== POS TAB BAR =====
@@ -1233,6 +1310,167 @@ function renderSavedSheets(){const saved=JSON.parse(localStorage.getItem('savedG
 function loadSavedSheet(i){const saved=JSON.parse(localStorage.getItem('savedGSheets')||'[]');document.getElementById('gSheetsUrl').value=saved[i]||'';}
 function deleteSavedSheet(i){const saved=JSON.parse(localStorage.getItem('savedGSheets')||'[]');saved.splice(i,1);localStorage.setItem('savedGSheets',JSON.stringify(saved));renderSavedSheets();}
 function initGSheets(){renderSavedSheets();document.getElementById('gSheetsStatus').style.display='none';document.getElementById('gSheetsUrl').value='';}
+
+// ===== GRID EDITOR =====
+function initGridEditor() {
+  renderGridColList();
+  renderGridRowList();
+  renderGridPlacementEditor();
+}
+
+function renderGridColList() {
+  const g = appData.grid;
+  document.getElementById('gridColList').innerHTML = g.cols.map((col, i) => `
+    <div style="display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;">
+      <span style="cursor:grab;color:var(--text-muted);font-size:16px;">⠿</span>
+      <input class="form-input" style="width:80px;padding:5px 8px;font-size:12px;" value="${col.label}" onchange="appData.grid.cols[${i}].label=this.value;renderGridPlacementEditor();" placeholder="Label">
+      <input class="form-input" style="flex:1;padding:5px 8px;font-size:12px;" value="${(col.posMap||[]).join(', ')}" onchange="appData.grid.cols[${i}].posMap=this.value.split(',').map(s=>s.trim()).filter(Boolean);" placeholder="Position codes e.g. G, C">
+      <button class="btn btn-secondary btn-sm" onclick="moveGridCol(${i},-1)" ${i===0?'disabled':''}>▲</button>
+      <button class="btn btn-secondary btn-sm" onclick="moveGridCol(${i},1)" ${i===g.cols.length-1?'disabled':''}>▼</button>
+      <button class="btn btn-danger btn-sm" onclick="removeGridCol(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+function renderGridRowList() {
+  const g = appData.grid;
+  document.getElementById('gridRowList').innerHTML = g.rows.map((row, i) => `
+    <div style="display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;">
+      <span style="cursor:grab;color:var(--text-muted);font-size:16px;">⠿</span>
+      <input type="color" class="color-swatch" value="${row.color}" onchange="appData.grid.rows[${i}].color=this.value;renderGridRowList();" style="width:32px;height:32px;border-radius:6px;border:none;cursor:pointer;background:none;">
+      <input class="form-input" style="flex:1;padding:5px 8px;font-size:12px;" value="${row.label}" onchange="appData.grid.rows[${i}].label=this.value;renderGridPlacementEditor();" placeholder="Row label">
+      <button class="btn btn-secondary btn-sm" onclick="moveGridRow(${i},-1)" ${i===0?'disabled':''}>▲</button>
+      <button class="btn btn-secondary btn-sm" onclick="moveGridRow(${i},1)" ${i===g.rows.length-1?'disabled':''}>▼</button>
+      <button class="btn btn-danger btn-sm" onclick="removeGridRow(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+function renderGridPlacementEditor() {
+  const g = appData.grid;
+  if (!g.cols.length || !g.rows.length) { document.getElementById('gridPlacementEditor').innerHTML = '<p style="color:var(--text-muted);font-size:13px;">Add at least one column and one row to place players.</p>'; return; }
+  let html = `<table style="border-collapse:collapse;min-width:600px;">
+    <thead><tr>
+      <th style="background:var(--surface2);border:1px solid var(--border);padding:8px 12px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);min-width:90px;">ROUND</th>
+      ${g.cols.map(col => `<th style="background:var(--surface2);border:1px solid var(--border);padding:8px 12px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);min-width:110px;">${col.label}</th>`).join('')}
+    </tr></thead><tbody>`;
+
+  g.rows.forEach((row, ri) => {
+    html += `<tr>
+      <td style="border:1px solid var(--border);padding:6px 10px;background:${row.color}22;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:${row.color};white-space:nowrap;">${row.label}</td>
+      ${g.cols.map((col, ci) => {
+        const names = ((g.placement[row.id]||{})[col.id]||[]);
+        return `<td style="border:1px solid var(--border);padding:6px;background:var(--surface);vertical-align:top;">
+          ${names.map((name, ni) => `
+            <div style="display:flex;align-items:center;gap:4px;margin-bottom:3px;">
+              <span style="flex:1;font-size:11px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2px 6px;color:var(--text);">${name}</span>
+              <button onclick="removeGridPlayer('${row.id}','${col.id}',${ni})" style="background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:4px;width:18px;height:18px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✕</button>
+            </div>`).join('')}
+          <select onchange="addGridPlayer('${row.id}','${col.id}',this)" style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);border-radius:6px;padding:3px 6px;font-size:11px;margin-top:2px;">
+            <option value="">+ Add player</option>
+            ${appData.players.map(p => `<option value="${p.name}">${p.name}</option>`).join('')}
+          </select>
+        </td>`;
+      }).join('')}
+    </tr>`;
+  });
+
+  html += '</tbody></table>';
+  document.getElementById('gridPlacementEditor').innerHTML = html;
+}
+
+function addGridPlayer(rowId, colId, sel) {
+  const name = sel.value;
+  if (!name) return;
+  if (!appData.grid.placement[rowId]) appData.grid.placement[rowId] = {};
+  if (!appData.grid.placement[rowId][colId]) appData.grid.placement[rowId][colId] = [];
+  if (!appData.grid.placement[rowId][colId].includes(name)) {
+    appData.grid.placement[rowId][colId].push(name);
+  }
+  sel.value = '';
+  renderGridPlacementEditor();
+}
+
+function removeGridPlayer(rowId, colId, idx) {
+  appData.grid.placement[rowId][colId].splice(idx, 1);
+  renderGridPlacementEditor();
+}
+
+function addGridCol() {
+  appData.grid.cols.push({ id: 'col_' + Date.now(), label: 'NEW', posMap: [] });
+  renderGridColList();
+  renderGridPlacementEditor();
+}
+
+function removeGridCol(i) {
+  appData.grid.cols.splice(i, 1);
+  renderGridColList();
+  renderGridPlacementEditor();
+}
+
+function moveGridCol(i, dir) {
+  const cols = appData.grid.cols;
+  const j = i + dir;
+  if (j < 0 || j >= cols.length) return;
+  [cols[i], cols[j]] = [cols[j], cols[i]];
+  renderGridColList();
+  renderGridPlacementEditor();
+}
+
+function addGridRow() {
+  appData.grid.rows.push({ id: 'row_' + Date.now(), label: 'New Row', color: '#6b7280' });
+  renderGridRowList();
+  renderGridPlacementEditor();
+}
+
+function removeGridRow(i) {
+  appData.grid.rows.splice(i, 1);
+  renderGridRowList();
+  renderGridPlacementEditor();
+}
+
+function moveGridRow(i, dir) {
+  const rows = appData.grid.rows;
+  const j = i + dir;
+  if (j < 0 || j >= rows.length) return;
+  [rows[i], rows[j]] = [rows[j], rows[i]];
+  renderGridRowList();
+  renderGridPlacementEditor();
+}
+
+function autoPlacePlayers() {
+  // Build a round label -> rowId map
+  const roundToRow = {};
+  appData.grid.rows.forEach(row => { roundToRow[row.label] = row.id; });
+  // Build posCode -> colId map
+  const posToCol = {};
+  appData.grid.cols.forEach(col => { (col.posMap||[]).forEach(p => posToCol[p] = col.id); });
+
+  appData.grid.placement = {};
+  appData.players.forEach(p => {
+    const rowId = roundToRow[p.round];
+    const colId = posToCol[p.pos];
+    if (!rowId || !colId) return;
+    if (!appData.grid.placement[rowId]) appData.grid.placement[rowId] = {};
+    if (!appData.grid.placement[rowId][colId]) appData.grid.placement[rowId][colId] = [];
+    if (!appData.grid.placement[rowId][colId].includes(p.name)) {
+      appData.grid.placement[rowId][colId].push(p.name);
+    }
+  });
+  renderGridPlacementEditor();
+  showToast('⚡ Players auto-placed!');
+}
+
+function clearGridPlacement() {
+  appData.grid.placement = {};
+  renderGridPlacementEditor();
+  showToast('Grid cleared.');
+}
+
+function saveGrid() {
+  saveData();
+  showToast('💾 Grid saved!');
+}
 
 function openModal(id){document.getElementById(id).classList.add('open');if(id==='gSheetsModal')initGSheets();}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
