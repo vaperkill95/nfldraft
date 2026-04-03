@@ -377,6 +377,35 @@
     .layout { grid-template-columns: 1fr; }
     aside { position: static; height: auto; }
   }
+
+  /* GRID VIEW */
+  .draft-grid { border-collapse: collapse; min-width: 900px; width: 100%; }
+  .draft-grid th {
+    background: var(--surface2); border: 1px solid var(--border);
+    padding: 8px 12px; font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-muted); text-align: center; white-space: nowrap; min-width: 100px;
+  }
+  .draft-grid th.row-header { min-width: 80px; text-align: left; }
+  .draft-grid td {
+    border: 1px solid var(--border); padding: 6px 8px;
+    vertical-align: top; min-width: 100px; min-height: 40px;
+  }
+  .draft-grid tr.round-group-top td,
+  .draft-grid tr.round-group-top th { border-top: 2px solid var(--border); }
+  .grid-round-label {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: 13px; letter-spacing: 0.5px; padding: 4px 8px;
+    white-space: nowrap; text-align: left;
+  }
+  .grid-player {
+    display: block; padding: 4px 6px; border-radius: 5px; margin-bottom: 3px;
+    font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer;
+    background: var(--surface2); border: 1px solid var(--border);
+    transition: all 0.15s; line-height: 1.3;
+  }
+  .grid-player:hover { border-color: var(--accent); color: var(--accent); }
+  .grid-player:last-child { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -385,6 +414,7 @@
   <div class="logo" id="siteLogo">PHIL'S 2026 <span>NFL DRAFT</span> GUIDE</div>
   <nav id="mainNav">
     <a class="active" onclick="switchTab('')">📋 Big Board</a>
+    <a onclick="switchToGrid()">⊞ Grid View</a>
   </nav>
   <div class="header-right">Lite Version</div>
 </header>
@@ -414,6 +444,8 @@
         <option>3 (Mid)</option>
         <option>3 (Late)</option>
         <option>Day 3</option>
+        <option>4th Round</option>
+        <option>5th Round</option>
         <option>UDFA</option>
       </select>
     </div>
@@ -468,6 +500,14 @@
     <button class="modal-close" id="modalClose">✕</button>
     <div id="modalBody"></div>
   </div>
+</div>
+
+<!-- GRID VIEW -->
+<div id="gridView" style="display:none; padding:20px 24px; overflow-x:auto;">
+  <div style="margin-bottom:16px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;letter-spacing:0.5px;">Grid View</div>
+  </div>
+  <div id="gridContainer"></div>
 </div>
 
 <script>
@@ -540,6 +580,8 @@ const DEFAULT_STAT_COLORS = {
       '3 (Mid)':   { color:'#ef4444', bg:'rgba(239,68,68,0.15)' },
       '3 (Late)':  { color:'#dc2626', bg:'rgba(220,38,38,0.15)' },
       'Day 3':     { color:'#9ca3af', bg:'rgba(107,114,128,0.15)' },
+      '4th Round': { color:'#6b7280', bg:'rgba(107,114,128,0.12)' },
+      '5th Round': { color:'#4b5563', bg:'rgba(75,85,99,0.12)' },
       'UDFA':      { color:'#6b7280', bg:'rgba(107,114,128,0.10)' },
     }
   },
@@ -697,20 +739,7 @@ posOrder.forEach(pos => {
   nav.appendChild(a);
 });
 
-function switchTab(pos) {
-  posFilter = pos;
-  currentPage = 1;
-  document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('active'));
-  if (!pos) {
-    document.querySelector('#mainNav a:first-child').classList.add('active');
-    document.querySelector('.main-title').textContent = 'Big Board';
-  } else {
-    const tab = [...document.querySelectorAll('#mainNav a')].find(a => a.textContent.trim().endsWith(pos));
-    if (tab) tab.classList.add('active');
-    document.querySelector('.main-title').textContent = pos + ' Rankings';
-  }
-  renderTable();
-}
+
 
 // Populate school filter
 const schools = [...new Set(players.map(p => p.school))].sort();
@@ -1023,6 +1052,117 @@ async function pollRailway() {
       await fetchFromRailway();
     }
   } catch(e) { /* ignore */ }
+}
+
+// ===== GRID VIEW =====
+const GRID_POSITIONS = ['QB','HB','WR','TE','IOL','OT','DT','ED','LB','CB','SAF'];
+const GRID_POS_MAP = { // map player pos to grid column
+  QB:'QB', HB:'HB', WR:'WR', TE:'TE',
+  G:'IOL', C:'IOL', OT:'OT',
+  DT:'DT', ED:'ED', LB:'LB',
+  CB:'CB', S:'SAF'
+};
+const GRID_ROUNDS = [
+  'Top 10',
+  '1 (Early)', '1 (Mid)', '1 (Late)',
+  '2 (Early)', '2 (Mid)', '2 (Late)',
+  '3 (Early)', '3 (Mid)', '3 (Late)',
+  'Day 3', '4th Round', '5th Round', 'UDFA'
+];
+const GRID_ROUND_GROUPS = {
+  'Top 10': 0,
+  '1 (Early)': 1, '1 (Mid)': 1, '1 (Late)': 1,
+  '2 (Early)': 2, '2 (Mid)': 2, '2 (Late)': 2,
+  '3 (Early)': 3, '3 (Mid)': 3, '3 (Late)': 3,
+  'Day 3': 4, '4th Round': 4, '5th Round': 4, 'UDFA': 4
+};
+const GRID_ROUND_COLORS = {
+  0: { bg:'rgba(0,200,150,0.15)',   color:'#00c896' },
+  1: { bg:'rgba(59,130,246,0.12)',  color:'#60a5fa' },
+  2: { bg:'rgba(251,146,60,0.12)',  color:'#fb923c' },
+  3: { bg:'rgba(239,68,68,0.12)',   color:'#f87171' },
+  4: { bg:'rgba(107,114,128,0.10)', color:'#9ca3af' },
+};
+
+let gridVisible = false;
+
+function switchToGrid() {
+  gridVisible = true;
+  document.querySelector('.layout').style.display = 'none';
+  document.getElementById('gridView').style.display = 'block';
+  document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('#mainNav a')[1].classList.add('active');
+  renderGrid();
+}
+
+function switchTab(pos) {
+  gridVisible = false;
+  document.querySelector('.layout').style.display = '';
+  document.getElementById('gridView').style.display = 'none';
+  posFilter = pos;
+  currentPage = 1;
+  document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('active'));
+  if (!pos) {
+    document.querySelector('#mainNav a:first-child').classList.add('active');
+    document.querySelector('.main-title').textContent = 'Big Board';
+  } else {
+    const tab = [...document.querySelectorAll('#mainNav a')].find(a => a.textContent.trim().endsWith(pos));
+    if (tab) tab.classList.add('active');
+    document.querySelector('.main-title').textContent = pos + ' Rankings';
+  }
+  renderTable();
+}
+
+function renderGrid() {
+  syncFromStorage();
+  const container = document.getElementById('gridContainer');
+
+  // Build lookup: round -> gridPos -> [players]
+  const grid = {};
+  GRID_ROUNDS.forEach(r => {
+    grid[r] = {};
+    GRID_POSITIONS.forEach(p => grid[r][p] = []);
+  });
+
+  players.forEach((p, idx) => {
+    const gridPos = GRID_POS_MAP[p.pos];
+    const round = p.round;
+    if (gridPos && round && grid[round] && grid[round][gridPos] !== undefined) {
+      grid[round][gridPos].push({ player: p, idx });
+    }
+  });
+
+  let html = `<div style="overflow-x:auto;"><table class="draft-grid">`;
+
+  // Header row
+  html += `<thead><tr>
+    <th class="row-header">ROUND</th>
+    ${GRID_POSITIONS.map(p => `<th>${p}</th>`).join('')}
+  </tr></thead><tbody>`;
+
+  let lastGroup = -1;
+  GRID_ROUNDS.forEach(round => {
+    const group = GRID_ROUND_GROUPS[round];
+    const groupStyle = GRID_ROUND_COLORS[group];
+    const isGroupTop = group !== lastGroup;
+    lastGroup = group;
+
+    html += `<tr class="${isGroupTop ? 'round-group-top' : ''}">
+      <td class="grid-round-label" style="background:${groupStyle.bg};color:${groupStyle.color};">${round}</td>
+      ${GRID_POSITIONS.map(pos => {
+        const cell = grid[round][pos];
+        if (!cell || cell.length === 0) return `<td style="background:var(--surface);"></td>`;
+        return `<td style="background:var(--surface);">
+          ${cell.map(({player, idx}) =>
+            `<span class="grid-player" onclick="openModal(${idx})">${player.name}</span>`
+          ).join('')}
+        </td>`;
+      }).join('')}
+    </tr>`;
+  });
+
+  html += `</tbody></table></div>`;
+  container.innerHTML = html;
 }
 
 fetchFromRailway();
